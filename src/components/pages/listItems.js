@@ -11,60 +11,67 @@ import LayersIcon from '@material-ui/icons/Layers';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 
 export const mainListItems = (
-  <div>
+  <div >
     <ListItem button>
-      <ListItemIcon>
+      <ListItemIcon style={{ color: 'white' }}>
         <DashboardIcon />
-      </ListItemIcon>
-      <ListItemText primary="Dashboard" />
+      </ListItemIcon >
+      <ListItemText primary="Home" />
     </ListItem>
+
     <ListItem button>
-      <ListItemIcon>
+      <ListItemIcon style={{ color: 'white' }}>
         <ShoppingCartIcon />
       </ListItemIcon>
-      <ListItemText primary="Orders" />
+      <ListItemText primary="Budget Planning" />
     </ListItem>
+
     <ListItem button>
-      <ListItemIcon>
+      <ListItemIcon style={{ color: 'white' }}>
         <PeopleIcon />
       </ListItemIcon>
-      <ListItemText primary="Customers" />
+      <ListItemText primary="To Do" />
     </ListItem>
+
     <ListItem button>
-      <ListItemIcon>
+      <ListItemIcon style={{ color: 'white' }}>
         <BarChartIcon />
       </ListItemIcon>
-      <ListItemText primary="Reports" />
+      <ListItemText primary="Guestlists" />
     </ListItem>
+
     <ListItem button>
-      <ListItemIcon>
+      <ListItemIcon style={{ color: 'white' }}>
         <LayersIcon />
       </ListItemIcon>
-      <ListItemText primary="Integrations" />
+      <ListItemText primary="Events Scheduling" />
     </ListItem>
+
+    <ListItem button>
+      <ListItemIcon style={{ color: 'white' }}>
+        <LayersIcon />
+      </ListItemIcon>
+      <ListItemText primary="Design E-invites" />
+    </ListItem>
+    
+    
   </div>
 );
 
 export const secondaryListItems = (
   <div>
-    <ListSubheader inset>Saved reports</ListSubheader>
     <ListItem button>
-      <ListItemIcon>
+      <ListItemIcon style={{ color: 'white' }}>
         <AssignmentIcon />
       </ListItemIcon>
-      <ListItemText primary="Current month" />
+      <ListItemText primary="Dark Mode" />
     </ListItem>
+   
     <ListItem button>
-      <ListItemIcon>
+      <ListItemIcon style={{ color: 'white' }}>
         <AssignmentIcon />
       </ListItemIcon>
-      <ListItemText primary="Last quarter" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="Year-end sale" />
+      <ListItemText primary="Log Out" />
     </ListItem>
   </div>
 );

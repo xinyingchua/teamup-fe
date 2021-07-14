@@ -23,6 +23,7 @@ import Chart from './Chart';
 import Deposits from './Deposits';
 import Orders from './Orders';
 
+
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -41,6 +42,7 @@ const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
+    background: '#F9F8FF'
   },
   toolbar: {
     paddingRight: 24, // keep right padding when drawer closed
@@ -48,8 +50,9 @@ const useStyles = makeStyles((theme) => ({
   toolbarIcon: {
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'flex-end',
+    justifyContent: 'flex-start',
     padding: '0 8px',
+    fill: '#0072ea',
     ...theme.mixins.toolbar,
   },
   appBar: {
@@ -75,10 +78,13 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     flexGrow: 1,
+    color: '#000',
+    fontWeight: 700,
   },
   drawerPaper: {
     position: 'relative',
     whiteSpace: 'nowrap',
+    background: '#7865E5',
     width: drawerWidth,
     transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
@@ -115,6 +121,26 @@ const useStyles = makeStyles((theme) => ({
   fixedHeight: {
     height: 240,
   },
+
+  logo: {
+    maxWidth: 75,
+  },
+
+  style: {
+    background: '#fff',
+  },
+
+  username:{
+
+    color: '#000',
+    fontWeight: 300,
+  },
+
+  divider: {
+    // Theme Color, or use css color in quote
+    background: "theme.palette.divider",
+},
+
 }));
 
 export default function Dashboard() {
@@ -131,7 +157,7 @@ export default function Dashboard() {
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
+      <AppBar position="absolute" className={clsx(classes.appBar,classes.style, open && classes.appBarShift)}>
         <Toolbar className={classes.toolbar}>
           <IconButton
             edge="start"
@@ -140,16 +166,20 @@ export default function Dashboard() {
             onClick={handleDrawerOpen}
             className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
           >
-            <MenuIcon />
+            {/* <MenuIcon /> */}
+            <img src="logo.png" alt="logo" className={classes.logo} />
           </IconButton>
+          <AppBar
+            title={<img src="https://unsplash.it/40/40"/>}
+          />
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
             Dashboard
           </Typography>
-          <IconButton color="inherit">
-            <Badge badgeContent={4} color="secondary">
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
+
+          <Typography variant="body2" className={classes.username}>
+            Welcome Lucas And Xin Ying!
+          </Typography>
+          
         </Toolbar>
       </AppBar>
       <Drawer
@@ -161,13 +191,13 @@ export default function Dashboard() {
       >
         <div className={classes.toolbarIcon}>
           <IconButton onClick={handleDrawerClose}>
-            <ChevronLeftIcon />
+            <img src="logo2.png" alt="logo" className={classes.logo }/>
+            {/* <ChevronLeftIcon /> */}
           </IconButton>
         </div>
+        <List style={{ color: 'white' }}>{mainListItems}</List>
         <Divider />
-        <List>{mainListItems}</List>
-        <Divider />
-        <List>{secondaryListItems}</List>
+        <List style={{ color: 'white' }}>{secondaryListItems}</List>
       </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
