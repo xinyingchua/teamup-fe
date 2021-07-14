@@ -5,6 +5,7 @@ import './App.css';
 import SiteNavBar from './components/pages/SiteNavBar'
 import SiteHeader from './components/pages/SiteHeader'
 import Dashboard from './components/pages/Dashboard'
+import SignInSide from './components/pages/SignInSide'
 
 
 
@@ -14,7 +15,8 @@ class App extends React.Component {
 
     return(
       <div className="App">
-      <Dashboard/>
+      {/* <Dashboard/> */}
+      <SignInSide/>
     </div>
 
     )
