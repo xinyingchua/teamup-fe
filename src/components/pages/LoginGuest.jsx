@@ -2,7 +2,6 @@ import React from 'react';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -14,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
     height: '100vh',
   },
   image: {
-    backgroundImage: 'url(photo-girl1b.jpg)',
+    backgroundImage: 'url(photo-ring.jpg)',
     backgroundRepeat: 'no-repeat',
     backgroundColor:
       theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
@@ -38,30 +37,25 @@ const useStyles = makeStyles((theme) => ({
   logo: {
     maxWidth: 75,
     margin: theme.spacing(-3, 12, 10, 0),
-    // direction: 'row',
-    // justifyContent: 'flex-start',
-    // textAlign: 'left',
     
   },
   
 }));
 
-export default function SignInSide() {
+export default function LoginGuest() {
   const classes = useStyles();
 
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-      {/* <img src='logo.png' alt='logo' className={classes.logo}/> */}
         <div className={classes.paper}>
         <img src='logo.png' alt='logo' className={classes.logo}/>
-          {/* <Typography component="h1" variant="h5" align='left' style={{fontWeight:"fontWeightBold"}}> */}
-          <Typography component="h1" variant="h4" align='left' fontWeight="700">
-            Login
+          <Typography variant="h4" align='left' fontWeight="700">
+            Welcome!
           </Typography>
-          <Typography component="h1" variant="h6" align='left' >
-            Welcome back! Please login to your account.
+          <Typography variant="h6" align='left' >
+            Please login with your mobile number
           </Typography>
           <form className={classes.form} noValidate>
             <TextField
@@ -69,27 +63,12 @@ export default function SignInSide() {
               margin="normal"
               required
               fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
+              id="mobile"
+              label="Mobile Number"
+              name="mobileNumber"
               autoFocus
             />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-            />
-            {/* <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            /> */}
+       
             <Button
               type="submit"
               fullWidth
@@ -97,16 +76,8 @@ export default function SignInSide() {
               color="primary"
               className={classes.submit}
             >
-              Sign In
+              Login
             </Button>
-            <Grid container>
-              <Grid item>
-                 New User? 
-                <Link href="#" variant="body2">
-                  {" Sign Up!"}
-                </Link>
-              </Grid>
-            </Grid>
           </form>
         </div>
       </Grid>

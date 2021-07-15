@@ -7,6 +7,7 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import { FacebookLoginButton, GoogleLoginButton } from "react-social-login-buttons";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -14,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
     height: '100vh',
   },
   image: {
-    backgroundImage: 'url(photo-girl1b.jpg)',
+    backgroundImage: 'url(photo-girl2.webp)',
     backgroundRepeat: 'no-repeat',
     backgroundColor:
       theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
@@ -46,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
   
 }));
 
-export default function SignInSide() {
+export default function RegisterPage() {
   const classes = useStyles();
 
   return (
@@ -57,13 +58,24 @@ export default function SignInSide() {
         <div className={classes.paper}>
         <img src='logo.png' alt='logo' className={classes.logo}/>
           {/* <Typography component="h1" variant="h5" align='left' style={{fontWeight:"fontWeightBold"}}> */}
-          <Typography component="h1" variant="h4" align='left' fontWeight="700">
-            Login
+          <Typography component="h1" variant="h4" align='left' fontWeight='700'>
+            Register to TeamUp!
           </Typography>
           <Typography component="h1" variant="h6" align='left' >
-            Welcome back! Please login to your account.
+            Join TeamUp! for easy and fuss-free wedding planning!  
           </Typography>
           <form className={classes.form} noValidate>
+          <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="name"
+              label="Name"
+              name="name"
+              autoComplete="name"
+              autoFocus
+            />
             <TextField
               variant="outlined"
               margin="normal"
@@ -86,10 +98,18 @@ export default function SignInSide() {
               id="password"
               autoComplete="current-password"
             />
-            {/* <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            /> */}
+      
+             <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="confirmPassword"
+              label="Confirm Password"
+              type="confirmPassword"
+              id="confirmPassword"
+              autoComplete="confirm-password"
+            />
             <Button
               type="submit"
               fullWidth
@@ -97,13 +117,26 @@ export default function SignInSide() {
               color="primary"
               className={classes.submit}
             >
-              Sign In
+              Register
             </Button>
+
+            <Grid item xs={6} md={6} lg={12}>
+              
+              <GoogleLoginButton onClick={() => alert("Hello")}>
+              <h7 >Register with Google</h7>
+            </GoogleLoginButton>
+              
+              <FacebookLoginButton className={classes.paper} onClick={() => alert("Hello")}>
+              <p>Register with Facebook</p>
+            </FacebookLoginButton>
+
+            </Grid>
+            
             <Grid container>
               <Grid item>
-                 New User? 
+                 Do you have an account?
                 <Link href="#" variant="body2">
-                  {" Sign Up!"}
+                  {" Login now"}
                 </Link>
               </Grid>
             </Grid>
@@ -111,6 +144,8 @@ export default function SignInSide() {
         </div>
       </Grid>
     <Grid item xs={false} sm={4} md={7} className={classes.image} />
+
+ 
     </Grid>
   );
 }
