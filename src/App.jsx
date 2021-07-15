@@ -15,6 +15,7 @@ const theme = createTheme({
 
 // PAGES // 
 import Dashboard from './components/pages/Dashboard'
+import SignInSide from './components/pages/SignInSide'
 
 
 
