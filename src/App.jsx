@@ -16,12 +16,28 @@ import RegisterDateBudget from './components/pages/RegisterDateBudget'
 import LoginGuest from './components/pages/LoginGuest'
 import GuestRSVP from './components/pages/GuestRSVP';
 
+// PAGES // 
+import Dashboard from './components/pages/Dashboard'
+import SignInSide from './components/pages/SignInSide'
+
+
 const theme = createTheme({
   typography: {
     fontFamily: [
       'Lexend',
       'sans-serif',
     ].join(','),
+    h1: {
+      fontWeight: 700,
+    },
+  },
+  palette: {
+    primary: {
+      main: '#000',
+    },
+    secondary: {
+      main: '#7865E5',
+    },
   },
 
 }); 

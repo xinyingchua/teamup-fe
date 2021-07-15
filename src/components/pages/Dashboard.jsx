@@ -20,8 +20,17 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import { mainListItems, secondaryListItems } from './listItems';
 import Chart from './Chart';
-import Deposits from './Deposits';
+import Budgetplanning from './Budgetplanning';
 import Orders from './Orders';
+import Dday from './Dday';
+import Guestlists from './Guestlists';
+import UpcomingEvents from './UpcomingEvents';
+import Todo from './Todo';
+
+
+
+
+
 
 
 function Copyright() {
@@ -203,28 +212,64 @@ export default function Dashboard() {
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
           <Grid container spacing={3}>
-            {/* Chart */}
-            <Grid item xs={12} md={8} lg={9}>
-              <Paper className={fixedHeightPaper}>
-                <Chart />
-              </Paper>
-            </Grid>
-            {/* Recent Deposits */}
+            {/* D-day */}
             <Grid item xs={12} md={4} lg={3}>
               <Paper className={fixedHeightPaper}>
-                <Deposits />
+                <Dday />
               </Paper>
             </Grid>
-            {/* Recent Orders */}
-            <Grid item xs={12}>
+
+            {/* Budget-Planning */}
+            <Grid item xs={12} md={8} lg={9}>
+              <Paper className={fixedHeightPaper}>
+                    <Budgetplanning/>
+              </Paper>
+            </Grid>
+
+            {/* Guestlists */}
+            <Grid item xs={12} md={6} lg={6}>
+              <Paper className={fixedHeightPaper}>
+                <Guestlists />
+              </Paper>
+            </Grid>
+
+            {/* To Dos  */}
+            <Grid item xs={12} md={6} lg={6}>
+              <Paper className={fixedHeightPaper}>
+                <Todo />
+              </Paper>
+            </Grid>
+
+            {/* Upcoming Events 1*/}
+            <Grid item xs={3}>
               <Paper className={classes.paper}>
-                <Orders />
+                <UpcomingEvents />
               </Paper>
             </Grid>
+             {/* Upcoming Events 2*/}
+            <Grid item xs={3}>
+              <Paper className={classes.paper}>
+              <UpcomingEvents />
+              </Paper>
+            </Grid>
+            {/* Upcoming Events 3*/}
+            <Grid item xs={3}>
+              <Paper className={classes.paper}>
+              <UpcomingEvents />
+              </Paper>
+            </Grid>
+            {/* Upcoming Events 4*/}
+            <Grid item xs={3}>
+              <Paper className={classes.paper}>
+              <UpcomingEvents />
+              </Paper>
+            </Grid>
+
           </Grid>
-          <Box pt={4}>
+          
+          {/* <Box pt={4}>
             <Copyright />
-          </Box>
+          </Box> */}
         </Container>
       </main>
     </div>
