@@ -8,7 +8,6 @@ import {
 } from "react-router-dom";
 
 
-
 // PAGES // 
 import Dashboard from './components/pages/Dashboard'
 import SignInSide from './components/pages/SignInSide'
@@ -45,10 +44,8 @@ class App extends React.Component {
               <Route path="/:slug/dashboard" component={Dashboard} />
               <Route path="/guest/:slug/login" component={LoginGuest} />
               <Route path="/guest/:slug/RSVP" component={GuestRSVP} />
-
               </Switch>
       
-
               </div>
           </Router>
       </ThemeProvider>
