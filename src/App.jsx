@@ -16,8 +16,7 @@ import RegisterDateBudget from './components/pages/RegisterDateBudget'
 import LoginGuest from './components/pages/LoginGuest'
 import GuestRSVP from './components/pages/GuestRSVP';
 import NewBudget from './components/pages/NewBudget';
-
-
+import ToDoCreate from './components/pages/Todo-Create';
 
 
 const theme = createTheme({
@@ -59,7 +58,8 @@ class App extends React.Component {
               <Route path="/dashboard" component={Dashboard} />
               <Route path="/budget" component={NewBudget} />
               <Route path="/hi" component={LoginGuest} />
-              <Route path="/guest/RSVP" component={GuestRSVP} />
+              <Route path="/RSVP" component={GuestRSVP} />
+              <Route path="/to-do" component={ToDoCreate} />
               </Switch>
       
               </div>
