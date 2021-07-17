@@ -70,7 +70,7 @@ export default function RegisterDateBudget() {
           <img src='event-purple.png' alt='logo' className={classes.icons}/>
             <TextField
             id="date"
-            label="Birthday"
+            label="Wedding Date"
             type="date"
             defaultValue="2017-05-24"
             className={classes.textField}
