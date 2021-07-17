@@ -1,5 +1,4 @@
 import React from 'react';
-import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
@@ -8,21 +7,8 @@ import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
 import NavBar from '../NavBar';
-
-
-// const CompletedCheckbox = withStyles({
-//   root: {
-//     color: green[400],
-//     '&$checked': {
-//       color: green[600]
-//     },
-//   },
-//   checked: {},
-// })((props) => <Checkbox color="default" {...props} />);
 
 
 
@@ -47,16 +33,10 @@ submit: {
   width: '200px',
   color: 'black'
 },
-delete: {
-  margin: theme.spacing(3, 0, 2,1),
-  background: '#F2BFD8',
-  width: '200px',
-  color: 'black'
-},
 
 }));
 
-export default function ToDoEdit() {
+export default function GuestListCreate() {
   const classes = useStyles();
   const [state, setState] = React.useState({
     checkedG: true,
@@ -75,19 +55,29 @@ export default function ToDoEdit() {
               margin="normal"
               required
               fullWidth
-              id="taskInput"
-              label="Task"
-              name="task"
+              id="guestname"
+              label="Guest Name"
+              name="guestname"
+              autoFocus
+            />
+
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="guestmobile"
+              label="Guest Mobile"
+              name="guestmobile"
               autoFocus
             />
 
             <FormControl 
             variant="outlined" 
-            // fullWidth
-            style={{width:"70%"}}
+            style={{width:"65%"}}
             margin="normal"
             textAlign= "left">
-                <InputLabel id="demo-simple-select-outlined-label">Who is responsible for this task?</InputLabel>
+                <InputLabel id="demo-simple-select-outlined-label">Which team is guest on?</InputLabel>
                   <Select
                     labelId="demo-simple-select-outlined-label"
                     id="demo-simple-select-outlined"
@@ -99,38 +89,37 @@ export default function ToDoEdit() {
                     </MenuItem>
                     <MenuItem value="bride">Bride</MenuItem>
                     <MenuItem value="groom">Groom</MenuItem>
-                    <MenuItem value="bridegroom">Groom & Bride</MenuItem>
                   </Select>
             </FormControl>
 
 
-            <FormControlLabel
-            style={{margin:"0"}}
-              control={
-                <Checkbox
-                  // checked={state.checkedB}
-                  // onChange={handleChange}
-                  name="checkedG"
-                  color="secondary"
-                />
-              }
-              label="Completed"
-            />
+            <FormControl 
+            variant="outlined" 
+            style={{width:"30%", marginLeft:"10px"}}
+            margin="normal"
+            textAlign= "center">
+                <InputLabel id="demo-simple-select-outlined-label">RSVP</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-outlined-label"
+                    id="demo-simple-select-outlined"
+                    // value={age}
+                    // onChange={handleChange}
+                    // label="Groom"
+                  >
+                    <MenuItem value="">
+                    </MenuItem>
+                    <MenuItem value="attending">Attending</MenuItem>
+                   <MenuItem value="not-attending">Not Attending</MenuItem>
+                  </Select>
+            </FormControl>
 
             <Button
               type="submit"
               variant="contained"
+              color="primary"
               className={classes.submit}
             >
-              Edit
-            </Button>
-
-            <Button
-              type="submit"
-              variant="contained"
-              className={classes.delete}
-            >
-              Delete
+              Add Guest
             </Button>
 
          </Box>
