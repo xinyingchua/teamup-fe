@@ -21,6 +21,7 @@ import ToDoCreate from './components/pages/To-Do/Todo-Create';
 import ToDoEdit from './components/pages/To-Do/Todo-Edit';
 import GuestlistCreate from './components/pages/Guestlist/Guestlist-Create';
 import GuestListEdit from './components/pages/Guestlist/Guestlist-Edit';
+import GuestListMain from './components/pages/Guestlist/Guestlist-Main';
 import EventCreate from './components/pages/Event-Schedule/Event-Create';
 import EventEdit from './components/pages/Event-Schedule/Event-Edit';
 
@@ -70,6 +71,7 @@ class App extends React.Component {
               <Route path="/to-doedit" component={ToDoEdit} />
               <Route path="/guest-listscreate" component={GuestlistCreate} />
               <Route path="/guest-listsedit" component={GuestListEdit} />
+              <Route path="/guest-listsmain" component={GuestListMain} />
               <Route path="/eventcreate" component={EventCreate} />
               <Route path="/eventedit" component={EventEdit} />
 
