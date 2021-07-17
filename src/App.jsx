@@ -16,12 +16,15 @@ import RegisterDateBudget from './components/pages/RegisterDateBudget'
 import LoginGuest from './components/pages/LoginGuest'
 import GuestRSVP from './components/pages/GuestRSVP';
 import NewBudget from './components/pages/NewBudget';
+import ToDoBeforeIDo from './components/pages/TodoBeforeIDo';
 import ToDoCreate from './components/pages/To-Do/Todo-Create';
 import ToDoEdit from './components/pages/To-Do/Todo-Edit';
 import GuestlistCreate from './components/pages/Guestlist/Guestlist-Create';
 import GuestListEdit from './components/pages/Guestlist/Guestlist-Edit';
 import EventCreate from './components/pages/Event-Schedule/Event-Create';
-import EventEdit from './components/pages/Event-Schedule/Event-Editx';
+import EventEdit from './components/pages/Event-Schedule/Event-Edit';
+import BudgetMain from './components/pages/Budget/Budget-Main';
+
 
 const theme = createTheme({
   typography: {
@@ -63,12 +66,15 @@ class App extends React.Component {
               <Route path="/budget" component={NewBudget} />
               <Route path="/hi" component={LoginGuest} />
               <Route path="/RSVP" component={GuestRSVP} />
+              <Route path="/to-do-before" component={ToDoBeforeIDo} />
               <Route path="/to-docreate" component={ToDoCreate} />
               <Route path="/to-doedit" component={ToDoEdit} />
               <Route path="/guest-listscreate" component={GuestlistCreate} />
               <Route path="/guest-listsedit" component={GuestListEdit} />
               <Route path="/eventcreate" component={EventCreate} />
               <Route path="/eventedit" component={EventEdit} />
+              <Route path="/budgetmain" component={BudgetMain} />
+
               </Switch>
       
               </div>
