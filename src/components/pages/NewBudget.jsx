@@ -145,7 +145,7 @@ export default function NewBudget() {
               color="primary"
               className={classes.submit}
             >
-              Create to do
+              Create budget
             </Button>
 
             </div>

@@ -17,6 +17,8 @@ import LoginGuest from './components/pages/LoginGuest'
 import GuestRSVP from './components/pages/GuestRSVP';
 import NewBudget from './components/pages/NewBudget';
 import ToDoCreate from './components/pages/Todo-Create';
+import ToDoBeforeIDo from './components/pages/TodoBeforeIDo';
+
 
 
 const theme = createTheme({
@@ -60,6 +62,7 @@ class App extends React.Component {
               <Route path="/hi" component={LoginGuest} />
               <Route path="/RSVP" component={GuestRSVP} />
               <Route path="/to-do" component={ToDoCreate} />
+              <Route path="/to-do-before" component={ToDoBeforeIDo} />
               </Switch>
       
               </div>
