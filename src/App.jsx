@@ -21,7 +21,7 @@ import ToDoEdit from './components/pages/To-Do/Todo-Edit';
 import GuestlistCreate from './components/pages/Guestlist/Guestlist-Create';
 import GuestListEdit from './components/pages/Guestlist/Guestlist-Edit';
 import EventCreate from './components/pages/Event-Schedule/Event-Create';
-import EventEdit from './components/pages/Event-Schedule/Event-Edit';
+import EventEdit from './components/pages/Event-Schedule/Event-Editx';
 
 const theme = createTheme({
   typography: {
