@@ -14,6 +14,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/Edit';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import Button from '@material-ui/core/Button';
 
 
 const drawerWidth = 240;
@@ -66,6 +67,11 @@ const useStyles = makeStyles((theme) => ({
   tickIcon:  {
     color: '#5EAB50',
     paddingBottom: theme.spacing(0),
+  },
+  submit: {
+    background: '#7865E5',
+    width: '200px',
+    color: 'white'
   },
 
 }));
@@ -124,9 +130,19 @@ export default function BudgetMain() {
               Available in your budget
             </Grid>
 
-
           </Grid>
-   
+
+          <Grid item xs={8} md={11} lg={12}
+          style={{textAlign : "right", paddingTop: "10px"}}>
+          <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+            >
+             Create New Expense
+            </Button>
+            </Grid>
 
             {/* Expense header */}
             <Grid item xs={12} md={4} lg={3}>
