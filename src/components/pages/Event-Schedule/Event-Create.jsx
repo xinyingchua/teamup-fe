@@ -9,7 +9,6 @@ import NavBar from '../Navbar/NavBar';
 import MomentUtils from '@date-io/moment';
 import {
   MuiPickersUtilsProvider,
-  KeyboardTimePicker,
   KeyboardDatePicker,
 } from '@material-ui/pickers';
 
@@ -51,9 +50,9 @@ export default function EventCreate() {
   const handleDateChange = (date) => {
     setSelectedDate(date);
   };
-  const [state, setState] = React.useState({
-    checkedG: true,
-  });
+  // const [state, setState] = React.useState({
+  //   checkedG: true,
+  // });
 
   return (
     <div className={classes.root}>
