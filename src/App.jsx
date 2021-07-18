@@ -23,6 +23,8 @@ import GuestlistCreate from './components/pages/Guestlist/Guestlist-Create';
 import GuestListEdit from './components/pages/Guestlist/Guestlist-Edit';
 import EventCreate from './components/pages/Event-Schedule/Event-Create';
 import EventEdit from './components/pages/Event-Schedule/Event-Edit';
+import BudgetMain from './components/pages/Budget/Budget-Main';
+
 
 
 const theme = createTheme({
@@ -72,6 +74,8 @@ class App extends React.Component {
               <Route path="/guest-listsedit" component={GuestListEdit} />
               <Route path="/eventcreate" component={EventCreate} />
               <Route path="/eventedit" component={EventEdit} />
+              <Route path="/budgetmain" component={BudgetMain} />
+
 
               </Switch>
       
