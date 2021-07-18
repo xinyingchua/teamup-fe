@@ -9,14 +9,14 @@ import {
 
 
 // PAGES // 
-import Dashboard from './components/pages/Dashboard'
-import SignInSide from './components/pages/SignInSide'
-import RegisterPage from './components/pages/RegisterPage'
-import RegisterDateBudget from './components/pages/RegisterDateBudget'
-import LoginGuest from './components/pages/LoginGuest'
-import GuestRSVP from './components/pages/GuestRSVP';
-import NewBudget from './components/pages/NewBudget';
-import ToDoBeforeIDo from './components/pages/TodoBeforeIDo';
+import Dashboard from './components/pages/Dashboard/Dashboard'
+import SignInSide from './components/pages/User/SignInSide'
+import RegisterPage from './components/pages/User/RegisterPage'
+import RegisterDateBudget from './components/pages/User/RegisterDateBudget'
+import LoginGuest from './components/pages/User/LoginGuest'
+import GuestRSVP from './components/pages/User/GuestRSVP';
+import NewBudget from './components/pages/Budget/NewBudget';
+import ToDoMain from './components/pages/To-Do/Todo-Main';
 import ToDoCreate from './components/pages/To-Do/Todo-Create';
 import ToDoEdit from './components/pages/To-Do/Todo-Edit';
 import GuestlistCreate from './components/pages/Guestlist/Guestlist-Create';
@@ -69,7 +69,7 @@ class App extends React.Component {
               <Route path="/budget" component={NewBudget} />
               <Route path="/hi" component={LoginGuest} />
               <Route path="/RSVP" component={GuestRSVP} />
-              <Route path="/to-do-before" component={ToDoBeforeIDo} />
+              <Route path="/to-do-before" component={ToDoMain} />
               <Route path="/to-docreate" component={ToDoCreate} />
               <Route path="/to-doedit" component={ToDoEdit} />
               <Route path="/guest-listscreate" component={GuestlistCreate} />
