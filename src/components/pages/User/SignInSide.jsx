@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
     height: '100vh',
   },
   image: {
-    backgroundImage: 'url(photo-girl1b.jpg)',
+    backgroundImage: 'url(https://res.cloudinary.com/dhexix4cn/image/upload/v1626617738/teamup/photo-girl1b_nwb8u7.jpg)',
     backgroundRepeat: 'no-repeat',
     backgroundColor:
       theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
@@ -38,9 +38,6 @@ const useStyles = makeStyles((theme) => ({
   logo: {
     maxWidth: 75,
     margin: theme.spacing(-3, 12, 10, 0),
-    // direction: 'row',
-    // justifyContent: 'flex-start',
-    // textAlign: 'left',
     
   },
   
@@ -53,14 +50,16 @@ export default function SignInSide() {
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-      {/* <img src='logo.png' alt='logo' className={classes.logo}/> */}
         <div className={classes.paper}>
-        <img src='logo.png' alt='logo' className={classes.logo}/>
-          {/* <Typography component="h1" variant="h5" align='left' style={{fontWeight:"fontWeightBold"}}> */}
-          <Typography component="h1" variant="h4" align='left' fontWeight="700">
+        <img src='https://res.cloudinary.com/dhexix4cn/image/upload/v1626617737/teamup/logo_sbei3p.png' alt='logo' className={classes.logo}/>
+          <Typography 
+           style={{fontWeight:"700"}}
+          variant="h4" align='left'>
             Login
           </Typography>
-          <Typography component="h1" variant="h6" align='left' >
+          <Typography
+             style={{fontWeight:"200", fontSize: "18px", marginTop:"10px"}}
+             variant="h6" align='left' >
             Welcome back! Please login to your account.
           </Typography>
           <form className={classes.form} noValidate>
@@ -99,10 +98,13 @@ export default function SignInSide() {
             >
               Sign In
             </Button>
-            <Grid container>
+            <Grid container
+              style={{textAlign:"center"}}>
               <Grid item>
                  New User? 
-                <Link href="#" variant="body2">
+                <Link 
+                style={{textDecorationLine:"underline", color:"#7865E5"}}
+                href="#" variant="body2">
                   {" Sign Up!"}
                 </Link>
               </Grid>

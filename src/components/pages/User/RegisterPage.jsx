@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
     height: '100vh',
   },
   image: {
-    backgroundImage: 'url(photo-girl2.webp)',
+    backgroundImage: 'url(https://res.cloudinary.com/dhexix4cn/image/upload/v1626617738/teamup/photo-girl2_jogvay.webp)',
     backgroundRepeat: 'no-repeat',
     backgroundColor:
       theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
@@ -39,10 +39,6 @@ const useStyles = makeStyles((theme) => ({
   logo: {
     maxWidth: 75,
     margin: theme.spacing(-3, 12, 10, 0),
-    // direction: 'row',
-    // justifyContent: 'flex-start',
-    // textAlign: 'left',
-    
   },
   
 }));
@@ -54,14 +50,16 @@ export default function RegisterPage() {
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-      {/* <img src='logo.png' alt='logo' className={classes.logo}/> */}
         <div className={classes.paper}>
-        <img src='logo.png' alt='logo' className={classes.logo}/>
-          {/* <Typography component="h1" variant="h5" align='left' style={{fontWeight:"fontWeightBold"}}> */}
-          <Typography component="h1" variant="h4" align='left' fontWeight='700'>
+        <img src='https://res.cloudinary.com/dhexix4cn/image/upload/v1626617737/teamup/logo_sbei3p.png' alt='logo' className={classes.logo}/>
+          <Typography 
+              style={{fontWeight:"700"}}
+              variant="h4" align='left'>
             Register to TeamUp!
           </Typography>
-          <Typography component="h1" variant="h6" align='left' >
+          <Typography
+            style={{fontWeight:"200", fontSize: "18px", marginTop:"10px"}}
+           variant="h6" align='left' >
             Join TeamUp! for easy and fuss-free wedding planning!  
           </Typography>
           <form className={classes.form} noValidate>
@@ -120,14 +118,18 @@ export default function RegisterPage() {
               Register
             </Button>
 
-            <Grid item xs={6} md={6} lg={12}>
+            <Grid item xs={12} md={12} lg={12}>
               
-              <GoogleLoginButton onClick={() => alert("Hello")}>
-              <h7 >Register with Google</h7>
+              <GoogleLoginButton iconSize={20} onClick={() => alert("Hello")}>
+              <Typography
+              style={{textAlign:"center"}}
+               >Register with Google</Typography>
             </GoogleLoginButton>
               
-              <FacebookLoginButton className={classes.paper} onClick={() => alert("Hello")}>
-              <p>Register with Facebook</p>
+              <FacebookLoginButton iconSize={20} onClick={() => alert("Hello")}>
+              <Typography
+              style={{textAlign:"center"}}
+              >Register with Facebook</Typography>
             </FacebookLoginButton>
 
             </Grid>
@@ -135,7 +137,9 @@ export default function RegisterPage() {
             <Grid container>
               <Grid item>
                  Do you have an account?
-                <Link href="#" variant="body2">
+                <Link href="#" 
+                  style={{textDecorationLine:"underline", color:"#7865E5"}}
+                  variant="body2">
                   {" Login now"}
                 </Link>
               </Grid>

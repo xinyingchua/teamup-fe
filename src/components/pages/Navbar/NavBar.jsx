@@ -142,7 +142,7 @@ export default function NavBar() {
             className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
           >
             {/* <MenuIcon /> */}
-            <img src="logo.png" alt="logo" className={classes.logo} />
+            <img src="https://res.cloudinary.com/dhexix4cn/image/upload/v1626617737/teamup/logo_sbei3p.png" alt="logo" className={classes.logo} />
           </IconButton>
           <AppBar
             title={<img src="https://unsplash.it/40/40"/>}
@@ -166,7 +166,7 @@ export default function NavBar() {
       >
         <div className={classes.toolbarIcon}>
           <IconButton onClick={handleDrawerClose}>
-            <img src="logo2.png" alt="logo" className={classes.logo }/>
+            <img src="https://res.cloudinary.com/dhexix4cn/image/upload/v1626617737/teamup/logo2_ihf6xr.png" alt="logo" className={classes.logo }/>
             {/* <ChevronLeftIcon /> */}
           </IconButton>
         </div>

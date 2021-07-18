@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
     height: '100vh',
   },
   image: {
-    backgroundImage: 'url(photo-guy.png)',
+    backgroundImage: 'url(https://res.cloudinary.com/dhexix4cn/image/upload/v1626617739/teamup/photo-guy_l7islm.png)',
     backgroundRepeat: 'no-repeat',
     backgroundColor:
       theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
@@ -60,14 +60,16 @@ export default function RegisterDateBudget() {
     <Grid container component="main" className={classes.root}>
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
         <div className={classes.paper}>
-        <img src='logo.png' alt='logo' className={classes.logo}/>
+        <img src='https://res.cloudinary.com/dhexix4cn/image/upload/v1626617737/teamup/logo_sbei3p.png' alt='logo' className={classes.logo}/>
 
-          <Typography variant="h4" align='center' fontWeight='700'>
+          <Typography 
+           style={{fontWeight:"600"}}
+           variant="h4" align='center'>
             When is your wedding date?
           </Typography>
        
           <form className={classes.form} noValidate>
-          <img src='event-purple.png' alt='logo' className={classes.icons}/>
+          <img src='https://res.cloudinary.com/dhexix4cn/image/upload/v1626617736/teamup/event-purple_dmadqr.png' alt='logo' className={classes.icons}/>
             <TextField
             id="date"
             label="Wedding Date"
@@ -78,10 +80,12 @@ export default function RegisterDateBudget() {
               shrink: true,
             }}
             />
-            <Typography variant="h4" align='center' fontWeight='700'>
+            <Typography
+             style={{fontWeight:"600", marginTop:"50px"}}
+             variant="h4" align='center'>
             Input your budget! 
             </Typography>
-            <img src='budget-purple.png' alt='logo' className={classes.icons}/>
+            <img src='https://res.cloudinary.com/dhexix4cn/image/upload/v1626617735/teamup/budget-purple_adjbcg.png' alt='logo' className={classes.icons}/>
 
             <TextField
               variant="outlined"
