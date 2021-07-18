@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import Title from './Title';
+import Title from '../Title';
 import Grid from '@material-ui/core/Grid';
 
 

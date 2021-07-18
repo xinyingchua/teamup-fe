@@ -11,7 +11,7 @@ import Select from '@material-ui/core/Select';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
-import NavBar from '../NavBar';
+import NavBar from '../Navbar/NavBar';
 
 
 // const CompletedCheckbox = withStyles({

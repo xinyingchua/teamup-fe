@@ -2,7 +2,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Button from "@material-ui/core/Button";
-import NavBar from "../NavBar";
+import NavBar from "../Navbar/NavBar";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import Title from "../Title";

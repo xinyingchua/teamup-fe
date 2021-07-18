@@ -9,7 +9,7 @@ import Dday from './Dday';
 import Guestlists from './Guestlists';
 import UpcomingEvents from './UpcomingEvents';
 import Todo from './Todo';
-import NavBar from './NavBar';
+import NavBar from '../Navbar/NavBar';
 
 
 const drawerWidth = 240;

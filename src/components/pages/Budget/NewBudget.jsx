@@ -8,7 +8,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button'
-import NavBar from './NavBar'
+import NavBar from '../Navbar/NavBar'
 
 
 
