@@ -12,6 +12,7 @@ import IconButton from '@material-ui/core/IconButton';
 import { mainListItems, secondaryListItems } from './listItems';
 
 
+
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -127,7 +128,6 @@ export default function NavBar() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
-  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
   return (
     <div className={classes.root}>
@@ -144,9 +144,7 @@ export default function NavBar() {
             {/* <MenuIcon /> */}
             <img src="https://res.cloudinary.com/dhexix4cn/image/upload/v1626617737/teamup/logo_sbei3p.png" alt="logo" className={classes.logo} />
           </IconButton>
-          <AppBar
-            title={<img src="https://unsplash.it/40/40"/>}
-          />
+          <AppBar/>
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
             Dashboard
           </Typography>

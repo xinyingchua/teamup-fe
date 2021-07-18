@@ -43,10 +43,7 @@ delete: {
 
 export default function GuestListEdit() {
   const classes = useStyles();
-  const [state, setState] = React.useState({
-    checkedG: true,
-  });
-
+ 
   return (
     <div className={classes.root}>
       <NavBar />

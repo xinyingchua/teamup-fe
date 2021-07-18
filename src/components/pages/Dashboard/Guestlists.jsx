@@ -1,10 +1,7 @@
 
 import React from 'react';
-import { useTheme,  makeStyles  } from '@material-ui/core/styles';
+import { makeStyles  } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Paper';
-import Title from '../Title';
 import Box from '@material-ui/core/Box';
 
 
@@ -43,7 +40,6 @@ const useStyles = makeStyles((theme) => ({
         display: "flex",
         flexDirection: "row",
         paddingTop: "30px",
-        display: "flex",
         alignItems: "center",
         justifyContent: "center",
         
@@ -53,7 +49,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Chart() {
 const classes = useStyles();
-  const theme = useTheme();
 
   return (
     <React.Fragment>

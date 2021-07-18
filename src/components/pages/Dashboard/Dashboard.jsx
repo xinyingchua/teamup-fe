@@ -12,8 +12,6 @@ import Todo from './Todo';
 import NavBar from '../Navbar/NavBar';
 
 
-const drawerWidth = 240;
-
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',

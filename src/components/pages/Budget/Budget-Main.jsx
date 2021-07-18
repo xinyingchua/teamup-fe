@@ -17,7 +17,6 @@ import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import Button from '@material-ui/core/Button';
 
 
-const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -158,7 +157,7 @@ export default function BudgetMain() {
             {[0, 1, 2, 3].map((value) => {
             const labelId = `checkbox-list-label-${value}`;
     
-            {/* Return Expense by line by map */}
+            /* Return Expense by line by map */
             return (
               <Grid container fullWidth>
                 <Grid item xs={12} md={11} lg={12}>
@@ -174,7 +173,6 @@ export default function BudgetMain() {
                     inputProps={{ 'aria-labelledby': labelId }}
                   >
                 </ListItemIcon> */}
-
 
 
                 <ListItemText edge="start" id={labelId} primary={`Line item ${value + 1}`} />

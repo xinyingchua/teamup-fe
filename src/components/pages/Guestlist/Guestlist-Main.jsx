@@ -5,42 +5,13 @@ import Button from "@material-ui/core/Button";
 import NavBar from "../Navbar/NavBar";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
-import Title from "../Title";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
-import { Typography } from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
 import clsx from "clsx";
 import TeamGroom from "./TeamGroom-Guest";
-
-
-
-const guestlist = [
-  {
-    name: "Jonathan",
-    status: "attending",
-  },
-  {
-    name: "John",
-    status: "pending",
-  },
-  {
-    name: "Jon",
-    status: "not-attending",
-  },
-  {
-    name: "Jonny",
-    status: "attending",
-  },
-  {
-    name: "John",
-    status: "attending",
-  },
-  
-];
-
 
 
 const useStyles = makeStyles((theme) => ({
@@ -102,7 +73,6 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "row",
     paddingTop: "30px",
-    display: "flex",
     alignItems: "center",
     justifyContent: "center",
     
@@ -116,19 +86,18 @@ const useStyles = makeStyles((theme) => ({
 export default function NewBudget() {
   const classes = useStyles();
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-  const fixedHeightByExpense = clsx(classes.paper2, 100);
 
-  const [checked, setChecked] = React.useState([0]);
-  const handleToggle = (value) => () => {
-    const currentIndex = checked.indexOf(value);
-    const newChecked = [...checked];
-    if (currentIndex === -1) {
-      newChecked.push(value);
-    } else {
-      newChecked.splice(currentIndex, 1);
-    }
-    setChecked(newChecked);
-  };
+  // const [checked, setChecked] = React.useState([0]);
+  // const handleToggle = (value) => () => {
+  //   const currentIndex = checked.indexOf(value);
+  //   const newChecked = [...checked];
+  //   if (currentIndex === -1) {
+  //     newChecked.push(value);
+  //   } else {
+  //     newChecked.splice(currentIndex, 1);
+  //   }
+  //   setChecked(newChecked);
+  // };
 
   return (
     <div className={classes.root}>

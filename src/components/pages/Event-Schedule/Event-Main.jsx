@@ -20,7 +20,6 @@ import LocationOnIcon from '@material-ui/icons/LocationOn';
 import Moment from 'react-moment';
 
 
-const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -139,7 +138,7 @@ export default function EventMain() {
             {[0, 1, 2, 3].map((value) => {
             const labelId = `checkbox-list-label-${value}`;
     
-            {/* Return Event by line by map */}
+            /* Return Event by line by map */
             return (
               <Grid container >
                 <Grid item xs={12} md={11} lg={12}

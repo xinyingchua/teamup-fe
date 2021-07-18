@@ -38,9 +38,7 @@ submit: {
 
 export default function GuestListCreate() {
   const classes = useStyles();
-  const [state, setState] = React.useState({
-    checkedG: true,
-  });
+
 
   return (
     <div className={classes.root}>
