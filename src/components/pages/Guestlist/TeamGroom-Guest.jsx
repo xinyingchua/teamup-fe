@@ -7,7 +7,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import { Typography } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
-
+import { Link } from "react-router-dom"
 
 
 
@@ -90,9 +90,11 @@ export default function TeamGroom() {
                       </Typography>
                       </IconButton>
                       
+                      <Link to="/guest-lists/edit" style={{ textDecoration: "none", color:'#fff' }}>
                       <Button variant="contained" color="secondary" style={{background:'#60C3F1'}}>
                       Attending
                     </Button>
+                    </Link>
                     </ListItemSecondaryAction>
                   </ListItem>
               </Grid>

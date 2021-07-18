@@ -15,7 +15,7 @@ import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/Edit';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import Button from '@material-ui/core/Button';
-
+import { Link } from "react-router-dom"
 
 
 const useStyles = makeStyles((theme) => ({
@@ -70,7 +70,8 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     background: '#7865E5',
     width: '200px',
-    color: 'white'
+    color: 'white',
+    textDecoration: "none"
   },
 
 }));
@@ -133,6 +134,7 @@ export default function BudgetMain() {
 
           <Grid item xs={8} md={11} lg={12}
           style={{textAlign : "right", paddingTop: "10px"}}>
+          <Link to="/budget/create" style={{ textDecoration: "none", color:'#fff' }}>
           <Button
               type="submit"
               variant="contained"
@@ -141,6 +143,7 @@ export default function BudgetMain() {
             >
              Create New Expense
             </Button>
+            </Link>
             </Grid>
 
             {/* Expense header */}
@@ -166,14 +169,6 @@ export default function BudgetMain() {
                 <ListItem key={value} role={undefined} 
                 dense button 
                 onClick={handleToggle(value)}>
-                {/* <ListItemIcon
-                    edge="start"
-                    tabIndex={-1}
-                    disableRipple
-                    inputProps={{ 'aria-labelledby': labelId }}
-                  >
-                </ListItemIcon> */}
-
 
                 <ListItemText edge="start" id={labelId} primary={`Line item ${value + 1}`} />
 
@@ -191,9 +186,11 @@ export default function BudgetMain() {
                 </Grid>
 
                 <ListItemSecondaryAction>
+                <Link to="/budget/edit" style={{ textDecoration: "none", color:'#fff' }}>
                     <IconButton edge="end" aria-label="edit">
                     <EditIcon />
                     </IconButton>
+                </Link>
                 </ListItemSecondaryAction>
                 </ListItem>
                 </Paper>

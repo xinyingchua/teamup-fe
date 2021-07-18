@@ -12,6 +12,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Paper from "@material-ui/core/Paper";
 import clsx from "clsx";
 import TeamGroom from "./TeamGroom-Guest";
+import { Link } from "react-router-dom"
 
 
 const useStyles = makeStyles((theme) => ({
@@ -191,6 +192,7 @@ export default function NewBudget() {
               </Grid>
 
               <Grid item xs={12} sm={6} lg={6} style={{ textAlign: "right" }}>
+              <Link to="/guest-lists/create" style={{ textDecoration: "none", color:'#fff' }}>
                 <Button
                   type="submit"
                   variant="contained"
@@ -200,6 +202,7 @@ export default function NewBudget() {
                 >
                   Add Guest
                 </Button>
+                </Link>
               </Grid>
             </Grid>
 

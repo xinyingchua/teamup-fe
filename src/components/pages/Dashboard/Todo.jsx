@@ -1,16 +1,12 @@
 import React from 'react';
-import Link from '@material-ui/core/Link';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Title from '../Title';
 import Grid from '@material-ui/core/Grid';
+import { Link } from "react-router-dom"
 
-
-function preventDefault(event) {
-    event.preventDefault();
-  }
 
 
 
@@ -71,7 +67,7 @@ const useStyles = makeStyles({
           </Grid>
         <LinearProgress color="secondary" variant="determinate" value={progress} />
         <Box mt={1.5}>
-        <Link  style={{color: '#7865E5'}}color="primary" href="#" onClick={preventDefault}>
+        <Link to="/to-do" style={{color: '#7865E5'}}color="primary">
           View progress
         </Link>
       </Box>
