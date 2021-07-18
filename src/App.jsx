@@ -24,6 +24,7 @@ import GuestListEdit from './components/pages/Guestlist/Guestlist-Edit';
 import EventCreate from './components/pages/Event-Schedule/Event-Create';
 import EventEdit from './components/pages/Event-Schedule/Event-Edit';
 import BudgetMain from './components/pages/Budget/Budget-Main';
+import EventMain from './components/pages/Event-Schedule/Event-Main';
 
 
 
@@ -75,6 +76,7 @@ class App extends React.Component {
               <Route path="/eventcreate" component={EventCreate} />
               <Route path="/eventedit" component={EventEdit} />
               <Route path="/budgetmain" component={BudgetMain} />
+              <Route path="/eventmain" component={EventMain} />
 
 
               </Switch>
