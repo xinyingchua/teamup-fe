@@ -225,8 +225,9 @@ export default function NewBudget() {
                 <Button
                   type="submit"
                   variant="contained"
-                  color="primary"
+                  color="#60C3F1"
                   className={classes.submit}
+                  style={{background:'#7865E5', color:'white'}}
                 >
                   Add Guest
                 </Button>

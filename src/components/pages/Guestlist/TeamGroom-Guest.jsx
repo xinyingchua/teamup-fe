@@ -91,7 +91,7 @@ export default function TeamGroom() {
                       </Typography>
                       </IconButton>
                       
-                      <Button variant="contained" color="secondary">
+                      <Button variant="contained" color="secondary" style={{background:'#60C3F1'}}>
                       Attending
                     </Button>
                     </ListItemSecondaryAction>
