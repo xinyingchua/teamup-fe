@@ -4,20 +4,16 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import Budgetplanning from '../Budgetplanning';
-import Todo from '../Todo';
 import NavBar from '../NavBar';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
-import Checkbox from '@material-ui/core/Checkbox';
 import IconButton from '@material-ui/core/IconButton';
-import CommentIcon from '@material-ui/icons/Comment';
-
+import EditIcon from '@material-ui/icons/Edit';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 
 
 const drawerWidth = 240;
@@ -57,6 +53,19 @@ const useStyles = makeStyles((theme) => ({
     flex: 1,
     fontSize: 40,
     fontWeight: 'bold',
+  },
+  ulroot: {
+    width: '100%',
+    paddingBottom: theme.spacing(5),
+  },
+  ulheader: {
+    width: '100%',
+    paddingTop: theme.spacing(4),
+    textAlign: 'left',
+  },
+  tickIcon:  {
+    color: '#5EAB50',
+    paddingBottom: theme.spacing(0),
   },
 
 }));
@@ -107,41 +116,69 @@ export default function BudgetMain() {
             <Grid item xs={12} md={4} lg={3}>
               <Box className={fixedHeightPaper}>
               <Typography 
-              color="secondary"
+              style={{color:"#5EAB50"}}
               className={classes.costTypography}>
                 $2,673
             </Typography>
               </Box>
               Available in your budget
             </Grid>
+
+
           </Grid>
    
-        
 
-            <List className={classes.root}>
+            {/* Expense header */}
+            <Grid item xs={12} md={4} lg={3}>
+            <Box className={classes.ulheader}>
+              <Typography
+              style={{fontWeight:"bold"}}>
+              Entertainment
+            </Typography>
+              </Box>
+              </Grid>
+
+            <List className={classes.ulroot}>
             {[0, 1, 2, 3].map((value) => {
             const labelId = `checkbox-list-label-${value}`;
-
+    
+            {/* Return Expense by line by map */}
             return (
               <Grid container fullWidth>
                 <Grid item xs={12} md={11} lg={12}>
-                <Paper className={fixedHeightByExpense}>
+                <Paper 
+                className={fixedHeightByExpense}>
                 <ListItem key={value} role={undefined} 
                 dense button 
                 onClick={handleToggle(value)}>
-                <ListItemIcon>
-                    <Checkbox
+                {/* <ListItemIcon
                     edge="start"
-                    checked={checked.indexOf(value) !== -1}
                     tabIndex={-1}
                     disableRipple
                     inputProps={{ 'aria-labelledby': labelId }}
-                    />
-                </ListItemIcon>
-                <ListItemText id={labelId} primary={`Line item ${value + 1}`} />
+                  >
+                </ListItemIcon> */}
+
+
+
+                <ListItemText edge="start" id={labelId} primary={`Line item ${value + 1}`} />
+
+                <Grid
+                edge="end"
+                style={{display:"flex", flexDirection:"row"}}
+                >
+                <CheckCircleIcon className={classes.tickIcon}/>
+                <ListItemText 
+                 style={{marginLeft:"10px"}}
+                id={labelId} 
+                primary={`$ ${value + 1}`}
+      
+                 />
+                </Grid>
+
                 <ListItemSecondaryAction>
-                    <IconButton edge="end" aria-label="comments">
-                    <CommentIcon />
+                    <IconButton edge="end" aria-label="edit">
+                    <EditIcon />
                     </IconButton>
                 </ListItemSecondaryAction>
                 </ListItem>
@@ -151,29 +188,6 @@ export default function BudgetMain() {
             );
             })}
             </List>
-
-
-
-
-         {/* Budget-Planning */}
-            <Grid item xs={12} md={11} lg={11}
-            style={{textAlign:"left"}}>
-            Entertainment
-              <Paper className={fixedHeightByExpense}>
-              <Typography >
-              Nature of Expense
-            </Typography>
-            <Typography >
-             $500
-            </Typography>
-              </Paper>
-            </Grid>
-
-
-    
-
-        
-
 
           
         </Container>
