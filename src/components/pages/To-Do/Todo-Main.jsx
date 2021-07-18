@@ -14,7 +14,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
-
+import { Link } from "react-router-dom"
 
 const todo = [
   {
@@ -107,14 +107,16 @@ export default function NewBudget() {
                     </Grid>
 
                     <Grid item xs={12} sm={6} lg={6} style={{textAlign:'right'}}>
+                    <Link to="/to-do/create" style={{ textDecoration: "none", color:'#fff' }}>
                     <Button
                     type="submit"
                     variant="contained"
                     color="primary"
                     className={classes.submit}
                     >
-                    Add Event
-                    </Button>   
+                    Add To Do
+                    </Button>  
+                    </Link> 
                     </Grid>
             </Grid>
 
@@ -139,6 +141,7 @@ export default function NewBudget() {
                     <Grid container className={classes.button}>
                       <Grid item xs={6}>
                         <CardActions>
+                        <Link to="/to-do/edit" style={{ textDecoration: "none", color:'#fff' }}>
                           <Button
                             variant="contained"
                             style={{ color: "#7865E5" }}
@@ -147,6 +150,7 @@ export default function NewBudget() {
                           >
                             Edit
                           </Button>
+                          </Link>
                         </CardActions>
                       </Grid>
                       <Grid item xs={6} >

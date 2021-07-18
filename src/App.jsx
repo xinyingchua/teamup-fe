@@ -15,7 +15,8 @@ import RegisterPage from './components/pages/User/RegisterPage'
 import RegisterDateBudget from './components/pages/User/RegisterDateBudget'
 import LoginGuest from './components/pages/User/LoginGuest'
 import GuestRSVP from './components/pages/User/GuestRSVP';
-import NewBudget from './components/pages/Budget/NewBudget';
+import BudgetCreate from './components/pages/Budget/NewBudget';
+import BudgetEdit from './components/pages/Budget/Budget-Edit';
 import ToDoMain from './components/pages/To-Do/Todo-Main';
 import ToDoCreate from './components/pages/To-Do/Todo-Create';
 import ToDoEdit from './components/pages/To-Do/Todo-Edit';
@@ -26,6 +27,7 @@ import EventCreate from './components/pages/Event-Schedule/Event-Create';
 import EventEdit from './components/pages/Event-Schedule/Event-Edit';
 import BudgetMain from './components/pages/Budget/Budget-Main';
 import EventMain from './components/pages/Event-Schedule/Event-Main';
+
 
 
 
@@ -47,6 +49,10 @@ const theme = createTheme({
       main: '#7865E5',
     },
   },
+  link:{
+    textDecoration: "none", 
+    color:'#fff'
+  }
 
 }); 
 
@@ -62,24 +68,38 @@ class App extends React.Component {
               <div className="App">
 
               <Switch>
-              <Route path="/login" component={SignInSide} />
-              <Route path="/register" component={RegisterPage} />
-              <Route path="/hello" component={RegisterDateBudget} />
-              <Route path="/dashboard" component={Dashboard} />
-              <Route path="/budget" component={NewBudget} />
-              <Route path="/hi" component={LoginGuest} />
-              <Route path="/RSVP" component={GuestRSVP} />
-              <Route path="/to-do-before" component={ToDoMain} />
-              <Route path="/to-docreate" component={ToDoCreate} />
-              <Route path="/to-doedit" component={ToDoEdit} />
-              <Route path="/guest-listscreate" component={GuestlistCreate} />
-              <Route path="/guest-listsedit" component={GuestListEdit} />
-              <Route path="/guest-listsmain" component={GuestListMain} />
-              <Route path="/eventcreate" component={EventCreate} />
-              <Route path="/eventedit" component={EventEdit} />
-              <Route path="/budgetmain" component={BudgetMain} />
-              <Route path="/eventmain" component={EventMain} />
 
+              {/* Users Routes*/}
+              <Route path="/login" component={SignInSide} />
+              <Route path="/register/date-and-budget" component={RegisterDateBudget} />
+              <Route path="/register" component={RegisterPage} />
+              <Route path="/guest/login" component={LoginGuest} /> 
+              <Route path="/guest/RSVP" component={GuestRSVP} />
+
+              {/* Dashboard Route*/}
+              <Route path="/dashboard" component={Dashboard} />
+
+              {/* Budget Routes*/}
+              <Route path="/budget/create" component={BudgetCreate} />
+              <Route path="/budget/edit"component={BudgetEdit} />
+              <Route path="/budget" component={BudgetMain} />
+
+
+              {/* To Do List Routes*/}
+              <Route path="/to-do/create" component={ToDoCreate} />
+              <Route path="/to-do/edit" component={ToDoEdit} />
+              <Route path="/to-do" component={ToDoMain} />
+
+
+             {/* Guest List Routes*/}
+              <Route path="/guest-lists/create" component={GuestlistCreate} />
+              <Route path="/guest-lists/edit" component={GuestListEdit} />
+              <Route path="/guest-lists" component={GuestListMain} />
+
+              {/* Events Routes*/}
+              <Route path="/events/create" component={EventCreate} />
+              <Route path="/events/edit" component={EventEdit} />
+              <Route path="/events" component={EventMain} />
 
               </Switch>
       

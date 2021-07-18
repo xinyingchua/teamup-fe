@@ -18,6 +18,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import QueryBuilderIcon from '@material-ui/icons/QueryBuilder';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import Moment from 'react-moment';
+import { Link } from "react-router-dom"
 
 
 
@@ -124,6 +125,7 @@ export default function EventMain() {
 
           <Grid item xs={8} md={11} lg={12}
           style={{textAlign : "right", paddingTop: "10px"}}>
+          <Link to="/events/create" style={{ textDecoration: "none", color:'#fff' }}>
           <Button
               type="submit"
               variant="contained"
@@ -132,6 +134,7 @@ export default function EventMain() {
             >
              Add Event
             </Button>
+            </Link>
             </Grid>
 
             <List className={classes.ulroot}>
@@ -197,10 +200,12 @@ export default function EventMain() {
                 </Grid>
 
                 <ListItemSecondaryAction>
+                <Link to="/events/edit" style={{ textDecoration: "none", color:'#fff' }}>
                     <IconButton edge="end" aria-label="edit">
                     <EditIcon
                     className={classes.icon} />
                     </IconButton>
+                    </Link>
                 </ListItemSecondaryAction>
                 </ListItem>
                 </Paper>

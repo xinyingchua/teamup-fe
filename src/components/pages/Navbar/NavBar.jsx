@@ -116,6 +116,9 @@ const useStyles = makeStyles((theme) => ({
     // Theme Color, or use css color in quote
     background: "theme.palette.divider",
 },
+listdecoration: {
+  textDecoration: 'none',
+},
 
 }));
 
@@ -168,7 +171,7 @@ export default function NavBar() {
             {/* <ChevronLeftIcon /> */}
           </IconButton>
         </div>
-        <List style={{ color: 'white' }}>{mainListItems}</List>
+        <List style={{ color: 'white'}}>{mainListItems}</List>
         <Divider />
         <List style={{ color: 'white' }}>{secondaryListItems}</List>
       </Drawer>

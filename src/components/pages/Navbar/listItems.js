@@ -10,43 +10,57 @@ import DraftsIcon from '@material-ui/icons/Drafts';
 import PaletteIcon from '@material-ui/icons/Palette';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import ToggleOnIcon from '@material-ui/icons/ToggleOn';
+import { Link } from "react-router-dom"
+
+
 
 export const mainListItems = (
   <div >
-    <ListItem button>
+    <Link to="/dashboard" style={{ textDecoration: "none", color:'#fff' }}>
+    <ListItem button  >
       <ListItemIcon style={{ color: 'white' }}>
         <DashboardIcon />
       </ListItemIcon >
-      <ListItemText primary="Home" />
+      <ListItemText primary="Dashboard" />
     </ListItem>
+    </Link>
 
+    <Link to="/budget" style={{ textDecoration: "none", color:'#fff' }} >
     <ListItem button>
       <ListItemIcon style={{ color: 'white' }}>
         <MonetizationOnIcon />
       </ListItemIcon>
       <ListItemText primary="Budget Planning" />
     </ListItem>
+    </Link>
 
+
+    <Link to="/to-do" style={{ textDecoration: "none", color:'#fff' }} >
     <ListItem button>
       <ListItemIcon style={{ color: 'white' }}>
         <FormatListNumberedIcon />
       </ListItemIcon>
       <ListItemText primary="To Do" />
     </ListItem>
+    </Link>
 
+    <Link to="/guest-lists" style={{ textDecoration: "none", color:'#fff' }} >
     <ListItem button>
       <ListItemIcon style={{ color: 'white' }}>
         <PeopleIcon />
       </ListItemIcon>
       <ListItemText primary="Guestlists" />
     </ListItem>
+    </Link>
 
+    <Link to="/events" style={{ textDecoration: "none", color:'#fff' }} >
     <ListItem button>
       <ListItemIcon style={{ color: 'white' }}>
         <DraftsIcon />
       </ListItemIcon>
       <ListItemText primary="Events Scheduling" />
     </ListItem>
+    </Link>
 
     <ListItem button>
       <ListItemIcon style={{ color: 'white' }}>
