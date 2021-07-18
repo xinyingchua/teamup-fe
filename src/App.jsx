@@ -26,6 +26,7 @@ import EventEdit from './components/pages/Event-Schedule/Event-Edit';
 import BudgetMain from './components/pages/Budget/Budget-Main';
 
 
+
 const theme = createTheme({
   typography: {
     fontFamily: [
@@ -74,6 +75,7 @@ class App extends React.Component {
               <Route path="/eventcreate" component={EventCreate} />
               <Route path="/eventedit" component={EventEdit} />
               <Route path="/budgetmain" component={BudgetMain} />
+
 
               </Switch>
       
