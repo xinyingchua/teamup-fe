@@ -12,7 +12,6 @@ import Todo from './Todo';
 import NavBar from './NavBar';
 
 
-
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({

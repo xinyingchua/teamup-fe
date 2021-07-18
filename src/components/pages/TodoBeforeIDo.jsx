@@ -67,6 +67,13 @@ const useStyles = makeStyles((theme) => ({
   button: {
     marginTop: theme.spacing(4),
   },
+
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+    background: '#AAD1CA',
+    width: '200px',
+    color: 'black',
+  },
 }));
 
 export default function NewBudget() {
@@ -79,6 +86,8 @@ export default function NewBudget() {
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
 
+            <Grid container>
+                <Grid item xs={12} sm={6} lg={6}>
                 <FormControl variant="outlined" style={{width:'150px', marginBottom:'20px'}} >
                     <InputLabel id="category">Filter By</InputLabel>
                     <Select
@@ -95,6 +104,20 @@ export default function NewBudget() {
 
                     </Select>
                     </FormControl>
+                    </Grid>
+
+                    <Grid item xs={12} sm={6} lg={6} style={{textAlign:'right'}}>
+                    <Button
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    className={classes.submit}
+                    >
+                    Add Event
+                    </Button>   
+                    </Grid>
+            </Grid>
+
 
         {/* Map card here */}
           <Grid container spacing={4}>
@@ -126,10 +149,11 @@ export default function NewBudget() {
                           </Button>
                         </CardActions>
                       </Grid>
-                      <Grid item xs={6}>
+                      <Grid item xs={6} >
                         <CardActions>
                           <Button
                             variant="contained"
+                            justify="right" 
                             color="secondary"
                             className={classes.button}
                             startIcon={<CheckCircleOutlineIcon />}
