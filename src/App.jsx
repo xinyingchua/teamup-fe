@@ -11,11 +11,11 @@ import { instanceOf } from 'prop-types'
 
 
 
-
 // PAGES // 
 import Dashboard from './components/pages/Dashboard/Dashboard'
 import SignInSide from './components/pages/User/SignInSide'
 import RegisterPage from './components/pages/User/RegisterPage'
+import RegisterChangePassword from './components/pages/User/RegisterChangePassword'
 import RegisterDateBudget from './components/pages/User/RegisterDateBudget'
 import LoginGuest from './components/pages/User/LoginGuest'
 import GuestRSVP from './components/pages/User/GuestRSVP';
@@ -80,7 +80,9 @@ class App extends React.Component {
 
               {/* Users Routes*/}
               <Route path="/login" component={SignInSide} />
+              <Route path="/register/change-password" component={RegisterChangePassword} />
               <Route path="/register/date-and-budget" component={RegisterDateBudget} />
+
               <Route path="/register" component={RegisterPage} />
               <Route path="/guest/login" component={LoginGuest} /> 
               <Route path="/guest/RSVP" component={GuestRSVP} />
