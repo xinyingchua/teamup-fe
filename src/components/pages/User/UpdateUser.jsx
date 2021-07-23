@@ -12,8 +12,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
 import NavBar from '../Navbar/NavBar';
 import { CookiesProvider } from 'react-cookie';
-import axios from 'axios'
-import { useHistory } from "react-router-dom";
+
 
 
 
@@ -42,21 +41,18 @@ submit: {
 
 }));
 
-export default function ToDoCreate() {
+export default function UpdateUser() {
   const classes = useStyles();
-
-  const history = useHistory();
-    
 
   // use useState hooks
   const [task, setTask] = React.useState('')
-  const [status, setStatus] = React.useState('in progress')
+  const [status, setStatus] = React.useState(false)
   const [role, setRole] = React.useState('')
   let [fetchedData, setFetchedData] = React.useState('')
 
-  // function toggle() {
-  //   setStatus(!status);
-  // }
+  function toggle() {
+    setStatus(!status);
+  }
 
   // use api callback
   let fetchData = async () => {
@@ -65,9 +61,9 @@ export default function ToDoCreate() {
       headers: { 'auth_token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imx1Y2FzZXMuc2VldEBnbWFpbC5jb20iLCJpYXQiOjE2MjY5NjcxMzYsImV4cCI6MTYyNzA1MzUzNn0.DMY1A_336WZsnC4iu6x7rLLx-1XQwQ2aMQcP59oSlpc' },
       url: 'https://teamup-be.herokuapp.com/api/v1/users/todos/create',
       data: {
-        task: task,
-        status: 'in progress',
-        role: role,
+        task: '',
+        status: false,
+        role: '',
       },
     })
     console.log(response.data)
@@ -83,13 +79,11 @@ export default function ToDoCreate() {
   // submit form function
   const handleFormSummit = async (e) => {
     e.preventDefault()
-    
+    if (password !== confirmPass) {
+      console.log('password does not match')
+      return
+    }
     fetchData()
-    //after submit form redirect user
-    history.push('/to-do');
-    console.log(
-      `form submitted with values: ${task}, ${status}, ${role} `
-    )
   }
 
 
@@ -105,51 +99,96 @@ export default function ToDoCreate() {
         <form onSubmit={(e) => {
               handleFormSummit(e)
             }}>
-        <TextField
+            <TextField
               variant="outlined"
               margin="normal"
               required
-              fullWidth
-              id="taskInput"
-              label="Task"
-              name="task"
+              style={{width:"55%"}}
+              id="firstnameInput"
+              label="FirstName"
+              name="firstname"
               onChange={(e) => setTask(e.target.value)}
               autoFocus
             />
 
-            <FormControl 
-            variant="outlined" 
-            // fullWidth
-            style={{width:"70%"}}
-            margin="normal"
-            textalign= "left">
-                <InputLabel id="demo-simple-select-outlined-label">Who is responsible for this task?</InputLabel>
-                  <Select
-                    labelId="demo-simple-select-outlined-label"
-                    id="demo-simple-select-outlined"
-                    onChange={(e) => setRole(e.target.value)}
-                    // onClick={toggle}
-                  >
-                    <MenuItem value="">
-                    </MenuItem>
-                    <MenuItem value="bride">Bride</MenuItem>
-                    <MenuItem value="groom">Groom</MenuItem>
-                    <MenuItem value="bridegroom">Groom & Bride</MenuItem>
-                  </Select>
-            </FormControl>
-
-
-            <FormControlLabel
-            style={{margin:"0"}}
-              control={
-                <Checkbox
-                  onChange={(e) => setStatus(e.target.checked)}
-                  name="checkedG"
-                  color="secondary"
-                />
-              }
-              label="Completed"
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              style={{width: "44%", marginLeft:'5px'}}
+              id="lastnameInput"
+              label="Last Name"
+              name="lastname"
+              onChange={(e) => setTask(e.target.value)}
+              autoFocus
             />
+
+
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="emailInput"
+              label="Email"
+              name="email"
+              onChange={(e) => setTask(e.target.value)}
+              autoFocus
+            />
+
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="emailInput"
+              label="Password"
+              name="password"
+              onChange={(e) => setTask(e.target.value)}
+              autoFocus
+            />
+
+            
+
+            <TextField
+            id="date"
+            style={{width:"50%", marginTop:'20px', marginRight:'5px'}}
+            label="Wedding Date"
+            type="date"
+            defaultValue="2017-05-24"
+            className={classes.textField}
+            onChange={(e) => setTask(e.target.value)}
+            InputLabelProps={{
+              shrink: true,
+            }}
+            />
+
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              style={{width: "48%", marginLeft:'5px'}}
+              id="d-destination"
+              label="D-Destination"
+              name="d-destination"
+              onChange={(e) => setTask(e.target.value)}
+              autoFocus
+            />
+
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="emailInput"
+              label="Budget"
+              name="password"
+              onChange={(e) => setTask(e.target.value)}
+              autoFocus
+            />
+
+            
+
 
             <Button
               type="submit"
@@ -158,7 +197,7 @@ export default function ToDoCreate() {
               color="primary"
               className={classes.submit}
             >
-              Create to do
+              Update User
             </Button>
             </form>
 
