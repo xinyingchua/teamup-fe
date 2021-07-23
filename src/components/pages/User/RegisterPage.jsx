@@ -131,7 +131,7 @@ export default function RegisterPage() {
               required
               style={{width:"55%"}}
               id='name'
-              label='Your Name'
+              label='Your Full Name'
               name='name'
               autoComplete='name'
               autoFocus
@@ -174,7 +174,7 @@ export default function RegisterPage() {
               required
               fullWidth
               id='partnerName'
-              label="Your Partner's Name"
+              label="Your Partner's Full Name"
               name='partnerName'
               autoComplete='name'
               autoFocus

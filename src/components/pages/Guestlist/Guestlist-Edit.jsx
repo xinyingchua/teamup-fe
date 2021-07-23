@@ -9,7 +9,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
 import NavBar from '../Navbar/NavBar';
-
+// import axios from 'axios'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -43,6 +43,46 @@ delete: {
 
 export default function GuestListEdit() {
   const classes = useStyles();
+
+  // use useState hooks
+//  const [guestname, setGuestName] = React.useState('')
+//  const [guestmobile, setGuestMobile] = React.useState('')
+//  const [teamSelection, setTeamSelection] = React.useState('')
+//  const [rsvp, setRSVP] = React.useState('')
+//  let [fetchedData, setFetchedData] = React.useState('')
+
+ // use api callback
+//  let fetchData = async () => {
+//    fetchedData = await axios({
+//      method: 'patch',
+//      url: 'https://teamup-be.herokuapp.com/api/v1/users/guests/60f22aacb4a2d22327bba9f5/update',
+//      data: {
+//       guest_first_name: guestname,
+//       guest_last_name: guestname,
+//       guest_contact: guestmobile,
+//       role: teamSelection,
+//       status: 'pending',
+//       pax: 3,
+//      },
+//    })
+//    console.log(fetchedData.data)
+//    setFetchedData(fetchedData)
+//  }
+
+//  console.log(guestname)
+//  console.log(guestmobile)
+//  console.log(teamSelection)
+//  console.log(rsvp)
+
+ // submit form function
+//  const handleFormSubmission = async (e) => {
+//   e.preventDefault()
+
+//   fetchData()
+//   console.log(
+//     `form submitted with values: ${guestname}, ${guestmobile}, ${teamSelection}, ${rsvp}  `
+//   )
+// }
  
   return (
     <div className={classes.root}>
@@ -50,7 +90,7 @@ export default function GuestListEdit() {
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
-
+        {/* <form onSubmit={ e=> {handleFormSubmission(e)} }> */}
         <Box m={10}>
         <TextField
               variant="outlined"
@@ -61,6 +101,7 @@ export default function GuestListEdit() {
               label="Guest Name"
               name="guestname"
               autoFocus
+              // onChange={(e) => setGuestName(e.target.value)}
             />
 
             <TextField
@@ -72,6 +113,7 @@ export default function GuestListEdit() {
               label="Guest Mobile"
               name="guestmobile"
               autoFocus
+              // onChange={(e) => setGuestMobile(e.target.value)}
             />
 
             <FormControl 
@@ -86,6 +128,8 @@ export default function GuestListEdit() {
                     // value={age}
                     // onChange={handleChange}
                     // label="Groom"
+                        // label="Groom"
+                  // onChange={(e) => setTeamSelection(e.target.value)}
                   >
                     <MenuItem value="">
                     </MenuItem>
@@ -107,6 +151,7 @@ export default function GuestListEdit() {
                     // value={age}
                     // onChange={handleChange}
                     // label="Groom"
+                    // onChange={(e) => setRSVP(e.target.value)}
                   >
                     <MenuItem value="">
                     </MenuItem>
@@ -132,6 +177,7 @@ export default function GuestListEdit() {
             </Button>
 
          </Box>
+         {/* </form> */}
                 
         </Container>
       </main>
