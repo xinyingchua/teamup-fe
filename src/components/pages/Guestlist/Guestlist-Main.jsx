@@ -13,6 +13,8 @@ import Paper from "@material-ui/core/Paper";
 import clsx from "clsx";
 import TeamGroom from "./TeamGroom-Guest";
 import { Link } from "react-router-dom"
+import axios from 'axios'
+import { useEffect } from "react";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -88,21 +90,50 @@ export default function NewBudget() {
   const classes = useStyles();
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
-  // const [checked, setChecked] = React.useState([0]);
-  // const handleToggle = (value) => () => {
-  //   const currentIndex = checked.indexOf(value);
-  //   const newChecked = [...checked];
-  //   if (currentIndex === -1) {
-  //     newChecked.push(value);
-  //   } else {
-  //     newChecked.splice(currentIndex, 1);
-  //   }
-  //   setChecked(newChecked);
-  // };
+
+// use useState hooks
+const [guestData, getGuestData] = React.useState('')
+const [testData, getTestData] = React.useState('')
+const url = 'https://teamup-be.herokuapp.com/api/v1/users/guests'
+
+const getAllGuestData = () => {
+  axios.get(`${url}`, {
+    headers: { 'auth_token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Inh5Y2h1YTAwN0BnbWFpbC5jb20iLCJpYXQiOjE2MjY5NjY4MTIsImV4cCI6MTYyNzA1MzIxMn0.c_XB6jdJXCnK1BEONuuZgSYK4XDzARVFfmLFs37OFn8'
+  }})
+  .then((response) => {
+    const allData = response.data
+    console.log(allData[0].pax)
+    console.log(guestData.data)
+    getGuestData(allData[0].pax)
+    getTestData(allData[0].pax)
+  })
+  .catch((error => 
+    console.log("error")))
+}
+
+
+
+useEffect(() => {
+  getAllGuestData();
+}
+)
+
+// useEffect(() => {
+//   getAllGuestData();
+// }, []
+// )
+//  console.log(guestname)
+//  console.log(guestmobile)
+//  console.log(teamSelection)
+//  console.log(rsvp)
+
+
+
 
   return (
     <div className={classes.root}>
       <NavBar />
+     
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
@@ -123,7 +154,7 @@ export default function NewBudget() {
                     m={3}
                     style={{ margin: "0,auto" }}
                   >
-                    <h1>52</h1>
+                    <h1>{testData}</h1>
                   </Box>
                   <h6 style={{ marginTop: "20px", textAlign: "center" }}>
                     Attending

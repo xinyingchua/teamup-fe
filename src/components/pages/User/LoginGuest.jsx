@@ -67,7 +67,7 @@ class LoginGuest extends React.Component {
               path: '/'
             })
   
-            this.props.history.push('/')
+            this.props.history.push('/guest/rsvp')
           })
         .catch(err => {
             console.log(err)
