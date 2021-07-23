@@ -6,6 +6,10 @@ import {
   Switch,
   Route,
 } from "react-router-dom";
+import { withCookies, Cookies } from 'react-cookie'
+import { instanceOf } from 'prop-types'
+
+
 
 
 // PAGES // 
@@ -27,6 +31,8 @@ import EventCreate from './components/pages/Event-Schedule/Event-Create';
 import EventEdit from './components/pages/Event-Schedule/Event-Edit';
 import BudgetMain from './components/pages/Budget/Budget-Main';
 import EventMain from './components/pages/Event-Schedule/Event-Main';
+import UpdateUser from './components/pages/User/UpdateUser';
+
 
 
 
@@ -59,6 +65,9 @@ const theme = createTheme({
 
 
 class App extends React.Component {
+  static propTypes = {
+    cookies: instanceOf(Cookies).isRequired
+  }
   render() {
 
     return(
@@ -75,6 +84,8 @@ class App extends React.Component {
               <Route path="/register" component={RegisterPage} />
               <Route path="/guest/login" component={LoginGuest} /> 
               <Route path="/guest/RSVP" component={GuestRSVP} />
+              <Route path="/updates" component={UpdateUser} />
+
 
               {/* Dashboard Route*/}
               <Route path="/dashboard" component={Dashboard} />
@@ -114,4 +125,4 @@ class App extends React.Component {
 
 
 
-export default App;
+export default withCookies(App)
