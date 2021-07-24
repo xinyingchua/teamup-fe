@@ -9,7 +9,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
 import NavBar from '../Navbar/NavBar';
-import axios from 'axios'
 
 
 const useStyles = makeStyles((theme) => ({
