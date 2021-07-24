@@ -1,3 +1,4 @@
+
 import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
@@ -12,7 +13,7 @@ import axios from 'axios'
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
-    background: '#F9F8FF'
+    background: '#F9F8FF',
   },
   appBarSpacer: theme.mixins.toolbar,
   content: {
@@ -24,17 +25,16 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: theme.spacing(4),
     paddingBottom: theme.spacing(4),
   },
-submit: {
-  margin: theme.spacing(3, 0, 2),
-  background: '#AAD1CA',
-  width: '200px',
-  color: 'black'
-},
-
-}));
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+    background: '#AAD1CA',
+    width: '200px',
+    color: 'black',
+  },
+}))
 
 export default function UpdateUser() {
-  const classes = useStyles();
+  const classes = useStyles()
 
   // use useState hooks
   const [task, setTask] = React.useState('')
@@ -43,14 +43,17 @@ export default function UpdateUser() {
   let [fetchedData, setFetchedData] = React.useState('')
 
   function toggle() {
-    setStatus(!status);
+    setStatus(!status)
   }
 
   // use api callback
   let fetchData = async () => {
     const response = await axios({
       method: 'post',
-      headers: { 'auth_token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imx1Y2FzZXMuc2VldEBnbWFpbC5jb20iLCJpYXQiOjE2MjY5NjcxMzYsImV4cCI6MTYyNzA1MzUzNn0.DMY1A_336WZsnC4iu6x7rLLx-1XQwQ2aMQcP59oSlpc' },
+      headers: {
+        auth_token:
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imx1Y2FzZXMuc2VldEBnbWFpbC5jb20iLCJpYXQiOjE2MjY5NjcxMzYsImV4cCI6MTYyNzA1MzUzNn0.DMY1A_336WZsnC4iu6x7rLLx-1XQwQ2aMQcP59oSlpc',
+      },
       url: 'https://teamup-be.herokuapp.com/api/v1/users/todos/create',
       data: {
         task: '',
@@ -62,7 +65,6 @@ export default function UpdateUser() {
     setFetchedData(response)
   }
 
-
   // console log for debugging
   console.log(task)
   console.log(status)
@@ -71,13 +73,8 @@ export default function UpdateUser() {
   // submit form function
   const handleFormSummit = async (e) => {
     e.preventDefault()
-    // if (password !== confirmPass) {
-    //   console.log('password does not match')
-    //   return
-    // }
     fetchData()
   }
-
 
   return (
     <CookiesProvider>
@@ -198,6 +195,7 @@ export default function UpdateUser() {
         </Container>
       </main>
     </div>
+
     </CookiesProvider>
-  );
+  )
 }
