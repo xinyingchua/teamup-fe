@@ -103,7 +103,7 @@ export default function EventMain() {
   return (
     
     <div className={classes.root}>
-      <NavBar />
+     <NavBar title = "Event Scheduling" />
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>

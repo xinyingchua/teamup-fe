@@ -117,7 +117,7 @@ export default function ToDoEdit(props) {
   return (
     <CookiesProvider>
     <div className={classes.root}>
-      <NavBar />
+   <NavBar title = "Edit To Do's" />
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>

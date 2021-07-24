@@ -9,7 +9,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
 import NavBar from '../Navbar/NavBar';
-// import axios from 'axios'
+import axios from 'axios'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -53,7 +53,7 @@ export default function GuestListEdit() {
 
  // use api callback
 //  let fetchData = async () => {
-//    fetchedData = await axios({
+//    response = await axios({
 //      method: 'patch',
 //      url: 'https://teamup-be.herokuapp.com/api/v1/users/guests/60f22aacb4a2d22327bba9f5/update',
 //      data: {
@@ -86,7 +86,7 @@ export default function GuestListEdit() {
  
   return (
     <div className={classes.root}>
-      <NavBar />
+    <NavBar title = "Guestlists - Edit Guests" />
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>

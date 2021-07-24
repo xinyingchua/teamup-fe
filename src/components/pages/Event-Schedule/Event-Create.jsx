@@ -56,7 +56,7 @@ export default function EventCreate() {
 
   return (
     <div className={classes.root}>
-      <NavBar />
+    <NavBar title = "Event Scheduling - Create" />
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>

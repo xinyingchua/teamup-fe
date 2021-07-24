@@ -68,7 +68,7 @@ export default function NewBudget() {
 
   return (
     <div className={classes.root}>
-      <NavBar />
+    <NavBar title = "Budget Planning - Edit" />
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>

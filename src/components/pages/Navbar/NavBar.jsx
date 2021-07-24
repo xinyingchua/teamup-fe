@@ -12,7 +12,6 @@ import IconButton from '@material-ui/core/IconButton';
 import { mainListItems, secondaryListItems } from './listItems';
 
 
-
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -122,7 +121,7 @@ listdecoration: {
 
 }));
 
-export default function NavBar() {
+export default function NavBar(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const handleDrawerOpen = () => {
@@ -149,7 +148,7 @@ export default function NavBar() {
           </IconButton>
           <AppBar/>
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-            Dashboard
+            {props.title}
           </Typography>
 
           <Typography variant="body2" className={classes.username}>

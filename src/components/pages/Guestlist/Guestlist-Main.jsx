@@ -92,47 +92,58 @@ export default function NewBudget() {
 
 
 // use useState hooks
-const [guestData, getGuestData] = React.useState('')
-const [testData, getTestData] = React.useState('')
-const url = 'https://teamup-be.herokuapp.com/api/v1/users/guests'
+const [guestAttendingData, getGuestAttendingData] = React.useState('')
+const [guestNotAttendingData, getGuestNotAttendingData] = React.useState('')
+const [guestPendingData, getGuestPendingData] = React.useState('')
+const [guestTotalData, getGuestTotalData] = React.useState('')
+const [guestlistData, getGuestlistData] = React.useState('')
+const url = 'https://teamup-be.herokuapp.com/api/v1/users/dashboard'
+
 
 const getAllGuestData = () => {
   axios.get(`${url}`, {
-    headers: { 'auth_token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Inh5Y2h1YTAwN0BnbWFpbC5jb20iLCJpYXQiOjE2MjY5NjY4MTIsImV4cCI6MTYyNzA1MzIxMn0.c_XB6jdJXCnK1BEONuuZgSYK4XDzARVFfmLFs37OFn8'
+    headers: { 'auth_token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Inh5Y2h1YTAwN0BnbWFpbC5jb20iLCJpYXQiOjE2MjcwNTM2ODksImV4cCI6MTYyNzE0MDA4OX0.BUgNsoD6jhrbL-mY4f2x1DnGLJPepSbQPuDsvEjmMKk'
   }})
   .then((response) => {
     const allData = response.data
-    console.log(allData[0].pax)
-    console.log(guestData.data)
-    getGuestData(allData[0].pax)
-    getTestData(allData[0].pax)
+    getGuestAttendingData(allData.guests.attending)
+    getGuestNotAttendingData(allData.guests.unavailable)
+    getGuestPendingData(allData.guests.pending)
+    getGuestTotalData(allData.guests.total)
   })
   .catch((error => 
     console.log("error")))
 }
 
 
-
 useEffect(() => {
   getAllGuestData();
-}
+  // getGuestlistData();
+}, []
 )
 
+// getGuestlistData(() => {
+//     const guestlistResponse = axios.get(`https://teamup-be.herokuapp.com/api/v1/users/guests/`, {
+//       headers: { 'auth_token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Inh5Y2h1YTAwN0BnbWFpbC5jb20iLCJpYXQiOjE2MjcwNTM2ODksImV4cCI6MTYyNzE0MDA4OX0.BUgNsoD6jhrbL-mY4f2x1DnGLJPepSbQPuDsvEjmMKk'
+//     }})
+//     .then((response) => {
+//       const guestlistResponseData = response.data
+//       console.log(guestlistResponseData)
+//     })
+//     .catch((error => 
+//       console.log("error"))) 
+  
+// })
+
 // useEffect(() => {
-//   getAllGuestData();
+//   getGuestlistData();
 // }, []
 // )
-//  console.log(guestname)
-//  console.log(guestmobile)
-//  console.log(teamSelection)
-//  console.log(rsvp)
-
-
 
 
   return (
     <div className={classes.root}>
-      <NavBar />
+      <NavBar title = "Guestlists" />
      
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
@@ -154,7 +165,7 @@ useEffect(() => {
                     m={3}
                     style={{ margin: "0,auto" }}
                   >
-                    <h1>{testData}</h1>
+                    <h1>{guestAttendingData}</h1>
                   </Box>
                   <h6 style={{ marginTop: "20px", textAlign: "center" }}>
                     Attending
@@ -167,7 +178,7 @@ useEffect(() => {
                     m={3}
                     style={{ margin: "0, auto" }}
                   >
-                    <h1>61</h1>
+                    <h1>{guestNotAttendingData}</h1>
                   </Box>
                   <h6 style={{ marginTop: "20px", textAlign: "center" }}>
                     Not Attending
@@ -180,7 +191,7 @@ useEffect(() => {
                     m={3}
                     style={{ margin: "0, auto" }}
                   >
-                    <h1>35</h1>
+                    <h1>{guestPendingData}</h1>
                   </Box>
                   <h6 style={{ marginTop: "20px", textAlign: "center" }}>
                     Pending
@@ -194,7 +205,7 @@ useEffect(() => {
                     style={{ margin: "0, auto"}}
                 
                   >
-                    <h1>22</h1>
+                    <h1>{guestTotalData}</h1>
                   </Box>
                   <h6 style={{ marginTop: "20px", textAlign: "center" }}>
                     Total
@@ -211,10 +222,11 @@ useEffect(() => {
                 <FormControl variant="outlined" style={{ width: "200px" }}>
                   <InputLabel id="category">Filter By</InputLabel>
                   <Select
+                    Value = "All"
                     labelId="demo-simple-select-outlined-label"
                     id="demo-simple-select-outlined"
                   >
-                    <MenuItem value=""></MenuItem>
+                    <MenuItem value=" "></MenuItem>
                     <MenuItem value="pending">Pending</MenuItem>
                     <MenuItem value="attending">Attending</MenuItem>
                     <MenuItem value="notattending">Not Attending</MenuItem>
