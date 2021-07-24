@@ -3,17 +3,17 @@
   "name": "TeamUp Mobile",
   "icons": [
     {
-      "src": "logo2.png",
+      "src": "https://res.cloudinary.com/dhexix4cn/image/upload/v1626617737/teamup/logo2_ihf6xr.png",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/png"
     },
     {
-      "src": "logo2.png",
+      "src": "https://res.cloudinary.com/dhexix4cn/image/upload/v1626617737/teamup/logo2_ihf6xr.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "logo2.png",
+      "src": "https://res.cloudinary.com/dhexix4cn/image/upload/v1626617737/teamup/logo2_ihf6xr.png",
       "type": "image/png",
       "sizes": "512x512"
     }
