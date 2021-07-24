@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Box from "@material-ui/core/Box";
@@ -44,45 +44,23 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ToDoEdit(props) {
+export default function TodoForm(props) {
   const classes = useStyles();
   const url =
     "https://teamup-be.herokuapp.com/api/v1/users/todos/sadfagadhafhf";
 
   // use useState hooks
-  const [todoData, setTodoData] = React.useState("");
   const [task, setTask] = React.useState("");
   const [role, setRole] = React.useState("");
-  const [status, setStatus] = React.useState("");
+  const [status, setStatus] = React.useState(false);
   const [cookies] = useCookies(["auth_token"]);
+  let history = useHistory();
 
-  let [fetchedData, setFetchedData] = React.useState("");
-
-  // // use api callback
-  // let fetchData = async () => {
-  //   const response = await axios({
-  //     method: 'patch',
-  //     headers: { 'auth_token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imx1Y2FzZXMuc2VldEBnbWFpbC5jb20iLCJpYXQiOjE2MjcwNTM5MTEsImV4cCI6MTYyNzE0MDMxMX0.rBDxuNROrURb-0DwTNPX7CJYdfzJ9ECHF5YAqSLiOmo' },
-  //     url: 'https://teamup-be.herokuapp.com/api/v1/users/todos/sadfagadhafhf',
-  //     data: {
-  //       task: task,
-  //       status: status,
-  //       role: role,
-  //     },
-  //   })
-  //   console.log(response.data)
-  //   setFetchedData(response)
-  // }
-
-  const getAllToDoData = () => {
-    axios
-      .get(
-        "https://teamup-be.herokuapp.com/api/v1/users/todos/" +
-          props.location.state._id,
-        {
-          headers: cookies,
-        }
-      )
+ 
+  // GET - OK //
+  const getOneToDoData = () => {
+    axios.get("https://teamup-be.herokuapp.com/api/v1/users/todos/" + props.location.state._id,
+        {headers: cookies,})
       .then((response) => {
         const allData = response.data;
         const todo = allData[0];
@@ -96,31 +74,85 @@ export default function ToDoEdit(props) {
 
   useEffect(() => {
     if (props.location.state && props.location.state._id) {
-      getAllToDoData();
+      getOneToDoData();
     }
-
-    console.log(props.location.state);
   }, []);
 
-  // // submit form function
-  // const handleFormSummit = async (e) => {
-  //   e.preventDefault()
 
-  //   fetchData()
-  //   //after submit form redirect user
-  //   history.push('/to-do');
-  //   console.log(
-  //     `form submitted with values: ${task}, ${status}, ${role} `
-  //   )
-  // }
+// Create TO DO //
+let fetchData = async () => {
+ await axios.post('https://teamup-be.herokuapp.com/api/v1/users/todos/create', {
+    task: task,
+    status: '' + status,
+    role: role,
+  }, {
+    headers: cookies,
+  })
+}
+
+
+// Patch TO DO //
+  const updateToDoData = () => {
+    axios.patch(
+      "https://teamup-be.herokuapp.com/api/v1/users/todos/"+ props.location.state._id+ "/update", 
+      {
+        task: task,
+          status: '' + status,
+          role: role,
+      },
+      {
+        headers: cookies ,
+      }
+    )
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => console.log("error"));
+  };
+
+
+  // Delete TO DO //
+  const deleteToDoData = () => {
+    axios.delete(
+      "https://teamup-be.herokuapp.com/api/v1/users/todos/"+ props.location.state._id+ "/delete",
+      {
+        headers: cookies ,
+      }
+    )
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => console.log("error"));
+  };
+  
+
+
+
+  // submit form function
+  const handleFormSummit = async (e) => {
+    e.preventDefault()
+
+    if(props.location.state && props.location.state._id){
+      updateToDoData()
+      deleteToDoData()
+    } else {
+      fetchData()
+    }
+   
+    history.push("/to-do")
+
+  }
 
   return (
     <div className={classes.root}>
-      <NavBar title="Edit To Do's" />
+      <NavBar title={ props.location.state && props.location.state._id ?("Edit To Do's"):("Create To Do's")} />
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
           <Box m={10}>
+          <form onSubmit={(e) => {
+              handleFormSummit(e)
+            }}>
             <TextField
               variant="outlined"
               margin="normal"
@@ -154,11 +186,6 @@ export default function ToDoEdit(props) {
               style={{ margin: "0" }}
               control={
                 <Checkbox
-                  // value= {
-                  //     todoData.status
-                  //               ?(<Checkbox checked={true}></Checkbox>)
-                  //               :(<Checkbox disabled={true}></Checkbox>)
-                  //   }
                   name="checkedG"
                   color="secondary"
                   checked={status}
@@ -197,6 +224,7 @@ export default function ToDoEdit(props) {
                 Create to do
               </Button>
             )}
+            </form>
 
           </Box>
         </Container>

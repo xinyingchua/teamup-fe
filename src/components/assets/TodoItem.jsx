@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { makeStyles } from '@material-ui/core/styles';
-
 import Button from "@material-ui/core/Button";
-
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
@@ -10,7 +8,8 @@ import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import EditIcon from "@material-ui/icons/Edit";
 import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";
-
+import { useCookies } from "react-cookie";
+import axios from "axios";
 import { Link } from "react-router-dom"
 
 const useStyles = makeStyles((theme) => ({
@@ -53,9 +52,39 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-export default function ToDoGrid(props) {
+export default function ToDoGrid(props, hooks) {
 
     const classes = useStyles();
+    const [cookies] = useCookies(["auth_token"]);
+
+
+    // Delete TO DO //
+  const deleteToDoData = () => {
+    axios.delete(
+      "https://teamup-be.herokuapp.com/api/v1/users/todos/"+ props.location.state._id+ "/delete",
+      {
+        headers: cookies,
+      }
+    )
+      .then((response) => {
+        console.log(props.state[0])
+        console.log(response);
+      })
+      .catch((error) => console.log("error"));
+  };
+  
+
+
+
+  // submit form function
+  const handleFormSummit = async (e) => {
+    e.preventDefault()
+
+      deleteToDoData()
+    
+
+  }
+
     return (
 <Grid item key={props} xs={12} sm={4} lg={3}>
                 <Card className={classes.rootcard} >
@@ -87,15 +116,20 @@ export default function ToDoGrid(props) {
                       </Grid>
                       <Grid item xs={6} >
                         <CardActions>
+                        <Link to={{ state: { _id: props._id} }}style={{ textDecoration: "none", color:'#fff' }}>
                           <Button
                             variant="contained"
                             justify="right" 
                             color="secondary"
                             className={classes.button}
+                            onClick={(e) => {
+                                handleFormSummit(e)
+                              }}
                             startIcon={<CheckCircleOutlineIcon />}
                           >
                             Done
                           </Button>
+                          </Link>
                         </CardActions>
                       </Grid>
                     </Grid>
