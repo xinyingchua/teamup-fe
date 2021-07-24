@@ -99,7 +99,7 @@ class App extends React.Component {
 
 
               {/* To Do List Routes*/}
-              <Route path="/to-do/create" component={ToDoCreate} />
+              <Route path="/to-do/create" component={ToDoEdit} />
               <Route path="/to-do/edit" component={ToDoEdit} />
               <Route path="/to-do" component={ToDoMain} />
 
