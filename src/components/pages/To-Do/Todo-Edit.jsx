@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
@@ -11,6 +11,8 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
 import NavBar from '../Navbar/NavBar';
+import { CookiesProvider } from 'react-cookie';
+import axios from 'axios'
 
 
 
@@ -44,13 +46,76 @@ delete: {
 
 }));
 
-export default function ToDoEdit() {
+export default function ToDoEdit(props) {
   const classes = useStyles();
-  // const [state, setState] = React.useState({
-  //   checkedG: true,
-  // });
+  const url = 'https://teamup-be.herokuapp.com/api/v1/users/todos/sadfagadhafhf'
 
+  // use useState hooks
+  const [todoData, setTodoData] = React.useState('')
+  const [task, setTask] = React.useState('')
+  const [role, setRole] = React.useState('')
+  const [status, setStatus] = React.useState('')
+
+  let [fetchedData, setFetchedData] = React.useState('')
+
+  // // use api callback
+  // let fetchData = async () => {
+  //   const response = await axios({
+  //     method: 'patch',
+  //     headers: { 'auth_token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imx1Y2FzZXMuc2VldEBnbWFpbC5jb20iLCJpYXQiOjE2MjcwNTM5MTEsImV4cCI6MTYyNzE0MDMxMX0.rBDxuNROrURb-0DwTNPX7CJYdfzJ9ECHF5YAqSLiOmo' },
+  //     url: 'https://teamup-be.herokuapp.com/api/v1/users/todos/sadfagadhafhf',
+  //     data: {
+  //       task: task,
+  //       status: status,
+  //       role: role,
+  //     },
+  //   })
+  //   console.log(response.data)
+  //   setFetchedData(response)
+  // }
+
+  const getAllToDoData = () => {
+    axios.get('https://teamup-be.herokuapp.com/api/v1/users/todos/60fbc8eb3f5aee001531f08e', {
+      headers: { 'auth_token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imx1Y2FzZXMuc2VldEBnbWFpbC5jb20iLCJpYXQiOjE2MjcxMDYwMTgsImV4cCI6MTYyNzE5MjQxOH0.5Cc7IWlbge8_Pppp_UMx7NrARy1oJhIrHXW_h2G7BdA'
+    },
+  })
+    .then((response) => {
+      const allData = response.data
+      const todo = allData[0]
+      console.log(allData[0].status)
+      setTask(todo.task)
+      setRole(todo.role)
+      setStatus(todo.status)
+    })
+    .catch((error => 
+      console.log("error")))
+  }
+
+  useEffect(() => {
+    if(props.location.state && props.location.state._id) {
+      getAllToDoData();
+    }
+ 
+    console.log(props.location.state)
+  }, [])
+
+
+
+  // // submit form function
+  // const handleFormSummit = async (e) => {
+  //   e.preventDefault()
+    
+  //   fetchData()
+  //   //after submit form redirect user
+  //   history.push('/to-do');
+  //   console.log(
+  //     `form submitted with values: ${task}, ${status}, ${role} `
+  //   )
+  // }
+
+ 
   return (
+    <CookiesProvider>
     <div className={classes.root}>
       <NavBar />
       <main className={classes.content}>
@@ -65,7 +130,10 @@ export default function ToDoEdit() {
               fullWidth
               id="taskInput"
               label="Task"
+              value={task}
               name="task"
+              // onChange={todoData.task}
+              onChange={(e) => setTask(e.target.value)}
               autoFocus
             />
 
@@ -75,16 +143,12 @@ export default function ToDoEdit() {
             style={{width:"70%"}}
             margin="normal"
             textAlign= "left">
-                <InputLabel id="demo-simple-select-outlined-label">Who is responsible for this task?</InputLabel>
+                <InputLabel >Who is responsible for this task?</InputLabel>
                   <Select
-                    labelId="demo-simple-select-outlined-label"
-                    id="demo-simple-select-outlined"
-                    // value={age}
-                    // onChange={handleChange}
-                    // label="Groom"
+                    value={role}
+                    onChange={(e) => setRole(e.target.value)}
                   >
-                    <MenuItem value="">
-                    </MenuItem>
+                   
                     <MenuItem value="bride">Bride</MenuItem>
                     <MenuItem value="groom">Groom</MenuItem>
                     <MenuItem value="bridegroom">Groom & Bride</MenuItem>
@@ -96,10 +160,15 @@ export default function ToDoEdit() {
             style={{margin:"0"}}
               control={
                 <Checkbox
-                  // checked={state.checkedB}
-                  // onChange={handleChange}
+                  // value= {
+                  //     todoData.status
+                  //               ?(<Checkbox checked={true}></Checkbox>) 
+                  //               :(<Checkbox disabled={true}></Checkbox>)
+                  //   }
                   name="checkedG"
                   color="secondary"
+                  checked={status}
+                  onChange={(e) => setStatus(e.target.checked)}
                 />
               }
               label="Completed"
@@ -126,5 +195,6 @@ export default function ToDoEdit() {
         </Container>
       </main>
     </div>
+    </CookiesProvider>
   );
 }

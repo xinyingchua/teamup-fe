@@ -60,6 +60,7 @@ class App extends React.Component {
           <Router>
             <div className='App'>
               <Switch>
+         
                 {/* Users Routes*/}
                 <Route path='/login' component={SignInSide} />
                 <Route
@@ -85,9 +86,9 @@ class App extends React.Component {
                 <Route path='/budget' component={BudgetMain} />
 
                 {/* To Do List Routes*/}
-                <Route path='/to-do/create' component={ToDoCreate} />
-                <Route path='/to-do/edit' component={ToDoEdit} />
-                <Route path='/to-do' component={ToDoMain} />
+                <Route path="/to-do/create" component={ToDoEdit} />
+                <Route path="/to-do/edit" component={ToDoEdit} />
+                <Route path="/to-do" component={ToDoMain} />
 
                 {/* Guest List Routes*/}
                 <Route path='/guest-lists/create' component={GuestlistCreate} />
