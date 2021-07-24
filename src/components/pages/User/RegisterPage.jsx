@@ -1,28 +1,30 @@
-import React from 'react';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
-import { FacebookLoginButton, GoogleLoginButton } from "react-social-login-buttons";
+import React from 'react'
+import Button from '@material-ui/core/Button'
+import CssBaseline from '@material-ui/core/CssBaseline'
+import TextField from '@material-ui/core/TextField'
+import Paper from '@material-ui/core/Paper'
+import Grid from '@material-ui/core/Grid'
+import Typography from '@material-ui/core/Typography'
+import { makeStyles } from '@material-ui/core/styles'
+import FormControl from '@material-ui/core/FormControl'
+import InputLabel from '@material-ui/core/InputLabel'
+import MenuItem from '@material-ui/core/MenuItem'
+import Select from '@material-ui/core/Select'
 import axios from 'axios'
-import { Link } from "react-router-dom"
+import { Link } from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
   root: {
     height: '100vh',
   },
   image: {
-    backgroundImage: 'url(https://res.cloudinary.com/dhexix4cn/image/upload/v1626617738/teamup/photo-girl2_jogvay.webp)',
+    backgroundImage:
+      'url(https://res.cloudinary.com/dhexix4cn/image/upload/v1626617738/teamup/photo-girl2_jogvay.webp)',
     backgroundRepeat: 'no-repeat',
     backgroundColor:
-      theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
+      theme.palette.type === 'light'
+        ? theme.palette.grey[50]
+        : theme.palette.grey[900],
     backgroundSize: 'cover',
     backgroundPosition: 'center',
   },
@@ -44,8 +46,7 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: 75,
     margin: theme.spacing(-3, 12, 10, 0),
   },
-  
-}));
+}))
 
 export default function RegisterPage() {
   const classes = useStyles()
@@ -93,10 +94,8 @@ export default function RegisterPage() {
     //   return
     // }
     fetchData()
-    
-    console.log(
-      `form submitted with values: ${name}, ${email}, `
-    )
+
+    console.log(`form submitted with values: ${name}, ${email}, `)
   }
   return (
     <Grid container component='main' className={classes.root}>
@@ -129,7 +128,7 @@ export default function RegisterPage() {
               variant='outlined'
               margin='normal'
               required
-              style={{width:"55%"}}
+              style={{ width: '55%' }}
               id='name'
               label='Your Full Name'
               name='name'
@@ -137,22 +136,24 @@ export default function RegisterPage() {
               autoFocus
               onChange={(e) => setName(e.target.value)}
             />
-            <FormControl 
-            variant="outlined" 
-            style={{width:"43%", marginLeft: "6px"}}
-            margin="normal"
-            textAlign= "left">
-                <InputLabel id="demo-simple-select-outlined-label">Your Role</InputLabel>
-                  <Select
-                    labelId="demo-simple-select-outlined-label"
-                    id="teamSelection"
-                    // onChange={(e) => setTeamSelection(e.target.value)}
-                  >
-                    <MenuItem value="">
-                    </MenuItem>
-                    <MenuItem value="bride">Bride</MenuItem>
-                    <MenuItem value="groom">Groom</MenuItem>
-                  </Select>
+            <FormControl
+              variant='outlined'
+              style={{ width: '43%', marginLeft: '6px' }}
+              margin='normal'
+              textAlign='left'
+            >
+              <InputLabel id='demo-simple-select-outlined-label'>
+                Your Role
+              </InputLabel>
+              <Select
+                labelId='demo-simple-select-outlined-label'
+                id='teamSelection'
+                // onChange={(e) => setTeamSelection(e.target.value)}
+              >
+                <MenuItem value=''></MenuItem>
+                <MenuItem value='bride'>Bride</MenuItem>
+                <MenuItem value='groom'>Groom</MenuItem>
+              </Select>
             </FormControl>
 
             <TextField
@@ -181,7 +182,6 @@ export default function RegisterPage() {
               // onChange={(e) => setEmail(e.target.value)}
             />
 
-
             <TextField
               variant='outlined'
               margin='normal'
@@ -193,8 +193,8 @@ export default function RegisterPage() {
               autoComplete='email'
               autoFocus
               // onChange={(e) => setEmail(e.target.value)}
-            />       
- 
+            />
+
             <Button
               type='submit'
               fullWidth
@@ -205,7 +205,7 @@ export default function RegisterPage() {
               Register
             </Button>
             <Grid item xs={12} md={12} lg={12}>
-              <GoogleLoginButton iconSize={20} onClick={() => alert('Hello')}>
+              {/* <GoogleLoginButton iconSize={20} onClick={() => alert('Hello')}>
                 <Typography style={{ textAlign: 'center' }}>
                   Register with Google
                 </Typography>
@@ -214,12 +214,13 @@ export default function RegisterPage() {
                 <Typography style={{ textAlign: 'center' }}>
                   Register with Facebook
                 </Typography>
-              </FacebookLoginButton>
+              </FacebookLoginButton> */}
             </Grid>
             <Grid container>
               <Grid item>
                 Do you have an account?
-                <Link to = "/login"
+                <Link
+                  to='/login'
                   style={{ textDecorationLine: 'underline', color: '#7865E5' }}
                   variant='body2'
                 >
