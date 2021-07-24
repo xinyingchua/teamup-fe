@@ -7,7 +7,9 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-
+import axios from 'axios'
+import { useHistory } from "react-router-dom";
+import { useCookies } from 'react-cookie';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -46,6 +48,42 @@ const useStyles = makeStyles((theme) => ({
 export default function SignInSide() {
   const classes = useStyles();
 
+   // use useState hooks
+ const [emailLogin, setEmailLogin] = React.useState('')
+ const [passwordLogin, setPasswordLogin] = React.useState('')
+  // Npm Cookies  => [ value, setter ] ==> if we want to use setter, we need to set value 
+ const [cookie, setCookie] = useCookies(['auth_token']) 
+ let [response, setFetchedData] = React.useState('')
+ let history = useHistory();
+
+
+ // use api callback
+ let fetchData = async () => {
+  response = await axios({
+    method: 'post',
+    url: 'https://teamup-be.herokuapp.com/api/v1/login',
+    data: {
+     email: emailLogin,
+     password: passwordLogin,
+    }, 
+  })
+  console.log(response.data)
+  setCookie('auth_token', response.data.token)
+  setFetchedData(response)
+
+}
+
+
+ // submit form function
+ const handleFormSubmission = async (e) => {
+  e.preventDefault()
+  fetchData()
+  history.push("/dashboard");
+  console.log(
+    `form submitted with values: ${emailLogin}, ${passwordLogin} `
+  )
+}
+
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
@@ -62,7 +100,8 @@ export default function SignInSide() {
              variant="h6" align='left' >
             Welcome back! Please login to your account.
           </Typography>
-          <form className={classes.form} noValidate>
+          <form className={classes.form} noValidate
+          onSubmit={ e=> {handleFormSubmission(e)}}>
             <TextField
               variant="outlined"
               margin="normal"
@@ -73,6 +112,7 @@ export default function SignInSide() {
               name="email"
               autoComplete="email"
               autoFocus
+              onChange={(e) => setEmailLogin(e.target.value)}
             />
             <TextField
               variant="outlined"
@@ -84,11 +124,8 @@ export default function SignInSide() {
               type="password"
               id="password"
               autoComplete="current-password"
+              onChange={(e) => setPasswordLogin(e.target.value)}
             />
-            {/* <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            /> */}
             <Button
               type="submit"
               fullWidth
