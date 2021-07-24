@@ -10,8 +10,8 @@ import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
 import NavBar from '../Navbar/NavBar';
 import axios from 'axios'
-import { CookiesProvider } from 'react-cookie';
 import { useHistory } from "react-router-dom";
+import { useCookies } from 'react-cookie';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -45,23 +45,28 @@ export default function GuestListCreate() {
  const [guestname, setGuestName] = React.useState('')
  const [guestmobile, setGuestMobile] = React.useState('')
  const [teamSelection, setTeamSelection] = React.useState('')
+ const [addPax, setAddPax] = React.useState('')
  const [rsvp, setRSVP] = React.useState('')
+ const [cookies] = useCookies(['auth_token'])
  let [response, setFetchedData] = React.useState('')
  let history = useHistory();
+
+ console.log(cookies)
 
  // use api callback
  let fetchData = async () => {
    response = await axios({
      method: 'post',
-     headers: { 'auth_token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Inh5Y2h1YTAwN0BnbWFpbC5jb20iLCJpYXQiOjE2MjY5NjY4MTIsImV4cCI6MTYyNzA1MzIxMn0.c_XB6jdJXCnK1BEONuuZgSYK4XDzARVFfmLFs37OFn8' },
+     headers: cookies,
      url: 'https://teamup-be.herokuapp.com/api/v1/users/guests/create',
+    //  withCredentials: true, 
      data: {
       guest_first_name: guestname,
       guest_last_name: guestname,
       guest_contact: guestmobile,
       role: teamSelection,
       status: rsvp,
-      pax: 3,
+      pax: addPax,
      }, 
    })
    console.log(response.data)
@@ -72,9 +77,6 @@ export default function GuestListCreate() {
 //  console.log(guestmobile)
 //  console.log(teamSelection)
 //  console.log(rsvp)
-
-
-
 
 
  // submit form function
@@ -89,9 +91,9 @@ export default function GuestListCreate() {
 
 
   return (
-    <CookiesProvider>
+
     <div className={classes.root}>
-      <NavBar />
+      <NavBar title = "Guestlists - Add Guests" />
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
@@ -113,7 +115,7 @@ export default function GuestListCreate() {
               variant="outlined"
               margin="normal"
               required
-              fullWidth
+              style={{width:"55%"}}
               id="guestmobile"
               label="Guest Mobile"
               name="guestmobile"
@@ -121,22 +123,42 @@ export default function GuestListCreate() {
               onChange={(e) => setGuestMobile(e.target.value)}
             />
 
+          <FormControl
+          margin="normal"
+          style={{width:"44%", marginLeft: "6px"}}
+      
+          variant="outlined">
+            <InputLabel id="demo-simple-select-outlined-label">Any family members to bring along?</InputLabel>
+              <Select
+                labelId="demo-simple-select-outlined-label"
+                id="demo-simple-select-outlined"
+                onChange={(e) => setAddPax(e.target.value)}
+                defaultValue = "0"
+              >
+                <MenuItem value="0">0</MenuItem>
+                <MenuItem value="1">1</MenuItem>
+                <MenuItem value="2">2</MenuItem>
+                <MenuItem value="3">3</MenuItem>
+                <MenuItem value="4">4</MenuItem>
+                <MenuItem value="5">5</MenuItem>
+                <MenuItem value="6">6</MenuItem>
+                
+              </Select>
+         </FormControl>
+
             <FormControl 
             variant="outlined" 
             style={{width:"65%"}}
             margin="normal"
-            textAlign= "left">
+            textalign= "left">
                 <InputLabel id="demo-simple-select-outlined-label">Which team is guest on?</InputLabel>
                   <Select
+                    defaultValue = " "
                     labelId="demo-simple-select-outlined-label"
                     id="teamSelection"
-                    // value={age}
-                    // onChange={handleChange}
-                    // label="Groom"
                     onChange={(e) => setTeamSelection(e.target.value)}
                   >
-                    <MenuItem value="">
-                    </MenuItem>
+                    <MenuItem value=" "></MenuItem>
                     <MenuItem value="bride">Bride</MenuItem>
                     <MenuItem value="groom">Groom</MenuItem>
                   </Select>
@@ -147,20 +169,17 @@ export default function GuestListCreate() {
             variant="outlined" 
             style={{width:"30%", marginLeft:"10px"}}
             margin="normal"
-            textAlign= "center">
+            textalign= "center">
                 <InputLabel id="demo-simple-select-outlined-label">RSVP</InputLabel>
                   <Select
+                    defaultValue = " "
                     labelId="demo-simple-select-outlined-label"
                     id="rsvp"
-                    // value={age}
-                    // onChange={handleChange}
-                    // label="Groom"
                     onChange={(e) => setRSVP(e.target.value)}
                   >
-                    <MenuItem value="">
-                    </MenuItem>
+                    <MenuItem value=" "></MenuItem>
                     <MenuItem value="attending">Attending</MenuItem>
-                   <MenuItem value="not-attending">Not Attending</MenuItem>
+                   <MenuItem value="unavailable">Not Attending</MenuItem>
                   </Select>
             </FormControl>
 
@@ -178,6 +197,5 @@ export default function GuestListCreate() {
         </Container>
       </main>
     </div>
-    </CookiesProvider>
   );
 }

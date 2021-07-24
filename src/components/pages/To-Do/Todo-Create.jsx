@@ -16,8 +16,6 @@ import axios from 'axios'
 import { useHistory } from "react-router-dom";
 
 
-
-
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
@@ -96,7 +94,7 @@ export default function ToDoCreate() {
   return (
     <CookiesProvider>
     <div className={classes.root}>
-      <NavBar />
+    <NavBar title = "Create New To Do's" />
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>

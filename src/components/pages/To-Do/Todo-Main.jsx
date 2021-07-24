@@ -142,7 +142,7 @@ export default function TodoMain() {
 
   return (
     <div className={classes.root}>
-      <NavBar />
+  <NavBar title = "To Do's Before 'I Do'" />
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>

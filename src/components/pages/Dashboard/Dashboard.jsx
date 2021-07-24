@@ -49,7 +49,7 @@ export default function Dashboard() {
 
   return (
     <div className={classes.root}>
-      <NavBar />
+    <NavBar title = "Dashboard" />
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>

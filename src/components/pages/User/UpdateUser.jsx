@@ -3,18 +3,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import TextField from '@material-ui/core/TextField';
-import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
 import NavBar from '../Navbar/NavBar';
 import { CookiesProvider } from 'react-cookie';
-
-
-
+import axios from 'axios'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -79,10 +71,10 @@ export default function UpdateUser() {
   // submit form function
   const handleFormSummit = async (e) => {
     e.preventDefault()
-    if (password !== confirmPass) {
-      console.log('password does not match')
-      return
-    }
+    // if (password !== confirmPass) {
+    //   console.log('password does not match')
+    //   return
+    // }
     fetchData()
   }
 
@@ -90,7 +82,7 @@ export default function UpdateUser() {
   return (
     <CookiesProvider>
     <div className={classes.root}>
-      <NavBar />
+    <NavBar title = "Update Personal Information" />
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
