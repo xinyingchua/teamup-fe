@@ -80,7 +80,6 @@ export default function TodoMain() {
       console.log("error")))
   }
 
-  
 
   useEffect(() => {
     getAllTodoData();
