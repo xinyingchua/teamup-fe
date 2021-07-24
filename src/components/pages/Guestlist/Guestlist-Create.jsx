@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
@@ -38,7 +38,7 @@ submit: {
 
 }));
 
-export default function GuestListCreate() {
+export default function GuestListForm(props) {
   const classes = useStyles();
 
  // use useState hooks
@@ -53,13 +53,12 @@ export default function GuestListCreate() {
 
  console.log(cookies)
 
- // use api callback
- let fetchData = async () => {
+ // POST - CREATE NEW GUEST // 
+ let postNewGuest = async () => {
    response = await axios({
      method: 'post',
      headers: cookies,
      url: 'https://teamup-be.herokuapp.com/api/v1/users/guests/create',
-    //  withCredentials: true, 
      data: {
       guest_first_name: guestname,
       guest_last_name: guestname,
@@ -73,16 +72,68 @@ export default function GuestListCreate() {
    setFetchedData(response)
  }
 
-//  console.log(guestname)
-//  console.log(guestmobile)
-//  console.log(teamSelection)
-//  console.log(rsvp)
+  // GET - GET SINGLE GUEST // 
+  let getGuestListData = async () => {
+    axios.get("https://teamup-be.herokuapp.com/api/v1/users/guests/" + props.location.state._id,
+        {headers: cookies,})
+      .then((response) => {
+        const allData = response.data;
+        const guestListData = allData[0];
+        console.log(allData[0].status);
+        setGuestMobile(guestListData.guest_contact);
+        setTeamSelection(guestListData.role);
+        setGuestName(guestListData.guest_first_name);
+        setAddPax(guestListData.pax)
+        setRSVP(guestListData.status)
+
+      })
+      .catch((error) => console.log("error"));
+  };
+
+    // PATCH - EDIT SINGLE GUEST // 
+    let UpdateGuestListData = async () => {
+      axios.patch("https://teamup-be.herokuapp.com/api/v1/users/guests/" + props.location.state._id + '/update',
+      {
+        guest_first_name: guestname,
+        guest_last_name: guestname,
+        guest_contact: guestmobile,
+        role: teamSelection,
+        status: rsvp,
+        pax: addPax,
+      },    
+      {
+        headers: cookies,
+      })
+        .then((response) => {
+          const allData = response.data;
+          const guestListData = allData[0];
+          console.log(allData[0].status);
+          setGuestMobile(guestListData.guest_contact);
+          setTeamSelection(guestListData.role);
+          setGuestName(guestListData.guest_first_name);
+          setAddPax(guestListData.pax)
+          setRSVP(guestListData.status)
+  
+        })
+        .catch((error) => console.log("error"));
+    };
 
 
- // submit form function
+  useEffect(() => {
+    if (props.location.state && props.location.state._id) {
+      getGuestListData();
+    }
+  }, []);
+
+ // FORM SUBMISSION 
  const handleFormSubmission = async (e) => {
   e.preventDefault()
-  fetchData()
+
+  if(props.location.state && props.location.state._id) {
+    UpdateGuestListData()
+  } else{
+    postNewGuest() 
+  }
   history.push("/guest-lists");
   console.log(
     `form submitted with values: ${guestname}, ${guestmobile}, ${teamSelection}, ${rsvp}  `

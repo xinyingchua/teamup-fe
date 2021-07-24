@@ -4,18 +4,20 @@ import Container from "@material-ui/core/Container";
 import Button from "@material-ui/core/Button";
 import NavBar from "../Navbar/NavBar";
 import Grid from "@material-ui/core/Grid";
-import Box from "@material-ui/core/Box";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
-import Paper from "@material-ui/core/Paper";
-import clsx from "clsx";
-import TeamGroom from "./TeamGroom-Guest";
 import { Link } from "react-router-dom"
 import axios from 'axios'
 import { useEffect } from "react";
-
+import { useCookies } from 'react-cookie';
+import List from "@material-ui/core/List";
+import GuestListItem from '../../assets/GuestListItem';
+import GuestListSummary from '../../assets/GuestListSummary';
+import TeamGroomBrideGuestList from './TeamGroomBride-List'
+import Paper from "@material-ui/core/Paper";
+import clsx from "clsx";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -42,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
     color: "black",
   },
   fixedHeight: {
-    height: 500,
+    height: 1000,
   },
 
   box: {
@@ -86,65 +88,70 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function NewBudget() {
+export default function GuestList() {
   const classes = useStyles();
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
 
 // use useState hooks
-const [guestAttendingData, getGuestAttendingData] = React.useState('')
-const [guestNotAttendingData, getGuestNotAttendingData] = React.useState('')
-const [guestPendingData, getGuestPendingData] = React.useState('')
-const [guestTotalData, getGuestTotalData] = React.useState('')
-const [guestlistData, getGuestlistData] = React.useState('')
-const url = 'https://teamup-be.herokuapp.com/api/v1/users/dashboard'
+const [cookies] = useCookies(['auth_token'])
+const [guestSummaryData, getGuestSummaryData] = React.useState('')
+const [guestListData, getGuestListData] = React.useState([])
 
 
-const getAllGuestData = () => {
-  axios.get(`${url}`, {
-    headers: { 'auth_token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Inh5Y2h1YTAwN0BnbWFpbC5jb20iLCJpYXQiOjE2MjcwNTM2ODksImV4cCI6MTYyNzE0MDA4OX0.BUgNsoD6jhrbL-mY4f2x1DnGLJPepSbQPuDsvEjmMKk'
-  }})
-  .then((response) => {
-    const allData = response.data
-    getGuestAttendingData(allData.guests.attending)
-    getGuestNotAttendingData(allData.guests.unavailable)
-    getGuestPendingData(allData.guests.pending)
-    getGuestTotalData(allData.guests.total)
-  })
-  .catch((error => 
-    console.log("error")))
-}
+// const getAllGuestData = () => {
+//   axios.get(`${url}`, {
+//     headers: cookies
+//   })
+//   .then((response) => {
+//     const allData = response.data
+//     getGuestSummaryData(allData.guests)
+//   })
+//   .catch((error => 
+//     console.log("error")))
+// }
 
 
 useEffect(() => {
   getAllGuestData();
-  // getGuestlistData();
 }, []
 )
 
-// getGuestlistData(() => {
-//     const guestlistResponse = axios.get(`https://teamup-be.herokuapp.com/api/v1/users/guests/`, {
-//       headers: { 'auth_token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Inh5Y2h1YTAwN0BnbWFpbC5jb20iLCJpYXQiOjE2MjcwNTM2ODksImV4cCI6MTYyNzE0MDA4OX0.BUgNsoD6jhrbL-mY4f2x1DnGLJPepSbQPuDsvEjmMKk'
-//     }})
-//     .then((response) => {
-//       const guestlistResponseData = response.data
-//       console.log(guestlistResponseData)
-//     })
-//     .catch((error => 
-//       console.log("error"))) 
-  
-// })
+// TRY //
+let urls = [
+  'https://teamup-be.herokuapp.com/api/v1/users/dashboard',
+  'https://teamup-be.herokuapp.com/api/v1/users/guests/'
+]
 
-// useEffect(() => {
-//   getGuestlistData();
-// }, []
-// )
+console.log(cookies)
+
+const getAllGuestData = () => {
+let requests = urls.map((url) => {
+  return axios.get(url, {
+    headers: cookies
+    
+  });
+});   
+
+Promise.all(requests).then((responses) => {
+  const DashboardData = responses[0].data
+  const GuestListData = responses[1].data
+  getGuestSummaryData(DashboardData.guests)
+  getGuestListData(GuestListData)
+  console.log(responses);
+  console.log(GuestListData);
+   
+}).catch((err) => {
+   console.log(err)
+});
+}
 
 
   return (
     <div className={classes.root}>
       <NavBar title = "Guestlists" />
      
+     {/* Guest Pax Summary  */}
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
@@ -158,60 +165,8 @@ useEffect(() => {
               lg={12}
               className={classes.outerbox}
             >
-              <div className={classes.outerbox}>
-                <Grid item xs={12} sm={3} md={3} lg={3}>
-                  <Box
-                    className={classes.purplebox}
-                    m={3}
-                    style={{ margin: "0,auto" }}
-                  >
-                    <h1>{guestAttendingData}</h1>
-                  </Box>
-                  <h6 style={{ marginTop: "20px", textAlign: "center" }}>
-                    Attending
-                  </h6>
-                </Grid>
+              <GuestListSummary attending= {guestSummaryData.attending} unavailable={guestSummaryData.unavailable} pending= {guestSummaryData.pending} total= {guestSummaryData.total}/>
 
-                <Grid item xs={12} sm={3} md={3} lg={3}>
-                  <Box
-                    className={classes.purplebox}
-                    m={3}
-                    style={{ margin: "0, auto" }}
-                  >
-                    <h1>{guestNotAttendingData}</h1>
-                  </Box>
-                  <h6 style={{ marginTop: "20px", textAlign: "center" }}>
-                    Not Attending
-                  </h6>
-                </Grid>
-
-                <Grid item xs={12} sm={3} md={3} lg={3}>
-                  <Box
-                    className={classes.purplebox}
-                    m={3}
-                    style={{ margin: "0, auto" }}
-                  >
-                    <h1>{guestPendingData}</h1>
-                  </Box>
-                  <h6 style={{ marginTop: "20px", textAlign: "center" }}>
-                    Pending
-                  </h6>
-                </Grid>
-
-                <Grid item xs={12} sm={3} md={3} lg={3}>
-                  <Box
-                    className={classes.purplebox}
-                    m={3}
-                    style={{ margin: "0, auto"}}
-                
-                  >
-                    <h1>{guestTotalData}</h1>
-                  </Box>
-                  <h6 style={{ marginTop: "20px", textAlign: "center" }}>
-                    Total
-                  </h6>
-                </Grid>
-              </div>
             </Grid>
           </div>
 
@@ -222,7 +177,7 @@ useEffect(() => {
                 <FormControl variant="outlined" style={{ width: "200px" }}>
                   <InputLabel id="category">Filter By</InputLabel>
                   <Select
-                    Value = "All"
+                    value = " "
                     labelId="demo-simple-select-outlined-label"
                     id="demo-simple-select-outlined"
                   >
@@ -252,32 +207,47 @@ useEffect(() => {
             <Grid container spacing={3}>
               {/* Team Groom */}
               <Grid item xs={12} md={6} lg={6}>
-                <Paper className={fixedHeightPaper}>
-                  <div className={classes.teamtitle}>
-                    <h2 style={{ marginRight: "150px", marginBottom:'20px', fontWeight:'700' }}>Team Groom</h2>
-                    <h2 style={{ fontWeight:'700' }}>32 Pax</h2>
-                  </div>
+              <Paper className={fixedHeightPaper}>
+              <GuestListItem title="Groom"/>
 
-                  {/* Teamgroom -guestlist */}
-                  <TeamGroom/>
-                </Paper>
+              <div style={{ margin:'25px'}}>
+                <List className={classes.ulroot}>
+                <Grid container>
+
+                {guestListData.map((item) => (
+  
+                <TeamGroomBrideGuestList role= {item.role} name={item.guest_first_name} guest_contact={item.guest_contact} status={item.status} pax={item.pax} _id={item._id} />
+                ))}
+
+        
+                </Grid>  
+                </List>
+        
+              </div>
+              </Paper>
               </Grid>
               
 
+
                {/* Team Bride */}
                <Grid item xs={12} md={6} lg={6}>
-                <Paper className={fixedHeightPaper}>
-                  <div className={classes.teamtitle}>
-                    <h2 style={{ marginRight: "150px", marginBottom:'20px', fontWeight:'700' }}>Team Bride</h2>
-                    <h2 style={{ fontWeight:'700' }}>32 Pax</h2>
-                  </div>
+              <Paper className={fixedHeightPaper}>
+              <GuestListItem title="Bride"/>
 
-                  {/* Teamgroom -guestlist */}
-                  <TeamGroom/>
-                </Paper>
+              <div style={{ margin:'25px'}}>
+                <List className={classes.ulroot}>
+                <Grid container>
+
+                {guestListData.map((item) => (
+  
+                <TeamGroomBrideGuestList role= {item.role} name={item.guest_first_name} guest_contact={item.guest_contact} status={item.status} pax={item.pax} _id={item._id}  />
+                ))}
+                </Grid>  
+                </List>
+        
+              </div>
+              </Paper>
               </Grid>
-
-
             </Grid>
             
           </div>
