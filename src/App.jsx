@@ -17,7 +17,6 @@ import GuestRSVP from './components/pages/User/GuestRSVP'
 import BudgetCreate from './components/pages/Budget/NewBudget'
 import BudgetEdit from './components/pages/Budget/Budget-Edit'
 import ToDoMain from './components/pages/To-Do/Todo-Main'
-import ToDoCreate from './components/pages/To-Do/Todo-Create'
 import ToDoEdit from './components/pages/To-Do/Todo-Edit'
 import GuestlistCreate from './components/pages/Guestlist/Guestlist-Create'
 import GuestListEdit from './components/pages/Guestlist/Guestlist-Edit'
@@ -60,7 +59,6 @@ class App extends React.Component {
           <Router>
             <div className='App'>
               <Switch>
-         
                 {/* Users Routes*/}
                 <Route path='/login' component={SignInSide} />
                 <Route
@@ -86,9 +84,9 @@ class App extends React.Component {
                 <Route path='/budget' component={BudgetMain} />
 
                 {/* To Do List Routes*/}
-                <Route path="/to-do/create" component={ToDoEdit} />
-                <Route path="/to-do/edit" component={ToDoEdit} />
-                <Route path="/to-do" component={ToDoMain} />
+                <Route path='/to-do/create' component={ToDoEdit} />
+                <Route path='/to-do/edit' component={ToDoEdit} />
+                <Route path='/to-do' component={ToDoMain} />
 
                 {/* Guest List Routes*/}
                 <Route path='/guest-lists/create' component={GuestlistCreate} />
