@@ -11,7 +11,8 @@ import Todo from './Todo'
 import NavBar from '../Navbar/NavBar'
 import axios from 'axios'
 import { withStyles } from '@material-ui/core/styles'
-import { withCookies, Cookies } from 'react-cookie'
+import { withCookies } from 'react-cookie'
+import { Redirect } from 'react-router-dom'
 
 const styles = (theme) => ({
   root: {
@@ -88,10 +89,12 @@ class Dashboard extends React.Component {
       totalTasks: this.state.apiResponse.todos.total,
       completedTasks: this.state.apiResponse.todos.completed,
     })
-    console.log(this.state.user)
   }
 
   render() {
+    if (!this.state.user) {
+      return <Redirect to='/login' />
+    }
     const { classes } = this.props
 
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
