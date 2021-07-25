@@ -63,12 +63,12 @@ const useStyles = makeStyles((theme) => ({
     color: '#5EAB50',
     paddingBottom: theme.spacing(0),
   },
-  submit: {
-    background: '#7865E5',
-    width: '200px',
-    color: 'white',
-    textDecoration: "none"
-  },
+//   submit: {
+//     background: '#7865E5',
+//     width: '200px',
+//     color: 'white',
+//     textDecoration: "none"
+//   },
 
 }));
 
@@ -77,34 +77,17 @@ export default function BudgetListItem(props) {
 
   const fixedHeightByExpense = clsx(classes.paper, 50);
 
-  const [checked, setChecked] = React.useState([0]);
-
-  const handleToggle = (value) => () => {
-    const currentIndex = checked.indexOf(value);
-    const newChecked = [...checked];
-
-    if (currentIndex === -1) {
-      newChecked.push(value);
-    } else {
-      newChecked.splice(currentIndex, 1);
-    }
-
-    setChecked(newChecked);
-  };
 
   
   return (
-    
-    
             /* Return Expense by line by map */
         
-              <Grid container fullWidth>
+              <Grid container>
                 <Grid item xs={12} md={11} lg={12}>
                 <Paper 
                 className={fixedHeightByExpense}>
                 <ListItem 
                 dense button 
-                // onClick={handleToggle(value)}
                 >
 
                 <ListItemText edge="start">{props.itemName}</ListItemText>

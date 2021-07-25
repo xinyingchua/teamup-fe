@@ -3,17 +3,10 @@ import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
 import NavBar from '../Navbar/NavBar';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import ListItemText from '@material-ui/core/ListItemText';
-import IconButton from '@material-ui/core/IconButton';
-import EditIcon from '@material-ui/icons/Edit';
-import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import BudgetListItem from '../../assets/BudgetListItem';
 import Button from '@material-ui/core/Button';
 import { Link } from "react-router-dom"
@@ -85,48 +78,33 @@ export default function BudgetMain() {
   const classes = useStyles();
 
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-  const fixedHeightByExpense = clsx(classes.paper, 50);
-
-  const [checked, setChecked] = React.useState([0]);
-
-  const handleToggle = (value) => () => {
-    const currentIndex = checked.indexOf(value);
-    const newChecked = [...checked];
-
-    if (currentIndex === -1) {
-      newChecked.push(value);
-    } else {
-      newChecked.splice(currentIndex, 1);
-    }
-
-    setChecked(newChecked);
-  };
+  // const fixedHeightByExpense = clsx(classes.paper, 50);
 
   // use useState hooks
   const [cookies] = useCookies(["auth_token"]);
   const [weddingBudget, setWeddingBudget] = React.useState("");
   const [weddingAvailableBudget, setWeddingAvailableBudge] = React.useState("");
   const [AllBudgetData, setAllBudgetData] = React.useState([]);
-  const [budgetAmount, setBudgetAmount] = React.useState("");
-  const [budgetItemName, setBudgetItemName] = React.useState("");
-  const [budgetStatus, setBudgetStatus] = React.useState("");
 
 
 
-// Get Multiple URL//
-let urls = [
-  'https://teamup-be.herokuapp.com/api/v1/users/dashboard',
-  'https://teamup-be.herokuapp.com/api/v1/users/budget/'
-]
 
-const getAllBudgetData = () => {
-  let requests = urls.map((url) => {
-    return axios.get(url, {
-      headers: cookies
-      
-    });
+  // Get Multiple URL//
+  let urls = [
+    'https://teamup-be.herokuapp.com/api/v1/users/dashboard',
+    'https://teamup-be.herokuapp.com/api/v1/users/budget/'
+  ]
+
+  // Get Multiple Data points//
+  const getAllBudgetData = () => {
+    let requests = urls.map((url) => {
+      return axios.get(url, {
+        headers: cookies
+        
+      });
   });   
 
+  // After retriving data, setState//
   Promise.all(requests).then((responses) => {
     console.log(responses);
     console.log(responses[0].data.budget.currentBudget);
@@ -145,9 +123,7 @@ const getAllBudgetData = () => {
     getAllBudgetData();
   }, []);
 
-
-
-
+  
   return (
     <div className={classes.root}>
     <NavBar title = "Budget Planning" />
@@ -207,15 +183,13 @@ const getAllBudgetData = () => {
               </Grid>
 
             <List className={classes.ulroot}>
-            { AllBudgetData.map((item) => {
+            { AllBudgetData.map((item, pos) => {
             return (
-            <BudgetListItem status={item.status} _id={item._id} itemName={item.item_name} amount={item.amount}/>
+            <BudgetListItem key={pos} status={item.status} _id={item._id} itemName={item.item_name} amount={item.amount}/>
             )
 
             })}
             </List>
-
-          
         </Container>
       </main>
     </div>

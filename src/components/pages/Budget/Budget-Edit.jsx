@@ -143,20 +143,19 @@ let CreateBudget = async () => {
 };
 
 
-// Delete TO DO //
-const deleteBudget = () => {
-  axios.delete(
-    "https://teamup-be.herokuapp.com/api/v1/users/budget/"+ props.location.state._id+ "/delete",
-    {
-      headers: cookies ,
-    }
-  )
-    .then((response) => {
-      console.log(response);
-    })
-    .catch((error) => console.log("error"));
-};
-
+// // Delete TO DO //
+// const deleteBudget = () => {
+//   axios.delete(
+//     "https://teamup-be.herokuapp.com/api/v1/users/budget/"+ props.location.state._id+ "/delete",
+//     {
+//       headers: cookies ,
+//     }
+//   )
+//     .then((response) => {
+//       console.log(response);
+//     })
+//     .catch((error) => console.log("error"));
+// };
 
 
 
@@ -166,7 +165,6 @@ const deleteBudget = () => {
 
   if(props.location.state && props.location.state._id){
     updateBudget()
-    deleteBudget()
   } else {
     CreateBudget()
   }
@@ -248,7 +246,7 @@ const deleteBudget = () => {
 
 
 
-            <form className={classes.root2} noValidate autoComplete="off" >
+            
             <TextField 
             id="status" 
             label="Item Status (notes)" 
@@ -256,8 +254,10 @@ const deleteBudget = () => {
             value={status}
             onChange={(e) => setStatus(e.target.value)}
             rows={9} 
-            multiline fullWidth row='9'/>
-            </form>
+            multiline fullWidth row='9'
+            className={classes.root2}
+            />
+
 
             {props.location.state && props.location.state._id ? (
             <div>
