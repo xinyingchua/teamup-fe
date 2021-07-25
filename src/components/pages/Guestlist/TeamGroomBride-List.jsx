@@ -14,7 +14,7 @@ export default function TeamGroomBrideGuestList(props) {
 
               <Grid item key={props} xs={12} md={11} lg={12}>
                   <ListItem
-                    key={props.name}
+                    // key={props.role}
                     dense
                     style={{ paddingBottom:'30px'}}
                   >

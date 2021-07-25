@@ -112,10 +112,7 @@ const [guestListData, getGuestListData] = React.useState([])
 // }
 
 
-useEffect(() => {
-  getAllGuestData();
-}, []
-)
+
 
 // TRY //
 let urls = [
@@ -140,13 +137,17 @@ Promise.all(requests).then((responses) => {
   getGuestListData(GuestListData)
   console.log(responses);
   console.log(GuestListData);
+  console.log(DashboardData.guests.bride.total);
    
 }).catch((err) => {
    console.log(err)
 });
 }
 
-
+useEffect(() => {
+  getAllGuestData()
+}, []
+)
   return (
     <div className={classes.root}>
       <NavBar title = "Guestlists" />
@@ -165,7 +166,7 @@ Promise.all(requests).then((responses) => {
               lg={12}
               className={classes.outerbox}
             >
-              <GuestListSummary attending= {guestSummaryData.attending} unavailable={guestSummaryData.unavailable} pending= {guestSummaryData.pending} total= {guestSummaryData.total}/>
+              <GuestListSummary attending= {guestSummaryData.totalAttending} unavailable={guestSummaryData.totalUnavailable} pending= {guestSummaryData.totalPending} total= {guestSummaryData.totalGuests}/>
 
             </Grid>
           </div>
@@ -208,7 +209,7 @@ Promise.all(requests).then((responses) => {
               {/* Team Groom */}
               <Grid item xs={12} md={6} lg={6}>
               <Paper className={fixedHeightPaper}>
-              <GuestListItem title="Groom"/>
+              {/* <GuestListItem title="Groom" teampax={guestSummaryData.groom.total}/> */}
 
               <div style={{ margin:'25px'}}>
                 <List className={classes.ulroot}>
@@ -232,7 +233,7 @@ Promise.all(requests).then((responses) => {
                {/* Team Bride */}
                <Grid item xs={12} md={6} lg={6}>
               <Paper className={fixedHeightPaper}>
-              <GuestListItem title="Bride"/>
+              {/* <GuestListItem title="Bride" teampax={guestSummaryData.bride.total}/> */}
 
               <div style={{ margin:'25px'}}>
                 <List className={classes.ulroot}>
