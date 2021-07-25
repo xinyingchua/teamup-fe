@@ -4,14 +4,7 @@ import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import Grid from '@material-ui/core/Grid';
 import NavBar from '../Navbar/NavBar';
-import MomentUtils from '@date-io/moment';
-import {
-  MuiPickersUtilsProvider,
-  KeyboardDatePicker,
-} from '@material-ui/pickers'
-import { CookiesProvider } from 'react-cookie';
 import axios from 'axios'
 import { useHistory } from "react-router-dom";
 import { useCookies } from "react-cookie";
@@ -60,13 +53,12 @@ export default function EventForm(props) {
 
   // use useState hooks
   const [cookies] = useCookies(['auth_token'])
-  const [selectedDate, setSelectedDate] = React.useState(new Date('2021-08-18T21:11:54'));
+  // const [selectedDate, setSelectedDate] = React.useState(new Date('2021-08-18T21:11:54'));
   const [eventName, setEventName] = React.useState('')
   const [eventStart, setEventStart] = React.useState('')
   const [eventEnd, setEventEnd] = React.useState('')
   const [eventLocation, setEventLocation] = React.useState('')
   const [eventDescription, setEventDescription] = React.useState('')
-  let [fetchedData, setFetchedData] = React.useState('')
 
 
 // GET A SINGLE EVENT DATA //
@@ -107,7 +99,6 @@ useEffect(() => {
       },
     })
     console.log(response.data)
-    setFetchedData(response)
   }
 
 // PATCH EVENT//
@@ -146,10 +137,10 @@ const deleteEvent = () => {
 };
 
 
-  // DATE FORM HANDLER
-  const handleDateChange = (date) => {
-    setSelectedDate(date);
-  };
+  // // DATE FORM HANDLER
+  // const handleDateChange = (date) => {
+  //   setSelectedDate(date);
+  // };
  
  // FORM SUBMISSION 
  const handleFormSubmission = async (e) => {

@@ -96,25 +96,11 @@ export default function GuestList() {
 // use useState hooks
 const [cookies] = useCookies(['auth_token'])
 const [guestSummaryData, getGuestSummaryData] = React.useState('')
+const [brideTotalPaxData, GetBrideTotalPaxData] = React.useState('')
 const [guestListData, getGuestListData] = React.useState([])
 
 
-// const getAllGuestData = () => {
-//   axios.get(`${url}`, {
-//     headers: cookies
-//   })
-//   .then((response) => {
-//     const allData = response.data
-//     getGuestSummaryData(allData.guests)
-//   })
-//   .catch((error => 
-//     console.log("error")))
-// }
-
-
-
-
-// TRY //
+// MULTIPLE AXIOS CALLS // 
 let urls = [
   'https://teamup-be.herokuapp.com/api/v1/users/dashboard',
   'https://teamup-be.herokuapp.com/api/v1/users/guests/'
@@ -135,6 +121,7 @@ Promise.all(requests).then((responses) => {
   const GuestListData = responses[1].data
   getGuestSummaryData(DashboardData.guests)
   getGuestListData(GuestListData)
+  GetBrideTotalPaxData(DashboardData.guests.bride.total)
   console.log(responses);
   console.log(GuestListData);
   console.log(DashboardData.guests.bride.total);
@@ -195,7 +182,7 @@ useEffect(() => {
                 <Button
                   type="submit"
                   variant="contained"
-                  color="#60C3F1"
+
                   className={classes.submit}
                   style={{background:'#7865E5', color:'white'}}
                 >
@@ -216,9 +203,9 @@ useEffect(() => {
                 <List className={classes.ulroot}>
                 <Grid container>
 
-                {guestListData.map((item) => (
+                {guestListData.map((item, pos) => (
   
-                <TeamGroomBrideGuestList role= {item.role} name={item.guest_first_name} guest_contact={item.guest_contact} status={item.status} pax={item.pax} _id={item._id} />
+                <TeamGroomBrideGuestList key={pos} role= {item.role} name={item.guest_first_name} guest_contact={item.guest_contact} status={item.status} pax={item.pax} _id={item._id} />
                 ))}
 
         
@@ -235,15 +222,16 @@ useEffect(() => {
                <Grid item xs={12} md={6} lg={6}>
               <Paper className={fixedHeightPaper}>
               <GuestListItem title="Bride" />
+              {console.log(guestSummaryData)}
               {/* <GuestListItem title="Bride" teampax={guestSummaryData.bride.total}/> */}
 
               <div style={{ margin:'25px'}}>
                 <List className={classes.ulroot}>
                 <Grid container>
 
-                {guestListData.map((item) => (
+                {guestListData.map((item, pos) => (
   
-                <TeamGroomBrideGuestList role= {item.role} name={item.guest_first_name} guest_contact={item.guest_contact} status={item.status} pax={item.pax} _id={item._id}  />
+                <TeamGroomBrideGuestList key= {pos} role= {item.role} name={item.guest_first_name} guest_contact={item.guest_contact} status={item.status} pax={item.pax} _id={item._id}  />
                 ))}
                 </Grid>  
                 </List>
