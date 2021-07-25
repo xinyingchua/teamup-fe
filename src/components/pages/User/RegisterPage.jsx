@@ -75,27 +75,13 @@ export default function RegisterPage() {
         d_destination: 'Bedok Mall',
       },
     })
-    console.log(fetchedData.data)
     setFetchedData(fetchedData)
   }
-
-  // React.useEffect(() => {
-  //   fetchData()
-  // }, [])
-  // console log for debugging
-  console.log(name)
-  console.log(email)
 
   // submit form function
   const handleFormSummit = async (e) => {
     e.preventDefault()
-    // if (password !== confirmPass) {
-    //   console.log('password does not match')
-    //   return
-    // }
     fetchData()
-
-    console.log(`form submitted with values: ${name}, ${email}, `)
   }
   return (
     <Grid container component='main' className={classes.root}>
