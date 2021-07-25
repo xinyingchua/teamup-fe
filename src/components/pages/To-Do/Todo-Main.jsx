@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     background: '#F9F8FF',
-  },
+  },  
 
   rootcard: {
     height: 300,

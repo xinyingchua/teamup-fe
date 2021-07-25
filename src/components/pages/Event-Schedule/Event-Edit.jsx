@@ -10,7 +10,11 @@ import MomentUtils from '@date-io/moment';
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
-} from '@material-ui/pickers';
+} from '@material-ui/pickers'
+import { CookiesProvider } from 'react-cookie';
+import axios from 'axios'
+import { useHistory } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 
 
@@ -49,122 +53,182 @@ textField: {
 
 }));
 
-export default function EventCreate() {
+export default function EventForm(props) {
   const classes = useStyles();
-  const [selectedDate, setSelectedDate] = React.useState(new Date('2014-08-18T21:11:54'));
+
+  const history = useHistory();
+
+  // use useState hooks
+  const [cookies] = useCookies(['auth_token'])
+  const [selectedDate, setSelectedDate] = React.useState(new Date('2021-08-18T21:11:54'));
+  const [eventName, setEventName] = React.useState('')
+  const [eventStart, setEventStart] = React.useState('')
+  const [eventEnd, setEventEnd] = React.useState('')
+  const [eventLocation, setEventLocation] = React.useState('')
+  const [eventDescription, setEventDescription] = React.useState('')
+  let [fetchedData, setFetchedData] = React.useState('')
+
+
+  // POST - CREATE NEW EVENT
+  let postNewEvent = async () => {
+    const response = await axios({
+      method: 'post',
+      headers: cookies ,
+      url: 'https://teamup-be.herokuapp.com/api/v1/users/events/create',
+      data: {
+        event_name: eventName ,
+        from: eventStart,
+        to: eventEnd,
+        location: eventLocation ,
+        description: eventDescription,
+
+      },
+    })
+    console.log(response.data)
+    setFetchedData(response)
+  }
+
+
   const handleDateChange = (date) => {
     setSelectedDate(date);
   };
-  // const [state, setState] = React.useState({
-  //   checkedG: true,
-  // });
+ 
+ // FORM SUBMISSION 
+ const handleFormSubmission = async (e) => {
+  e.preventDefault()
+
+  // if(props.location.state && props.location.state._id) {
+  //   UpdateGuestListData()
+  //   DeleteGuestListData()
+  // } else{
+    postNewEvent() 
+  // }
+  history.push("/events");
+  console.log(
+    `form submitted with values: ${eventName}, ${eventStart}, ${eventEnd}, ${eventLocation} ${eventDescription}  `
+  )
+}
 
   return (
     <div className={classes.root}>
-     <NavBar title = "Event Scheduling - Edit" />
+     <NavBar title = {props.location.state && props.location.state._id ? ('Event Scheduling - Edit') : ('Event Scheduling - Create')} />
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
 
         <Box m={10}>
-        <TextField
+          <form onSubmit={(e) => {handleFormSubmission(e)}}>
+
+              {/* Event Name */}
+               <TextField
              style={{marginBottom:"20px"}}
               variant="outlined"
               margin="normal"
               required
               fullWidth
-              id="eventdescription"
-              label="Event Description"
-              name="eventdescription"
+              onChange={(e) => setEventName(e.target.value)}
+              id="eventname"
+              label="Event Name"
+              name="eventname"
               autoFocus
-            />
+              />
 
-          <MuiPickersUtilsProvider utils={MomentUtils}>
-            <Grid container justifyContent="space-around">
-              <KeyboardDatePicker
-                  disableToolbar
-                  style={{width:"33%"}}
-                  variant="inline"
-                  format="MM/dd/yyyy"
+            {/* Event Description */}
+              <TextField
+              style={{marginBottom:"20px"}}
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                onChange={(e) => setEventDescription(e.target.value)}
+                id="eventdescription"
+                label="Event Description"
+                name="eventdescription"
+                autoFocus
+              />
+
+
+              {/* Event Start */}
+
+                <TextField
+                  id="datetime-local"
+                  style={{width:"50%"}}
                   margin="normal"
-                  id="eventdate"
-                  label="Event Date"
-                  value={selectedDate}
-                  onChange={handleDateChange}
-                  KeyboardButtonProps={{
-                    'aria-label': 'change date',
-                }}
-              />
-              
-              <form noValidate>
-              <TextField
-                id="eventStartTime"
-                label="Event Start Time"
-                margin="normal"
-                type="time"
-                defaultValue="07:30"
-                onChange={handleDateChange}
-                className={classes.textField}
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                inputProps={{
-                  step: 300, // 5 min
-                }}
-              />
-            </form>
+                  label="Event Start"
+                  type="datetime-local"
+                  defaultValue="2021-05-24T10:30"
+                  onChange={(e) => setEventStart(e.target.value)}
+                  // className={classes.textField}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+          
+                 {/* Event End */}
+                <TextField
+                  id="datetime-local"
+                  style={{width:"47%"}}
+                  margin="normal"
+                  label="Event Start"
+                  type="datetime-local"
+                  defaultValue="2021-05-24T10:30"
+                  onChange={(e) => setEventEnd(e.target.value)}
+                  // className={classes.textField}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
 
-            <form noValidate>
-              <TextField
-                id="eventEndTime"
-                label="Event End Time"
-                margin="normal"
-                type="time"
-                defaultValue="07:30"
-                onChange={handleDateChange}
-                className={classes.textField}
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                inputProps={{
-                  step: 300, // 5 min
-                }}
-              />
-            </form>
-              
-              </Grid>
-              </MuiPickersUtilsProvider>
+                  {/* Event Location */}
+  
+                <TextField
+                  style={{marginTop:"40px"}}
+                  variant="outlined"
+                  margin="normal"
+                  fullWidth
+                  id="eventlocation"
+                  label="Event Location"
+                  name="eventlocation"
+                  onChange={(e) => setEventLocation(e.target.value)}
+                  autoFocus
+                />
+
+                {props.location.state && props.location.state._id ? (
+
+                <div>
+
+                  <Button
+                      type="submit"
+                      variant="contained"
+                      className={classes.submit}
+                    >
+                      Edit
+                    </Button>
+
+                    <Button
+                      type="submit"
+                      variant="contained"
+                      className={classes.delete}
+                    >
+                      Delete
+                    </Button> 
+                </div>
+
+                  ) : (
+
+                    <Button
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    className={classes.submit}
+                  >
+                    Add Event
+                  </Button>
+                  )}
 
 
-
-            <TextField
-               style={{marginTop:"40px"}}
-              variant="outlined"
-              margin="normal"
-              fullWidth
-              id="eventlocation"
-              label="Event Location"
-              name="eventlocation"
-              autoFocus
-            />
-
-          <Button
-              type="submit"
-              variant="contained"
-              className={classes.submit}
-            >
-              Edit
-            </Button>
-
-            <Button
-              type="submit"
-              variant="contained"
-              className={classes.delete}
-            >
-              Delete
-            </Button> 
-
-         </Box>
+                  </form>
+              </Box>
                 
         </Container>
       </main>
