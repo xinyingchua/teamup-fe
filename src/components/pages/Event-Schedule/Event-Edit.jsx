@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
@@ -69,6 +69,28 @@ export default function EventForm(props) {
   let [fetchedData, setFetchedData] = React.useState('')
 
 
+// GET A SINGLE EVENT DATA //
+const getOnEventData = () => {
+  axios.get("https://teamup-be.herokuapp.com/api/v1/users/events/" + props.location.state._id,
+      {headers: cookies,})
+    .then((response) => {
+      console.log(response);
+      const allData = response.data[0];
+      setEventLocation(allData.location.name)
+      setEventName(allData.event_name)
+      setEventStart(allData.from)
+      setEventEnd(allData.to)
+      setEventDescription(allData.description)
+    })
+    .catch((error) => console.log("error"));
+};
+
+useEffect(() => {
+  if (props.location.state && props.location.state._id) {
+    getOnEventData();
+  }
+}, []);
+
   // POST - CREATE NEW EVENT
   let postNewEvent = async () => {
     const response = await axios({
@@ -88,7 +110,28 @@ export default function EventForm(props) {
     setFetchedData(response)
   }
 
+// PATCH EVENT//
+  const updateEvent = () => {
+    axios.patch(
+      "https://teamup-be.herokuapp.com/api/v1/users/events/"+ props.location.state._id+ "/update", 
+      {
+        event_name: eventName ,
+        from: eventStart,
+        to: eventEnd,
+        location: eventLocation ,
+        description: eventDescription,
+      },
+      {
+        headers: cookies ,
+      }
+    )
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => console.log("error"));
+  };
 
+  // DATE FORM HANDLER
   const handleDateChange = (date) => {
     setSelectedDate(date);
   };
@@ -97,12 +140,12 @@ export default function EventForm(props) {
  const handleFormSubmission = async (e) => {
   e.preventDefault()
 
-  // if(props.location.state && props.location.state._id) {
-  //   UpdateGuestListData()
-  //   DeleteGuestListData()
-  // } else{
+  if(props.location.state && props.location.state._id) {
+    updateEvent()
+
+  } else{
     postNewEvent() 
-  // }
+  }
   history.push("/events");
   console.log(
     `form submitted with values: ${eventName}, ${eventStart}, ${eventEnd}, ${eventLocation} ${eventDescription}  `
@@ -126,6 +169,7 @@ export default function EventForm(props) {
               margin="normal"
               required
               fullWidth
+              value={eventName}
               onChange={(e) => setEventName(e.target.value)}
               id="eventname"
               label="Event Name"
@@ -135,11 +179,12 @@ export default function EventForm(props) {
 
             {/* Event Description */}
               <TextField
-              style={{marginBottom:"20px"}}
+                style={{marginBottom:"20px"}}
                 variant="outlined"
                 margin="normal"
                 required
                 fullWidth
+                value={eventDescription}
                 onChange={(e) => setEventDescription(e.target.value)}
                 id="eventdescription"
                 label="Event Description"
@@ -156,7 +201,8 @@ export default function EventForm(props) {
                   margin="normal"
                   label="Event Start"
                   type="datetime-local"
-                  defaultValue="2021-05-24T10:30"
+                  // defaultValue="2021-05-24T10:30"
+                  defaultValue={eventStart}
                   onChange={(e) => setEventStart(e.target.value)}
                   // className={classes.textField}
                   InputLabelProps={{
@@ -189,6 +235,7 @@ export default function EventForm(props) {
                   id="eventlocation"
                   label="Event Location"
                   name="eventlocation"
+                  value={eventLocation}
                   onChange={(e) => setEventLocation(e.target.value)}
                   autoFocus
                 />
@@ -212,6 +259,7 @@ export default function EventForm(props) {
                     >
                       Delete
                     </Button> 
+                    
                 </div>
 
                   ) : (

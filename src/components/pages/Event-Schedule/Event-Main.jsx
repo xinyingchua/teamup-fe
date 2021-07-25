@@ -158,7 +158,7 @@ console.log(eventData)
               {console.log(item.from)}
             /* Return Event by line by map */
             return(
-            <EventByLine from={item.from} description={item.description} location={item.location.name} />
+            <EventByLine from={item.from} description={item.description} location={item.location.name} _id={item._id} />
             )
             })}
             </List>

@@ -144,7 +144,7 @@ export default function EventByLine(props) {
                   </Grid>
 
                   <ListItemSecondaryAction>
-                  <Link to= {{pathname: "/events/edit" ,state: { _id: props._id }}}
+                  <Link to= {{ pathname: '/events/edit', state: { _id: props._id }}}
                   style={{ textDecoration: "none", color:'#fff' }}>
                       <IconButton edge="end" aria-label="edit">
                       <EditIcon
