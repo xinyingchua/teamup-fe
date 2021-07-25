@@ -98,11 +98,11 @@ export default function GuestListForm(props) {
 
     // PATCH - EDIT SINGLE GUEST // 
     let UpdateGuestListData = async () => {
-      axios.patch("https://teamup-be.herokuapp.com/api/v1/users/guests/" + props.location.state._id + '/update',
+      axios.patch("https://teamup-be.herokuapp.com/api/v1/users/guests/" + props.location.state._id + "/update",
       {
         guest_first_name: guestname,
         guest_last_name: guestname,
-        guest_contact: guestmobile,
+        guest_contact: guestmobile + "",
         role: teamSelection,
         status: rsvp,
         pax: addPax,
@@ -119,6 +119,20 @@ export default function GuestListForm(props) {
     };
 
 
+      // DELETE - DELETE SINGLE GUEST // 
+      let DeleteGuestListData = async () => {
+        axios.delete("https://teamup-be.herokuapp.com/api/v1/users/guests/" + props.location.state._id + "/delete",
+        {
+          headers: cookies,
+        })
+          .then((response) => {
+          console.log(response);
+        
+          })
+          .catch((error) => console.log("error"));
+      };
+  
+
   useEffect(() => {
     if (props.location.state && props.location.state._id) {
       getGuestListData();
@@ -131,6 +145,7 @@ export default function GuestListForm(props) {
 
   if(props.location.state && props.location.state._id) {
     UpdateGuestListData()
+    DeleteGuestListData()
   } else{
     postNewGuest() 
   }
@@ -144,7 +159,7 @@ export default function GuestListForm(props) {
   return (
 
     <div className={classes.root}>
-      <NavBar title = "Guestlists - Add Guests" />
+      <NavBar title = {props.location.state && props.location.state._id ? ("Guestlists - Edit Guests") : ("Guestlists - Add Guests")} />
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
