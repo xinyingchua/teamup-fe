@@ -3,7 +3,7 @@
   "name": "TeamUp Mobile",
   "icons": [
     {
-      "src": "https://res.cloudinary.com/dhexix4cn/image/upload/v1626617737/teamup/logo2_ihf6xr.png",
+      "src": "logo2.png",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/png"
     },
