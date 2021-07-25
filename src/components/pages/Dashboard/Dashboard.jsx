@@ -11,6 +11,7 @@ import Todo from './Todo'
 import NavBar from '../Navbar/NavBar'
 import axios from 'axios'
 import { withStyles } from '@material-ui/core/styles'
+import { withCookies, Cookies } from 'react-cookie'
 
 const styles = (theme) => ({
   root: {
@@ -44,8 +45,11 @@ const styles = (theme) => ({
 class Dashboard extends React.Component {
   constructor(props) {
     super(props)
+
+    const { cookies } = props
+
     this.state = {
-      test: 'test',
+      user: cookies.get('auth_token'),
       apiResponse: null,
       daysLeft: '',
       budget: '',
@@ -63,14 +67,12 @@ class Dashboard extends React.Component {
         method: 'get',
         url: 'https://teamup-be.herokuapp.com/api/v1/users/dashboard',
         headers: {
-          auth_token:
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imhvd0BlbWFpbC5jb20iLCJpYXQiOjE2MjcxNjY3MDcsImV4cCI6MTYyNzI1MzEwN30.fNTKdxb4Gj-XKjCCcHdNsQhb1uhj0QzDFPnvxQK5bQQ',
+          auth_token: this.state.user,
         },
       })
       this.setState({
         apiResponse: response.data,
       })
-      console.log(this.state.apiResponse)
     } catch (err) {
       // Handle Error Here
       console.error(err)
@@ -79,8 +81,14 @@ class Dashboard extends React.Component {
       daysLeft: this.state.apiResponse.calendar.daysLeft,
       budget: this.state.apiResponse.budget.initialBudget.toFixed(2),
       currentBudget: this.state.apiResponse.budget.currentBudget.toFixed(2),
-      attending: this.state.apiResponse.guests.totalGuests,
+      attending: this.state.apiResponse.guests.totalAttending,
+      notAttending: this.state.apiResponse.guests.totalUnavailable,
+      pending: this.state.apiResponse.guests.totalPending,
+      total: this.state.apiResponse.guests.totalGuests,
+      totalTasks: this.state.apiResponse.todos.total,
+      completedTasks: this.state.apiResponse.todos.completed,
     })
+    console.log(this.state.user)
   }
 
   render() {
@@ -115,14 +123,22 @@ class Dashboard extends React.Component {
               {/* Guestlists */}
               <Grid item xs={12} md={6} lg={6}>
                 <Paper className={fixedHeightPaper}>
-                  <Guestlists attending={this.state.attending} />
+                  <Guestlists
+                    attending={this.state.attending}
+                    notAttending={this.state.notAttending}
+                    pending={this.state.pending}
+                    total={this.state.total}
+                  />
                 </Paper>
               </Grid>
 
               {/* To Dos  */}
               <Grid item xs={12} md={6} lg={6}>
                 <Paper className={fixedHeightPaper}>
-                  <Todo />
+                  <Todo
+                    totalTasks={this.state.totalTasks}
+                    completed={this.state.completedTasks}
+                  />
                 </Paper>
               </Grid>
 
@@ -158,4 +174,4 @@ class Dashboard extends React.Component {
   }
 }
 
-export default withStyles(styles)(Dashboard)
+export default withCookies(withStyles(styles)(Dashboard))
