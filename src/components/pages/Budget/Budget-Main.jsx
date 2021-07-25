@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from "react";
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
@@ -14,8 +14,13 @@ import ListItemText from '@material-ui/core/ListItemText';
 import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/Edit';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import BudgetListItem from '../../assets/BudgetListItem';
 import Button from '@material-ui/core/Button';
 import { Link } from "react-router-dom"
+import { useCookies } from "react-cookie";
+import axios from "axios";
+
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -97,6 +102,51 @@ export default function BudgetMain() {
     setChecked(newChecked);
   };
 
+  // use useState hooks
+  const [cookies] = useCookies(["auth_token"]);
+  const [weddingBudget, setWeddingBudget] = React.useState("");
+  const [weddingAvailableBudget, setWeddingAvailableBudge] = React.useState("");
+  const [AllBudgetData, setAllBudgetData] = React.useState([]);
+  const [budgetAmount, setBudgetAmount] = React.useState("");
+  const [budgetItemName, setBudgetItemName] = React.useState("");
+  const [budgetStatus, setBudgetStatus] = React.useState("");
+
+
+
+// Get Multiple URL//
+let urls = [
+  'https://teamup-be.herokuapp.com/api/v1/users/dashboard',
+  'https://teamup-be.herokuapp.com/api/v1/users/budget/'
+]
+
+const getAllBudgetData = () => {
+  let requests = urls.map((url) => {
+    return axios.get(url, {
+      headers: cookies
+      
+    });
+  });   
+
+  Promise.all(requests).then((responses) => {
+    console.log(responses);
+    console.log(responses[0].data.budget.currentBudget);
+    console.log(responses[0].data.budget.initialBudget);
+    console.log(responses[1].data);
+    setAllBudgetData(responses[1].data)
+    setWeddingAvailableBudge(responses[0].data.budget.currentBudget)
+    setWeddingBudget(responses[0].data.budget.initialBudget)
+     
+  }).catch((err) => {
+     console.log(err)
+  });
+  }
+
+  useEffect(() => {
+    getAllBudgetData();
+  }, []);
+
+
+
 
   return (
     <div className={classes.root}>
@@ -112,7 +162,7 @@ export default function BudgetMain() {
               <Typography 
               color="secondary"
               className={classes.costTypography}>
-                $7,200
+                {weddingBudget}
             </Typography>
               </Box>
               Estimated Wedding Cost
@@ -124,7 +174,7 @@ export default function BudgetMain() {
               <Typography 
               style={{color:"#5EAB50"}}
               className={classes.costTypography}>
-                $2,673
+                {weddingAvailableBudget}
             </Typography>
               </Box>
               Available in your budget
@@ -157,46 +207,11 @@ export default function BudgetMain() {
               </Grid>
 
             <List className={classes.ulroot}>
-            {[0, 1, 2, 3].map((value) => {
-            const labelId = `checkbox-list-label-${value}`;
-    
-            /* Return Expense by line by map */
+            { AllBudgetData.map((item) => {
             return (
-              <Grid container fullWidth>
-                <Grid item xs={12} md={11} lg={12}>
-                <Paper 
-                className={fixedHeightByExpense}>
-                <ListItem key={value} role={undefined} 
-                dense button 
-                onClick={handleToggle(value)}>
+            <BudgetListItem status={item.status} _id={item._id} itemName={item.item_name} amount={item.amount}/>
+            )
 
-                <ListItemText edge="start" id={labelId} primary={`Line item ${value + 1}`} />
-
-                <Grid
-                edge="end"
-                style={{display:"flex", flexDirection:"row"}}
-                >
-                <CheckCircleIcon className={classes.tickIcon}/>
-                <ListItemText 
-                 style={{marginLeft:"10px"}}
-                id={labelId} 
-                primary={`$ ${value + 1}`}
-      
-                 />
-                </Grid>
-
-                <ListItemSecondaryAction>
-                <Link to="/budget/edit" style={{ textDecoration: "none", color:'#fff' }}>
-                    <IconButton edge="end" aria-label="edit">
-                    <EditIcon />
-                    </IconButton>
-                </Link>
-                </ListItemSecondaryAction>
-                </ListItem>
-                </Paper>
-                </Grid>
-                </Grid>
-            );
             })}
             </List>
 
