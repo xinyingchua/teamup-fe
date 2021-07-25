@@ -209,6 +209,7 @@ useEffect(() => {
               {/* Team Groom */}
               <Grid item xs={12} md={6} lg={6}>
               <Paper className={fixedHeightPaper}>
+              <GuestListItem title="Groom" />
               {/* <GuestListItem title="Groom" teampax={guestSummaryData.groom.total}/> */}
 
               <div style={{ margin:'25px'}}>
@@ -233,6 +234,7 @@ useEffect(() => {
                {/* Team Bride */}
                <Grid item xs={12} md={6} lg={6}>
               <Paper className={fixedHeightPaper}>
+              <GuestListItem title="Bride" />
               {/* <GuestListItem title="Bride" teampax={guestSummaryData.bride.total}/> */}
 
               <div style={{ margin:'25px'}}>
