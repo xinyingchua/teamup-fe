@@ -12,6 +12,8 @@ import { CookiesProvider } from 'react-cookie'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import TodoItem from '../../assets/TodoItem'
+import { useCookies } from "react-cookie";
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -54,15 +56,14 @@ export default function TodoMain() {
 
   // use useState hooks
   const [todoData, setTodoData] = React.useState([])
+  const [cookies] = useCookies(["auth_token"]);
+
   const url = 'https://teamup-be.herokuapp.com/api/v1/users/todos'
 
   const getAllTodoData = () => {
     axios
       .get(`${url}`, {
-        headers: {
-          auth_token:
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imx1Y2FzZXMuc2VldEBnbWFpbC5jb20iLCJpYXQiOjE2MjcxMDYwMTgsImV4cCI6MTYyNzE5MjQxOH0.5Cc7IWlbge8_Pppp_UMx7NrARy1oJhIrHXW_h2G7BdA',
-        },
+        headers: cookies,
       })
       .then((response) => {
         const allData = response.data
@@ -78,7 +79,6 @@ export default function TodoMain() {
   }, [])
 
   return (
-    <CookiesProvider>
       <div className={classes.root}>
         <NavBar title="To Do's Before 'I Do'" />
         <main className={classes.content}>
@@ -123,13 +123,12 @@ export default function TodoMain() {
 
             {/* Map card here */}
             <Grid container spacing={4}>
-              {todoData.map((item) => (
-                <TodoItem role={item.role} task={item.task} _id={item._id} />
+              {todoData.map((item, pos) => (
+                <TodoItem key={pos} role={item.role} task={item.task} _id={item._id} />
               ))}
             </Grid>
           </Container>
         </main>
       </div>
-    </CookiesProvider>
   )
 }
