@@ -79,7 +79,7 @@ class App extends React.Component {
                 <Route path='/dashboard' component={Dashboard} />
 
                 {/* Budget Routes*/}
-                <Route path='/budget/create' component={BudgetCreate} />
+                <Route path='/budget/create' component={BudgetEdit} />
                 <Route path='/budget/edit' component={BudgetEdit} />
                 <Route path='/budget' component={BudgetMain} />
 
