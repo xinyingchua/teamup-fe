@@ -90,7 +90,7 @@ class App extends React.Component {
 
                 {/* Guest List Routes*/}
                 <Route path='/guest-lists/create' component={GuestlistCreate} />
-                <Route path='/guest-lists/edit' component={GuestListEdit} />
+                <Route path='/guest-lists/edit' component={GuestlistCreate} />
                 <Route path='/guest-lists' component={GuestListMain} />
 
                 {/* Events Routes*/}

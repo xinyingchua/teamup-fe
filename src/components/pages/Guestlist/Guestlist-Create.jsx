@@ -35,6 +35,12 @@ submit: {
   width: '200px',
   color: 'black'
 },
+delete: {
+  margin: theme.spacing(3, 0, 2,1),
+  background: '#F2BFD8',
+  width: '200px',
+  color: 'black'
+},
 
 }));
 
@@ -105,14 +111,8 @@ export default function GuestListForm(props) {
         headers: cookies,
       })
         .then((response) => {
-          const allData = response.data;
-          const guestListData = allData[0];
-          console.log(allData[0].status);
-          setGuestMobile(guestListData.guest_contact);
-          setTeamSelection(guestListData.role);
-          setGuestName(guestListData.guest_first_name);
-          setAddPax(guestListData.pax)
-          setRSVP(guestListData.status)
+        console.log(response);
+      
   
         })
         .catch((error) => console.log("error"));
@@ -159,6 +159,7 @@ export default function GuestListForm(props) {
               label="Guest Name"
               name="guestname"
               autoFocus
+              value= {guestname}
               onChange={(e) => setGuestName(e.target.value)}
             />
 
@@ -171,6 +172,7 @@ export default function GuestListForm(props) {
               label="Guest Mobile"
               name="guestmobile"
               autoFocus
+              value= {guestmobile}
               onChange={(e) => setGuestMobile(e.target.value)}
             />
 
@@ -183,6 +185,7 @@ export default function GuestListForm(props) {
               <Select
                 labelId="demo-simple-select-outlined-label"
                 id="demo-simple-select-outlined"
+                value= {addPax}
                 onChange={(e) => setAddPax(e.target.value)}
                 defaultValue = "0"
               >
@@ -204,7 +207,7 @@ export default function GuestListForm(props) {
             textalign= "left">
                 <InputLabel id="demo-simple-select-outlined-label">Which team is guest on?</InputLabel>
                   <Select
-                    defaultValue = " "
+                     value= {teamSelection}
                     labelId="demo-simple-select-outlined-label"
                     id="teamSelection"
                     onChange={(e) => setTeamSelection(e.target.value)}
@@ -223,7 +226,7 @@ export default function GuestListForm(props) {
             textalign= "center">
                 <InputLabel id="demo-simple-select-outlined-label">RSVP</InputLabel>
                   <Select
-                    defaultValue = " "
+                     value= {rsvp}
                     labelId="demo-simple-select-outlined-label"
                     id="rsvp"
                     onChange={(e) => setRSVP(e.target.value)}
@@ -234,7 +237,28 @@ export default function GuestListForm(props) {
                   </Select>
             </FormControl>
 
-            <Button
+
+            {props.location.state && props.location.state._id ? (
+                <div>
+                <Button
+                type="submit"
+                variant="contained"
+                className={classes.submit}
+                >
+                Edit
+                </Button>
+
+                <Button
+                type="submit"
+                variant="contained"
+                className={classes.delete}
+                >
+                Delete
+                </Button>
+                </div>
+            ) : (
+
+              <Button
               type="submit"
               variant="contained"
               color="primary"
@@ -242,6 +266,7 @@ export default function GuestListForm(props) {
             >
               Add Guest
             </Button>
+            )}
 
          </Box>
          </form>

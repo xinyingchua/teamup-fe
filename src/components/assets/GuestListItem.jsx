@@ -79,7 +79,7 @@ const classes = useStyles();
 return (
       <div className={classes.teamtitle}>
         <h2 style={{ marginRight: "150px", marginBottom:'20px', fontWeight:'700' }}>Team {props.title}</h2>
-        <h2 style={{ fontWeight:'700' }}>32 Pax</h2>
+        <h2 style={{ fontWeight:'700' }}>{props.teampax} Pax</h2>
       </div>
 )
 }
