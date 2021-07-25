@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react'
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
@@ -18,7 +18,11 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import QueryBuilderIcon from '@material-ui/icons/QueryBuilder';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import Moment from 'react-moment';
+import axios from 'axios'
 import { Link } from "react-router-dom"
+import { useCookies } from 'react-cookie';
+import { useHistory } from "react-router-dom";
+import EventByLine from '../../assets/Event-Schedule'
 
 
 
@@ -83,22 +87,33 @@ export default function EventMain() {
   const classes = useStyles();
 
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+  
 
-  const [checked, setChecked] = React.useState([0]);
 
-  const handleToggle = (value) => () => {
-    const currentIndex = checked.indexOf(value);
-    const newChecked = [...checked];
+  // use useState hooks
+  const [cookies] = useCookies(['auth_token'])
+  const [eventData, getEventData] = React.useState([])
+  const url = 'https://teamup-be.herokuapp.com/api/v1/users/events'
 
-    if (currentIndex === -1) {
-      newChecked.push(value);
-    } else {
-      newChecked.splice(currentIndex, 1);
-    }
+  const getAllEventData = () => {
+    axios
+      .get(
+        `${url}`, 
+        {headers: cookies,
+      })
+      .then((response) => {
+        const getData = response.data
+        console.log(response.data)
+        getEventData(getData)
+      })
+      .catch((error) => console.log('error'))
+  }
 
-    setChecked(newChecked);
-  };
+  useEffect(() => {
+    getAllEventData()
+  }, [])
 
+console.log(eventData)
 
   return (
     
@@ -137,81 +152,14 @@ export default function EventMain() {
             </Link>
             </Grid>
 
+            {console.log(eventData)}
             <List className={classes.ulroot}>
-            {[0, 1, 2, 3].map((value) => {
-            const labelId = `checkbox-list-label-${value}`;
-    
+            {eventData.map((item) => {
+              {console.log(item.from)}
             /* Return Event by line by map */
-            return (
-              <Grid container >
-                <Grid item xs={12} md={11} lg={12}
-                >
-                <Paper 
-                className={fixedHeightPaper}>
-                <ListItem key={value} role={undefined} 
-                dense button 
-                onClick={handleToggle(value)}>
-                
-                {/* Date */}
-                <Grid>
-                <ListItemText 
-                edge="start" 
-                disableTypography
-                style={{fontWeight:"bold", fontSize:"28px"}}
-                id={labelId} primary={`16 May ${value + 1}`} />
-                </Grid>
-
-              {/* Event Details */}
-              <Grid xs={12} md={11} lg={12}
-              style={{textAlign:"center", marginLeft: "80px"}}
-
-               edge="start">
-              <ListItem>
-              <ListItemText 
-                disableTypography
-                style={{fontWeight:"bold", fontSize:"30px"}}
-                id={labelId} primary={`Hotel Viewing ${value + 1}`} />
-              </ListItem>
-
-              <ListItem>
-              <QueryBuilderIcon
-              className={classes.icon}/>
-               <ListItemText 
-                style={{flexDirection:"column"}}
-                id={labelId} primary={`6pm - 7pm ${value + 1}`} />
-              </ListItem>
-
-              <ListItem>
-              <LocationOnIcon
-              className={classes.icon}/>
-                <ListItemText 
-                style={{flexDirection:"column"}}
-                id={labelId} primary={`Raffles Hotel ${value + 1}`} />
-                </ListItem>
-              </Grid>
-              
-
-
-                <Grid
-                edge="end"
-                style={{display:"flex", flexDirection:"row"}}
-                >
-                <DeleteIcon className={classes.icon}/>
-                </Grid>
-
-                <ListItemSecondaryAction>
-                <Link to="/events/edit" style={{ textDecoration: "none", color:'#fff' }}>
-                    <IconButton edge="end" aria-label="edit">
-                    <EditIcon
-                    className={classes.icon} />
-                    </IconButton>
-                    </Link>
-                </ListItemSecondaryAction>
-                </ListItem>
-                </Paper>
-                </Grid>
-                </Grid>
-            );
+            return(
+            <EventByLine from={item.from} description={item.description} location={item.location.name} />
+            )
             })}
             </List>
 
