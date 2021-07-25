@@ -1,16 +1,27 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
+import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
 import NavBar from '../Navbar/NavBar';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+import ListItemText from '@material-ui/core/ListItemText';
+import IconButton from '@material-ui/core/IconButton';
+import EditIcon from '@material-ui/icons/Edit';
 import Button from '@material-ui/core/Button';
+import DeleteIcon from '@material-ui/icons/Delete';
+import QueryBuilderIcon from '@material-ui/icons/QueryBuilder';
+import LocationOnIcon from '@material-ui/icons/LocationOn';
 import Moment from 'react-moment';
 import axios from 'axios'
 import { Link } from "react-router-dom"
 import { useCookies } from 'react-cookie';
+import { useHistory } from "react-router-dom";
 import EventByLine from '../../assets/Event-Schedule'
 
 
@@ -74,6 +85,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function EventMain() {
   const classes = useStyles();
+
+  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
   
 
 
@@ -112,7 +125,7 @@ console.log(eventData)
           <Grid container spacing={3}>
 
            {/* Estimated Wedding Cost */}
-            <Grid item={true} xs={12} md={4} lg={3}>
+            <Grid item xs={12} md={4} lg={3}>
               <Box>
               <Typography 
               color="secondary"
@@ -125,7 +138,7 @@ console.log(eventData)
 
           </Grid>
 
-          <Grid item={true} xs={8} md={11} lg={12}
+          <Grid item xs={8} md={11} lg={12}
           style={{textAlign : "right", paddingTop: "10px"}}>
           <Link to="/events/create" style={{ textDecoration: "none", color:'#fff' }}>
           <Button
@@ -141,10 +154,11 @@ console.log(eventData)
 
             {console.log(eventData)}
             <List className={classes.ulroot}>
-            {eventData.map((item, pos) => {
+            {eventData.map((item) => {
+              {console.log(item.from)}
             /* Return Event by line by map */
             return(
-            <EventByLine key={pos} from={item.from} name={item.event_name} description={item.description} location={item.location.name} _id={item._id} />
+            <EventByLine from={item.from} name={item.event_name} description={item.description} location={item.location.name} _id={item._id} />
             )
             })}
             </List>
