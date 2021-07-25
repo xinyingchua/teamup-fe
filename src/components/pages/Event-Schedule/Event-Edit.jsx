@@ -131,6 +131,21 @@ useEffect(() => {
       .catch((error) => console.log("error"));
   };
 
+  // DELETE EVENT //
+const deleteEvent = () => {
+  axios.delete(
+    "https://teamup-be.herokuapp.com/api/v1/users/events/"+ props.location.state._id+ "/delete",
+    {
+      headers: cookies ,
+    }
+  )
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((error) => console.log("error"));
+};
+
+
   // DATE FORM HANDLER
   const handleDateChange = (date) => {
     setSelectedDate(date);
@@ -139,13 +154,6 @@ useEffect(() => {
  // FORM SUBMISSION 
  const handleFormSubmission = async (e) => {
   e.preventDefault()
-
-  if(props.location.state && props.location.state._id) {
-    updateEvent()
-
-  } else{
-    postNewEvent() 
-  }
   history.push("/events");
   console.log(
     `form submitted with values: ${eventName}, ${eventStart}, ${eventEnd}, ${eventLocation} ${eventDescription}  `
@@ -202,7 +210,7 @@ useEffect(() => {
                   label="Event Start"
                   type="datetime-local"
                   // defaultValue="2021-05-24T10:30"
-                  defaultValue={eventStart}
+                  defaultValue="2021-12-23T13:33:00.000Z"
                   onChange={(e) => setEventStart(e.target.value)}
                   // className={classes.textField}
                   InputLabelProps={{
@@ -217,7 +225,7 @@ useEffect(() => {
                   margin="normal"
                   label="Event Start"
                   type="datetime-local"
-                  defaultValue="2021-05-24T10:30"
+                  defaultValue="2021-12-23T13:33:00.000Z"
                   onChange={(e) => setEventEnd(e.target.value)}
                   // className={classes.textField}
                   InputLabelProps={{
@@ -248,6 +256,7 @@ useEffect(() => {
                       type="submit"
                       variant="contained"
                       className={classes.submit}
+                      onClick = {updateEvent}
                     >
                       Edit
                     </Button>
@@ -256,6 +265,7 @@ useEffect(() => {
                       type="submit"
                       variant="contained"
                       className={classes.delete}
+                      onClick={deleteEvent}
                     >
                       Delete
                     </Button> 
@@ -269,6 +279,7 @@ useEffect(() => {
                     variant="contained"
                     color="primary"
                     className={classes.submit}
+                    onClick = {postNewEvent}
                   >
                     Add Event
                   </Button>

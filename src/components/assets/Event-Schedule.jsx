@@ -112,7 +112,7 @@ export default function EventByLine(props) {
                   disableTypography
                   style={{fontWeight:"bold", fontSize:"30px"}}
                   // id={labelId} 
-                  primary={props.description} />
+                  primary={props.name} />
                 </ListItem>
 
                 <ListItem>
@@ -140,7 +140,7 @@ export default function EventByLine(props) {
                   edge="end"
                   style={{display:"flex", flexDirection:"row"}}
                   >
-                  <DeleteIcon className={classes.icon}/>
+                  {/* <DeleteIcon className={classes.icon}/> */}
                   </Grid>
 
                   <ListItemSecondaryAction>
