@@ -143,38 +143,27 @@ let CreateBudget = async () => {
 };
 
 
-// // Delete TO DO //
-// const deleteBudget = () => {
-//   axios.delete(
-//     "https://teamup-be.herokuapp.com/api/v1/users/budget/"+ props.location.state._id+ "/delete",
-//     {
-//       headers: cookies ,
-//     }
-//   )
-//     .then((response) => {
-//       console.log(response);
-//     })
-//     .catch((error) => console.log("error"));
-// };
+// Delete TO DO //
+const deleteBudget = () => {
+  axios.delete(
+    "https://teamup-be.herokuapp.com/api/v1/users/budget/"+ props.location.state._id+ "/delete",
+    {
+      headers: cookies ,
+    }
+  )
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((error) => console.log("error"));
+};
 
 
 
  // submit form function
  const handleFormSummit = async (e) => {
   e.preventDefault()
-
-  if(props.location.state && props.location.state._id){
-    updateBudget()
-  } else {
-    CreateBudget()
-  }
-  
- 
   history.push("/budget")
-
 }
-
-
 
   return (
     <div className={classes.root}>
@@ -265,6 +254,7 @@ let CreateBudget = async () => {
               type="submit"
               variant="contained"
               className={classes.submit}
+              onClick={updateBudget}
             >
               Edit
             </Button>
@@ -273,6 +263,7 @@ let CreateBudget = async () => {
               type="submit"
               variant="contained"
               className={classes.delete}
+              onClick={deleteBudget}
             >
               Delete
             </Button>
@@ -283,6 +274,7 @@ let CreateBudget = async () => {
               // fullWidth
               variant="contained"
               className={classes.submit}
+              onClick={CreateBudget}
             >
               Create budget
             </Button>
