@@ -80,7 +80,7 @@ export default function TodoForm(props) {
 
 
 // Create TO DO //
-let fetchData = async () => {
+let createToDoData = async () => {
  await axios.post('https://teamup-be.herokuapp.com/api/v1/users/todos/create', {
     task: task,
     status: '' + status,
@@ -130,17 +130,8 @@ let fetchData = async () => {
 
   // submit form function
   const handleFormSummit = async (e) => {
-    e.preventDefault()
-
-    if(props.location.state && props.location.state._id){
-      updateToDoData()
-      deleteToDoData()
-    } else {
-      fetchData()
-    }
-   
+    e.preventDefault() 
     history.push("/to-do")
-
   }
 
   return (
@@ -162,17 +153,15 @@ let fetchData = async () => {
               label="Task"
               value={task}
               name="task"
-              // onChange={todoData.task}
               onChange={(e) => setTask(e.target.value)}
               autoFocus
             />
 
             <FormControl
               variant="outlined"
-              // fullWidth
               style={{ width: "70%" }}
               margin="normal"
-              textAlign="left"
+              textalign="left"
             >
               <InputLabel>Who is responsible for this task?</InputLabel>
               <Select value={role} onChange={(e) => setRole(e.target.value)}>
@@ -201,6 +190,7 @@ let fetchData = async () => {
                   type="submit"
                   variant="contained"
                   className={classes.submit}
+                  onClick={updateToDoData}
                 >
                   Edit
                 </Button>
@@ -209,6 +199,8 @@ let fetchData = async () => {
                   type="submit"
                   variant="contained"
                   className={classes.delete}
+                  onClick={deleteToDoData}
+
                 >
                   Delete
                 </Button>
@@ -220,6 +212,7 @@ let fetchData = async () => {
                 variant="contained"
                 color="primary"
                 className={classes.submit}
+                onClick={createToDoData}
               >
                 Create to do
               </Button>
