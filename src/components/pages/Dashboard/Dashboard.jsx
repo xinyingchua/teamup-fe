@@ -13,6 +13,8 @@ import axios from 'axios'
 import { withStyles } from '@material-ui/core/styles'
 import { withCookies } from 'react-cookie'
 import { Redirect } from 'react-router-dom'
+import Pagination from '@material-ui/lab/Pagination';
+
 
 const styles = (theme) => ({
   root: {
@@ -51,7 +53,7 @@ class Dashboard extends React.Component {
 
     this.state = {
       user: cookies.get('auth_token'),
-      apiResponse: null,
+      // response[0].data: null,
       daysLeft: '',
       budget: '',
       currentBudget: '',
@@ -59,36 +61,71 @@ class Dashboard extends React.Component {
       notAttending: '',
       pending: '',
       total: '',
+      allEventData: [],
     }
   }
 
-  async componentDidMount() {
-    try {
-      const response = await axios({
-        method: 'get',
-        url: 'https://teamup-be.herokuapp.com/api/v1/users/dashboard',
-        headers: {
-          auth_token: this.state.user,
-        },
-      })
-      this.setState({
-        apiResponse: response.data,
-      })
-    } catch (err) {
-      // Handle Error Here
-      console.error(err)
-    }
-    this.setState({
-      daysLeft: this.state.apiResponse.calendar.daysLeft,
-      budget: this.state.apiResponse.budget.initialBudget.toFixed(2),
-      currentBudget: this.state.apiResponse.budget.currentBudget.toFixed(2),
-      attending: this.state.apiResponse.guests.totalAttending,
-      notAttending: this.state.apiResponse.guests.totalUnavailable,
-      pending: this.state.apiResponse.guests.totalPending,
-      total: this.state.apiResponse.guests.totalGuests,
-      totalTasks: this.state.apiResponse.todos.total,
-      completedTasks: this.state.apiResponse.todos.completed,
-    })
+  componentDidMount() {
+    let dashboardURL = 'https://teamup-be.herokuapp.com/api/v1/users/dashboard'
+    let eventURL = 'https://teamup-be.herokuapp.com/api/v1/users/events/'
+
+    const promise1 = axios.get((dashboardURL),{ headers: { auth_token: this.state.user}})
+    const promise2 = axios.get((eventURL),{ headers: { auth_token: this.state.user}})
+
+    Promise.all([promise1 , promise2])
+        .then(response => {
+          console.log(response[0].data) // Dashboard Data
+          console.log(response[1].data) // event Data
+          
+          this.setState({
+            daysLeft: response[0].data.calendar.daysLeft,
+            budget: response[0].data.budget.initialBudget.toFixed(2),
+            currentBudget: response[0].data.budget.currentBudget.toFixed(2),
+            attending: response[0].data.guests.totalAttending,
+            notAttending: response[0].data.guests.totalUnavailable,
+            pending: response[0].data.guests.totalPending,
+            total: response[0].data.guests.totalGuests,
+            totalTasks: response[0].data.todos.total,
+            completedTasks: response[0].data.todos.completed,
+            numberOfEvents: response[0].data.events.total,
+            allEventData: response[1].data
+          })
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    
+
+    // const response = await axios({
+    //   method: 'get',
+    //   url: 'https://teamup-be.herokuapp.com/api/v1/users/dashboard',
+    //   headers: {
+    //     auth_token: this.state.user,
+    //   },
+    // })
+
+    //   this.setState({
+    //     response[0].data: response.data,
+    //   })
+    // } catch (err) {
+    //   // Handle Error Here
+    //   console.error(err)
+    // }
+    
+    // this.setState({
+    //   daysLeft: this.state.response[0].data.calendar.daysLeft,
+    //   budget: this.state.response[0].data.budget.initialBudget.toFixed(2),
+    //   currentBudget: this.state.response[0].data.budget.currentBudget.toFixed(2),
+    //   attending: this.state.response[0].data.guests.totalAttending,
+    //   notAttending: this.state.response[0].data.guests.totalUnavailable,
+    //   pending: this.state.response[0].data.guests.totalPending,
+    //   total: this.state.response[0].data.guests.totalGuests,
+    //   totalTasks: this.state.response[0].data.todos.total,
+    //   completedTasks: this.state.response[0].data.todos.completed,
+    //   numberOfEvents: this.state.response[0].data.events.total,
+
+    // }, 
+    // )
   }
 
   render() {
@@ -144,31 +181,28 @@ class Dashboard extends React.Component {
                   />
                 </Paper>
               </Grid>
+              <Grid container spacing={3}>
 
-              {/* Upcoming Events 1*/}
-              <Grid item xs={3}>
-                <Paper className={classes.paper}>
-                  <UpcomingEvents />
-                </Paper>
+              {this.state.allEventData.map((item, pos) => {
+              return (
+                <Grid item xs={3}>
+                  <Paper className={classes.paper}>
+                    <UpcomingEvents
+                    eventName={item.event_name}
+                    eventDate={item.from}
+                    key={pos}
+                    />
+                  </Paper>
+                </Grid>
+              )
+            })}
+            <Grid item xs={12}>
+            <Pagination count={this.state.numberOfEvents} color="primary" />
+            </Grid>
+                
+
               </Grid>
-              {/* Upcoming Events 2*/}
-              <Grid item xs={3}>
-                <Paper className={classes.paper}>
-                  <UpcomingEvents />
-                </Paper>
-              </Grid>
-              {/* Upcoming Events 3*/}
-              <Grid item xs={3}>
-                <Paper className={classes.paper}>
-                  <UpcomingEvents />
-                </Paper>
-              </Grid>
-              {/* Upcoming Events 4*/}
-              <Grid item xs={3}>
-                <Paper className={classes.paper}>
-                  <UpcomingEvents />
-                </Paper>
-              </Grid>
+
             </Grid>
           </Container>
         </main>
