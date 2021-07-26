@@ -95,7 +95,6 @@ export default function GuestList() {
   const [guestSummaryData, getGuestSummaryData] = React.useState('')
   const [guestListData, getGuestListData] = React.useState([])
 
-
   // MAKING MULTIPLE AXIOS CALLS //
 
   let urls = [
@@ -194,29 +193,31 @@ export default function GuestList() {
               <Grid item xs={12} md={6} lg={6}>
                 <Paper className={fixedHeightPaper}>
                   <GuestListItem title='Groom' />
-                  {/* <GuestListItem title="Groom" teampax={guestSummaryData.groom.total}/> */}
+
+                  {/* if guesSummaryData.groom.total is empty then render somthing else */}
+
+                  {/* <GuestListItem
+                    title='Groom'
+                    teampax={guestSummaryData.groom.total}
+                  /> */}
 
                   <div style={{ margin: '25px' }}>
                     <List className={classes.ulroot}>
                       <Grid container>
-
                         {guestListData.map((item, pos) => {
-                          return(
-                          item.role === "groom"
-                 
-                          ? 
-                          <TeamGroomBrideGuestList
-                            key={pos}
-                            name={item.guest_first_name}
-                            guest_contact={item.guest_contact}
-                            status={item.status}
-                            pax={item.pax}
-                            _id={item._id}
-                          />
-                          : <div key={pos}></div>
+                          return item.role === 'groom' ? (
+                            <TeamGroomBrideGuestList
+                              key={pos}
+                              name={item.guest_first_name}
+                              guest_contact={item.guest_contact}
+                              status={item.status}
+                              pax={item.pax}
+                              _id={item._id}
+                            />
+                          ) : (
+                            <div key={pos}></div>
                           )
                         })}
-
                       </Grid>
                     </List>
                   </div>
@@ -232,23 +233,20 @@ export default function GuestList() {
                   <div style={{ margin: '25px' }}>
                     <List className={classes.ulroot}>
                       <Grid container>
-                      {guestListData.map((item, pos) => {
-                          return(
-                          item.role === "bride"
-                 
-                          ? 
-                          <TeamGroomBrideGuestList
-                            key={pos}
-                            name={item.guest_first_name}
-                            guest_contact={item.guest_contact}
-                            status={item.status}
-                            pax={item.pax}
-                            _id={item._id}
-                          />
-                          : <div key={pos}></div>
+                        {guestListData.map((item, pos) => {
+                          return item.role === 'bride' ? (
+                            <TeamGroomBrideGuestList
+                              key={pos}
+                              name={item.guest_first_name}
+                              guest_contact={item.guest_contact}
+                              status={item.status}
+                              pax={item.pax}
+                              _id={item._id}
+                            />
+                          ) : (
+                            <div key={pos}></div>
                           )
                         })}
-
                       </Grid>
                     </List>
                   </div>

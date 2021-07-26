@@ -72,18 +72,18 @@ export default function SignInSide() {
     } catch (err) {
       return err
     }
-    setFetchedData(response)
-    return
+
+    return response
   }
 
-  React.useEffect(() => {
-    fetchData()
-  }, [])
+  // React.useEffect(() => {
+  //   fetchData()
+  // }, [])
 
   // submit form function
   const handleFormSubmission = async (e) => {
     e.preventDefault()
-    fetchData()
+    let response = await fetchData()
 
     if (!response.data.token) {
       console.log('authentication failed')
