@@ -138,7 +138,7 @@ export default function EventMain() {
           </Grid>
 
           <List className={classes.ulroot}>
-            {eventData.map((item) => {
+            {eventData.map((item, pos) => {
               /* Return Event by line by map */
               return (
                 <EventByLine
@@ -146,6 +146,7 @@ export default function EventMain() {
                     <Moment format='DD MMMM YYYY hh:mm A'>{item.from}</Moment>
                   }
                   to={<Moment format='DD MMMM YYYY hh:mm A'>{item.to}</Moment>}
+                  key={pos}
                   name={item.event_name}
                   description={item.description}
                   location={item.location.name}

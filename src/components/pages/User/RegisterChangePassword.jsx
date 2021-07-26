@@ -54,6 +54,23 @@ class RegisterChangePassword extends React.Component {
       confirmPass: '',
     }
   }
+
+  handleFormSubmission(e) {
+    e.preventDefault()
+
+    axios.post('https://teamup-be.herokuapp.com/api/v1/' , { 
+        password: this.state.password,
+        confirmPass: this.state.confirmPass
+        // guest_contact: this.state.guest_contact,
+    })
+        .then(response => {
+            // after successful login, store the token as cookie
+            const { cookies } = this.props
+
+            cookies.set('auth_token', response.data.token, {
+              path: '/'
+            })
+
   
   handleFormChange(e, fieldName) {
     let newState = {
