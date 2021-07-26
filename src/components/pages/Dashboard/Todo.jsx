@@ -16,23 +16,7 @@ const useStyles = makeStyles({
 
 export default function LinearDeterminate(props) {
   const classes = useStyles()
-  const [progress, setProgress] = React.useState(0)
 
-  React.useEffect(() => {
-    const timer = setInterval(() => {
-      setProgress((oldProgress) => {
-        if (oldProgress === 100) {
-          return 0
-        }
-        const diff = Math.random() * 10
-        return Math.min(oldProgress + diff, 100)
-      })
-    }, 500)
-
-    return () => {
-      clearInterval(timer)
-    }
-  }, [])
 
   return (
     <div className={classes.root}>
@@ -43,15 +27,15 @@ export default function LinearDeterminate(props) {
         <Grid item xs={6}>
           <Typography
             style={{ color: '#000', fontWeight: '500' }}
-            variant='body'
+            variant='body1'
           >
-            Tasks
+            Total Tasks
           </Typography>
         </Grid>
         <Grid item xs={6}>
           <Typography
             style={{ color: '#000', fontWeight: '500' }}
-            variant='body'
+            variant='body1'
           >
             Completed
           </Typography>
@@ -70,7 +54,7 @@ export default function LinearDeterminate(props) {
       <LinearProgress
         color='secondary'
         variant='determinate'
-        value={progress}
+        value={props.completed/props.totalTasks*100}
       />
       <Box mt={1.5}>
         <Link to='/to-do' style={{ color: '#7865E5' }} color='primary'>

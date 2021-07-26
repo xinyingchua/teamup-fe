@@ -14,7 +14,6 @@ import axios from 'axios'
 import { Link } from 'react-router-dom'
 import { useHistory } from 'react-router-dom'
 
-
 const useStyles = makeStyles((theme) => ({
   root: {
     height: '100vh',
@@ -62,8 +61,7 @@ export default function RegisterPage() {
   let [fetchedData, setFetchedData] = React.useState('')
   let history = useHistory()
 
-
-  // MAKING POST REQUEST TO REGISTER // 
+  // MAKING POST REQUEST TO REGISTER //
 
   let fetchData = async () => {
     fetchedData = await axios({
@@ -83,8 +81,8 @@ export default function RegisterPage() {
   // submit form function
   const handleFormSubmission = async (e) => {
     e.preventDefault()
-    fetchData()
-    history.push('/register/change-password')
+    await fetchData()
+    history.push(`/register/change-password/${fetchedData.data.userRegisterId}`)
   }
   return (
     <Grid container component='main' className={classes.root}>
@@ -137,7 +135,7 @@ export default function RegisterPage() {
               <Select
                 labelId='demo-simple-select-outlined-label'
                 id='teamSelection'
-                value = {mainUserRole}
+                value={mainUserRole}
                 onChange={(e) => setMainUserRole(e.target.value)}
               >
                 <MenuItem value='bride'>Bride</MenuItem>

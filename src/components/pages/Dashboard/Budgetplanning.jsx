@@ -28,7 +28,7 @@ export default class Demo extends React.PureComponent {
     return (
       <Grid container>
         <Grid item xs={6}>
-          <Chart data={chartData} height={150}>
+          <Chart data={chartData} height={125}>
             <PieSeries
               valueField='val'
               argumentField='region'
