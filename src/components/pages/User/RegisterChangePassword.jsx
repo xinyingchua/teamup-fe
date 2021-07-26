@@ -11,6 +11,7 @@ import axios from 'axios'
 import { withCookies } from 'react-cookie';
 
 
+
 const styles = theme => ({
   root: {
     height: '100vh',
@@ -49,15 +50,18 @@ class RegisterChangePassword extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      guest_contact: '',
+      password: '',
+      confirmPass: '',
     }
   }
 
   handleFormSubmission(e) {
     e.preventDefault()
 
-    axios.post('https://teamup-be.herokuapp.com/api/v1/guests/login', {
-        guest_contact: this.state.guest_contact,
+    axios.post('https://teamup-be.herokuapp.com/api/v1/', {
+        password: this.state.password,
+        confirmPass: this.state.confirmPass
+        // guest_contact: this.state.guest_contact,
     })
         .then(response => {
             // after successful login, store the token as cookie
@@ -67,7 +71,7 @@ class RegisterChangePassword extends React.Component {
               path: '/'
             })
   
-            this.props.history.push('/guest/rsvp')
+            this.props.history.push('/register/date-and-budget')
           })
         .catch(err => {
             console.log(err)
@@ -121,8 +125,8 @@ class RegisterChangePassword extends React.Component {
               fullWidth
               name="confirmPassword"
               label="Confirm Password"
-              type="confirmPassword"
-              id="confirmpassword"
+              type="confirmPass"
+              id="confirmPass"
               autoComplete="confirm-password"
               />
            
