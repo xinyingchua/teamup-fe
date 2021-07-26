@@ -97,6 +97,7 @@ export default function GuestList() {
 
 
   // MAKING MULTIPLE AXIOS CALLS //
+
   let urls = [
     'https://teamup-be.herokuapp.com/api/v1/users/dashboard',
     'https://teamup-be.herokuapp.com/api/v1/users/guests/',
@@ -198,6 +199,7 @@ export default function GuestList() {
                   <div style={{ margin: '25px' }}>
                     <List className={classes.ulroot}>
                       <Grid container>
+
                         {guestListData.map((item, pos) => {
                           return(
                           item.role === "groom"
@@ -205,7 +207,6 @@ export default function GuestList() {
                           ? 
                           <TeamGroomBrideGuestList
                             key={pos}
-
                             name={item.guest_first_name}
                             guest_contact={item.guest_contact}
                             status={item.status}
@@ -215,6 +216,7 @@ export default function GuestList() {
                           : <div key={pos}></div>
                           )
                         })}
+
                       </Grid>
                     </List>
                   </div>
@@ -237,7 +239,6 @@ export default function GuestList() {
                           ? 
                           <TeamGroomBrideGuestList
                             key={pos}
-
                             name={item.guest_first_name}
                             guest_contact={item.guest_contact}
                             status={item.status}
@@ -247,6 +248,7 @@ export default function GuestList() {
                           : <div key={pos}></div>
                           )
                         })}
+
                       </Grid>
                     </List>
                   </div>
