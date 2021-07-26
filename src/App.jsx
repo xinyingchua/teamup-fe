@@ -59,7 +59,7 @@ class App extends React.Component {
                 {/* Users Routes*/}
                 <Route path='/login' component={SignInSide} />
                 <Route
-                  path='/register/change-password'
+                  path='/register/change-password/:activationId'
                   component={RegisterChangePassword}
                 />
                 <Route
@@ -68,7 +68,7 @@ class App extends React.Component {
                 />
 
                 <Route path='/register' component={RegisterPage} />
-      
+
                 <Route path='/guest/login' component={LoginGuest} />
                 <Route path='/guest/RSVP' component={GuestRSVP} />
                 <Route path='/updates' component={UpdateUser} />

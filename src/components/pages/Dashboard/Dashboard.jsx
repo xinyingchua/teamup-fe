@@ -62,9 +62,9 @@ class Dashboard extends React.Component {
     }
   }
 
-  async componentDidMount() {
+  async componentDidMount(response) {
     try {
-      const response = await axios({
+      response = await axios({
         method: 'get',
         url: 'https://teamup-be.herokuapp.com/api/v1/users/dashboard',
         headers: {
@@ -78,10 +78,16 @@ class Dashboard extends React.Component {
       // Handle Error Here
       console.error(err)
     }
+
+    if (!response) {
+      console.log('waiting for response')
+      return
+    }
     this.setState({
       daysLeft: this.state.apiResponse.calendar.daysLeft,
-      budget: this.state.apiResponse.budget.initialBudget.toFixed(2),
-      currentBudget: this.state.apiResponse.budget.currentBudget.toFixed(2),
+      budget: `0` || this.state.apiResponse.budget.initialBudget.toFixed(2),
+      currentBudget:
+        `0` || this.state.apiResponse.budget.currentBudget.toFixed(2),
       attending: this.state.apiResponse.guests.totalAttending,
       notAttending: this.state.apiResponse.guests.totalUnavailable,
       pending: this.state.apiResponse.guests.totalPending,
