@@ -5,6 +5,10 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import { Link } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
+import axios from 'axios'
+import { useCookies } from 'react-cookie'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -56,6 +60,39 @@ const useStyles = makeStyles((theme) => ({
 export default function RegisterDateBudget() {
   const classes = useStyles();
 
+  // use useState hooks
+
+  const [eDate, setEDate] = React.useState('')
+  const [budget, setBudget] = React.useState('')
+  const [cookie, setCookie] = useCookies(['auth_token'])
+  let [response, setFetchedData] = React.useState(null)
+  let history = useHistory()
+
+  // POST REQUEST TO UPDATE EDATE AND BUDGET // 
+    let fetchData = async (response) => {
+      try {
+        response = await axios({
+          method: 'post',
+          // url: 'https://teamup-be.herokuapp.com/api/v1/login', --> TBC
+          data: {
+            edate: eDate,
+            ebudget: budget,
+          },
+        })
+      } catch (err) {
+        return err
+      }
+  
+      return response
+    }
+
+  // submit form function
+  const handleFormSubmission = async (e) => {
+    e.preventDefault()
+    setCookie('auth_token', response.data.token)
+    history.push('/dashboard')
+  }
+
   return (
     <Grid container component="main" className={classes.root}>
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
@@ -68,13 +105,17 @@ export default function RegisterDateBudget() {
             When is your wedding date?
           </Typography>
        
-          <form className={classes.form} noValidate>
+          <form 
+          onSubmit={(e) => { handleFormSubmission(e)}}
+          className={classes.form} noValidate
+          >
           <img src='https://res.cloudinary.com/dhexix4cn/image/upload/v1626617736/teamup/event-purple_dmadqr.png' alt='logo' className={classes.icons}/>
             <TextField
             id="date"
             label="Wedding Date"
             type="date"
-            defaultValue="2017-05-24"
+            defaultValue="2022-05-24"
+            onChange={(e) => setEDate(e.target.value)}
             className={classes.textField}
             InputLabelProps={{
               shrink: true,
@@ -95,20 +136,10 @@ export default function RegisterDateBudget() {
               id="wedding-budget"
               label="Amount"
               name="weddingBudget"
+              onChange={(e) => setBudget(e.target.value)}
               className={classes.textField}
               autoFocus
             />
-
-          {/* <FormControl fullWidth className={classes.margin} variant="outlined">
-            <InputLabel htmlFor="outlined-adornment-amount">Amount</InputLabel>
-            <OutlinedInput
-              id="outlined-adornment-amount"
-              value={values.amount}
-              // onChange={handleChange('amount')}
-              // startAdornment={<InputAdornment position="start">$</InputAdornment>}
-              labelWidth={60}
-           />
-        </FormControl> */}
 
 
             <Button
