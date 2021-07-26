@@ -64,22 +64,19 @@ class Dashboard extends React.Component {
     }
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     let dashboardURL = 'https://teamup-be.herokuapp.com/api/v1/users/dashboard'
     let eventURL = 'https://teamup-be.herokuapp.com/api/v1/users/events/'
 
-    const promise1 = axios.get(dashboardURL, {
+    const promise1 = await axios.get(dashboardURL, {
       headers: { auth_token: this.state.user },
     })
-    const promise2 = axios.get(eventURL, {
+    const promise2 = await axios.get(eventURL, {
       headers: { auth_token: this.state.user },
     })
 
     Promise.all([promise1, promise2])
       .then((response) => {
-        console.log(response[0].data) // Dashboard Data
-        console.log(response[1].data) // event Data
-
         this.setState({
           daysLeft: response[0].data.calendar.daysLeft,
           budget: `0` || response[0].data.budget.initialBudget.toFixed(2),
@@ -96,7 +93,7 @@ class Dashboard extends React.Component {
         })
       })
       .catch((err) => {
-        console.log(err)
+        return err
       })
 
     // const response = await axios({
@@ -184,20 +181,28 @@ class Dashboard extends React.Component {
                   />
                 </Paper>
               </Grid>
-              <Grid container spacing={3}>
-                {this.state.allEventData.map((item, pos) => {
-                  return (
-                    <Grid item xs={3}>
-                      <Paper className={classes.paper}>
-                        <UpcomingEvents
-                          eventName={item.event_name}
-                          eventDate={item.from}
-                          key={pos}
-                        />
-                      </Paper>
-                    </Grid>
-                  )
-                })}
+              <Grid container spacing={2}>
+                {this.state.allEventData.length !== 0 ? (
+                  <Grid item xs={3}>
+                    <Paper className={classes.paper}>
+                      <UpcomingEvents eventName={`No Event`} />
+                    </Paper>
+                  </Grid>
+                ) : (
+                  this.state.allEventData.map((item, pos) => {
+                    return (
+                      <Grid item xs={3}>
+                        <Paper className={classes.paper}>
+                          <UpcomingEvents
+                            eventName={item.event_name}
+                            eventDate={item.from}
+                            key={pos}
+                          />
+                        </Paper>
+                      </Grid>
+                    )
+                  })
+                )}
                 <Grid item xs={12}>
                   <Pagination
                     count={this.state.numberOfEvents}
