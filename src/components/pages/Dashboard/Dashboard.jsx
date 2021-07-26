@@ -13,8 +13,7 @@ import axios from 'axios'
 import { withStyles } from '@material-ui/core/styles'
 import { withCookies } from 'react-cookie'
 import { Redirect } from 'react-router-dom'
-import Pagination from '@material-ui/lab/Pagination';
-
+import Pagination from '@material-ui/lab/Pagination'
 
 const styles = (theme) => ({
   root: {
@@ -65,37 +64,40 @@ class Dashboard extends React.Component {
     }
   }
 
-
   componentDidMount() {
     let dashboardURL = 'https://teamup-be.herokuapp.com/api/v1/users/dashboard'
     let eventURL = 'https://teamup-be.herokuapp.com/api/v1/users/events/'
 
-    const promise1 = axios.get((dashboardURL),{ headers: { auth_token: this.state.user}})
-    const promise2 = axios.get((eventURL),{ headers: { auth_token: this.state.user}})
+    const promise1 = axios.get(dashboardURL, {
+      headers: { auth_token: this.state.user },
+    })
+    const promise2 = axios.get(eventURL, {
+      headers: { auth_token: this.state.user },
+    })
 
-    Promise.all([promise1 , promise2])
-        .then(response => {
-          console.log(response[0].data) // Dashboard Data
-          console.log(response[1].data) // event Data
-          
-          this.setState({
-            daysLeft: response[0].data.calendar.daysLeft,
-            budget: response[0].data.budget.initialBudget.toFixed(2),
-            currentBudget: response[0].data.budget.currentBudget.toFixed(2),
-            attending: response[0].data.guests.totalAttending,
-            notAttending: response[0].data.guests.totalUnavailable,
-            pending: response[0].data.guests.totalPending,
-            total: response[0].data.guests.totalGuests,
-            totalTasks: response[0].data.todos.total,
-            completedTasks: response[0].data.todos.completed,
-            numberOfEvents: response[0].data.events.total,
-            allEventData: response[1].data
-          })
+    Promise.all([promise1, promise2])
+      .then((response) => {
+        console.log(response[0].data) // Dashboard Data
+        console.log(response[1].data) // event Data
+
+        this.setState({
+          daysLeft: response[0].data.calendar.daysLeft,
+          budget: `0` || response[0].data.budget.initialBudget.toFixed(2),
+          currentBudget:
+            `0` || response[0].data.budget.currentBudget.toFixed(2),
+          attending: response[0].data.guests.totalAttending,
+          notAttending: response[0].data.guests.totalUnavailable,
+          pending: response[0].data.guests.totalPending,
+          total: response[0].data.guests.totalGuests,
+          totalTasks: response[0].data.todos.total,
+          completedTasks: response[0].data.todos.completed,
+          numberOfEvents: response[0].data.events.total,
+          allEventData: response[1].data,
         })
-        .catch(err => {
-          console.log(err)
-        })
-    
+      })
+      .catch((err) => {
+        console.log(err)
+      })
 
     // const response = await axios({
     //   method: 'get',
@@ -112,7 +114,7 @@ class Dashboard extends React.Component {
     //   // Handle Error Here
     //   console.error(err)
     // }
-    
+
     // this.setState({
     //   daysLeft: this.state.response[0].data.calendar.daysLeft,
     //   budget: this.state.response[0].data.budget.initialBudget.toFixed(2),
@@ -125,9 +127,8 @@ class Dashboard extends React.Component {
     //   completedTasks: this.state.response[0].data.todos.completed,
     //   numberOfEvents: this.state.response[0].data.events.total,
 
-    // }, 
+    // },
     // )
-
   }
 
   render() {
@@ -184,27 +185,26 @@ class Dashboard extends React.Component {
                 </Paper>
               </Grid>
               <Grid container spacing={3}>
-
-              {this.state.allEventData.map((item, pos) => {
-              return (
-                <Grid item xs={3}>
-                  <Paper className={classes.paper}>
-                    <UpcomingEvents
-                    eventName={item.event_name}
-                    eventDate={item.from}
-                    key={pos}
-                    />
-                  </Paper>
+                {this.state.allEventData.map((item, pos) => {
+                  return (
+                    <Grid item xs={3}>
+                      <Paper className={classes.paper}>
+                        <UpcomingEvents
+                          eventName={item.event_name}
+                          eventDate={item.from}
+                          key={pos}
+                        />
+                      </Paper>
+                    </Grid>
+                  )
+                })}
+                <Grid item xs={12}>
+                  <Pagination
+                    count={this.state.numberOfEvents}
+                    color='primary'
+                  />
                 </Grid>
-              )
-            })}
-            <Grid item xs={12}>
-            <Pagination count={this.state.numberOfEvents} color="primary" />
-            </Grid>
-                
-
               </Grid>
-
             </Grid>
           </Container>
         </main>
