@@ -95,19 +95,9 @@ export default function GuestList() {
   const [guestSummaryData, getGuestSummaryData] = React.useState('')
   const [guestListData, getGuestListData] = React.useState([])
 
-  // const getAllGuestData = () => {
-  //   axios.get(`${url}`, {
-  //     headers: cookies
-  //   })
-  //   .then((response) => {
-  //     const allData = response.data
-  //     getGuestSummaryData(allData.guests)
-  //   })
-  //   .catch((error =>
-  //     console.log(error)))
-  // }
 
-  // TRY //
+  // MAKING MULTIPLE AXIOS CALLS //
+
   let urls = [
     'https://teamup-be.herokuapp.com/api/v1/users/dashboard',
     'https://teamup-be.herokuapp.com/api/v1/users/guests/',
@@ -190,7 +180,6 @@ export default function GuestList() {
                   <Button
                     type='submit'
                     variant='contained'
-                    color='#60C3F1'
                     className={classes.submit}
                     style={{ background: '#7865E5', color: 'white' }}
                   >
@@ -210,16 +199,24 @@ export default function GuestList() {
                   <div style={{ margin: '25px' }}>
                     <List className={classes.ulroot}>
                       <Grid container>
-                        {guestListData.map((item) => (
+
+                        {guestListData.map((item, pos) => {
+                          return(
+                          item.role === "groom"
+                 
+                          ? 
                           <TeamGroomBrideGuestList
-                            role={item.role}
+                            key={pos}
                             name={item.guest_first_name}
                             guest_contact={item.guest_contact}
                             status={item.status}
                             pax={item.pax}
                             _id={item._id}
                           />
-                        ))}
+                          : <div key={pos}></div>
+                          )
+                        })}
+
                       </Grid>
                     </List>
                   </div>
@@ -235,16 +232,23 @@ export default function GuestList() {
                   <div style={{ margin: '25px' }}>
                     <List className={classes.ulroot}>
                       <Grid container>
-                        {guestListData.map((item) => (
+                      {guestListData.map((item, pos) => {
+                          return(
+                          item.role === "bride"
+                 
+                          ? 
                           <TeamGroomBrideGuestList
-                            role={item.role}
+                            key={pos}
                             name={item.guest_first_name}
                             guest_contact={item.guest_contact}
                             status={item.status}
                             pax={item.pax}
                             _id={item._id}
                           />
-                        ))}
+                          : <div key={pos}></div>
+                          )
+                        })}
+
                       </Grid>
                     </List>
                   </div>

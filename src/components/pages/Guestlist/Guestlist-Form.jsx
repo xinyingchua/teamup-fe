@@ -55,7 +55,9 @@ export default function GuestListForm(props) {
   let [response, setFetchedData] = React.useState('')
   let history = useHistory()
 
-  console.log(cookies)
+
+  // console.log(cookies)
+
 
   // POST - CREATE NEW GUEST //
   let postNewGuest = async () => {
@@ -72,7 +74,8 @@ export default function GuestListForm(props) {
         pax: addPax,
       },
     })
-    console.log(response.data)
+    // console.log(response.data)
+
     setFetchedData(response)
   }
 
@@ -87,7 +90,9 @@ export default function GuestListForm(props) {
       .then((response) => {
         const allData = response.data
         const guestListData = allData[0]
-        console.log(allData[0].status)
+
+        // console.log(allData[0].status)
+
         setGuestMobile(guestListData.guest_contact)
         setTeamSelection(guestListData.role)
         setGuestName(guestListData.guest_first_name)
@@ -266,9 +271,10 @@ export default function GuestListForm(props) {
                   id='rsvp'
                   onChange={(e) => setRSVP(e.target.value)}
                 >
-                  <MenuItem value=' '></MenuItem>
                   <MenuItem value='attending'>Attending</MenuItem>
                   <MenuItem value='unavailable'>Not Attending</MenuItem>
+                  <MenuItem value='pending'>To Be Confirmed</MenuItem>
+
                 </Select>
               </FormControl>
 
