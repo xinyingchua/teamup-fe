@@ -73,6 +73,7 @@ export default function UpdateUser() {
     }
     getUserData()
   }, [])
+  console.log(password)
 
 
   // Patch User Profile //
@@ -104,7 +105,7 @@ export default function UpdateUser() {
   // submit form function
   const handleFormSummit = async (e) => {
     e.preventDefault()
-    history.push('/dashboard')
+    history.push('/login')
   }
 
   return (

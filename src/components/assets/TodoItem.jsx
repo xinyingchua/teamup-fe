@@ -1,4 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles'
+import React, { useState } from 'react'
 import Button from '@material-ui/core/Button'
 import Card from '@material-ui/core/Card'
 import CardActions from '@material-ui/core/CardActions'
@@ -53,19 +54,22 @@ export default function ToDoGrid(props) {
   const [cookies] = useCookies(['auth_token'])
   let history = useHistory()
 
+
   // Delete TO DO //
-  const deleteToDoData = () => {
+  const deleteToDoData = (e) => {
     axios
       .delete(
         'https://teamup-be.herokuapp.com/api/v1/users/todos/' +
-          props.location.state._id +
+          props._id +
           '/delete',
         {
           headers: cookies,
         }
       )
-      .then((response) => {
+      .then(async(response) => {
+        await props.refreshItems()
         return
+        
       })
       .catch((error) => console.log(error))
   }
