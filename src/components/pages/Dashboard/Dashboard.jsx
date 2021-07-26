@@ -65,6 +65,7 @@ class Dashboard extends React.Component {
     }
   }
 
+
   componentDidMount() {
     let dashboardURL = 'https://teamup-be.herokuapp.com/api/v1/users/dashboard'
     let eventURL = 'https://teamup-be.herokuapp.com/api/v1/users/events/'
@@ -126,6 +127,7 @@ class Dashboard extends React.Component {
 
     // }, 
     // )
+
   }
 
   render() {
