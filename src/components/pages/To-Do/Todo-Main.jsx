@@ -58,19 +58,19 @@ export default function TodoMain() {
 
   const url = 'https://teamup-be.herokuapp.com/api/v1/users/todos'
 
-  React.useEffect(() => {
-    const getAllTodoData = () => {
-      axios
-        .get(`${url}`, {
-          headers: cookies,
-        })
-        .then((response) => {
-          const allData = response.data
-          setTodoData(response.data)
-        })
-        .catch((error) => console.log(error))
-    }
+  const getAllTodoData = () => {
+    axios
+      .get(`${url}`, {
+        headers: cookies,
+      })
+      .then((response) => {
+        const allData = response.data
+        setTodoData(response.data)
+      })
+      .catch((error) => console.log(error))
+  }
 
+  React.useEffect(() => {
     getAllTodoData()
   }, [])
 
@@ -125,6 +125,7 @@ export default function TodoMain() {
                 role={`Team ${item.role.toUpperCase()}`}
                 task={item.task}
                 _id={item._id}
+                refreshItems={getAllTodoData}
               />
             ))}
           </Grid>
