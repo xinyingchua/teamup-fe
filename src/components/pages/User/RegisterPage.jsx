@@ -12,6 +12,8 @@ import MenuItem from '@material-ui/core/MenuItem'
 import Select from '@material-ui/core/Select'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -50,38 +52,39 @@ const useStyles = makeStyles((theme) => ({
 
 export default function RegisterPage() {
   const classes = useStyles()
+
   // use useState hooks
-  const [name, setName] = React.useState('')
-  const [email, setEmail] = React.useState('')
-  // const [password, setPass] = React.useState('')
+  const [mainUserFullName, setMainUserFullName] = React.useState('')
+  const [mainUserEmail, setMainUserEmail] = React.useState('')
+  const [mainUserRole, setMainUserRole] = React.useState('')
+  const [secondaryUserFullName, setSecondaryUserFullName] = React.useState('')
+  const [secondaryUserEmail, setSecondaryUserEmail] = React.useState('')
   let [fetchedData, setFetchedData] = React.useState('')
-  // use api callback
+  let history = useHistory()
+
+
+  // MAKING POST REQUEST TO REGISTER // 
+
   let fetchData = async () => {
     fetchedData = await axios({
       method: 'post',
       url: 'https://teamup-be.herokuapp.com/api/v1/register',
       data: {
-        first_name: name,
-        last_name: name,
-        email: email,
-        partner_first_name: 'lady',
-        partner_last_name: 'lady',
-        partner_email: 'lady2@email.com',
-        role: 'groom',
-        d_date: '2021-12-31',
-        e_budget: 50000,
-        password: '1234',
-        confirmPassword: '1234',
-        d_destination: 'Bedok Mall',
+        user_fullName: mainUserFullName,
+        user_email: mainUserEmail,
+        user_role: mainUserRole,
+        partner_fullName: secondaryUserFullName,
+        partner_email: secondaryUserEmail,
       },
     })
     setFetchedData(fetchedData)
   }
 
   // submit form function
-  const handleFormSummit = async (e) => {
+  const handleFormSubmission = async (e) => {
     e.preventDefault()
     fetchData()
+    history.push('/register/change-password')
   }
   return (
     <Grid container component='main' className={classes.root}>
@@ -107,7 +110,7 @@ export default function RegisterPage() {
             className={classes.form}
             noValidate
             onSubmit={(e) => {
-              handleFormSummit(e)
+              handleFormSubmission(e)
             }}
           >
             <TextField
@@ -120,13 +123,13 @@ export default function RegisterPage() {
               name='name'
               autoComplete='name'
               autoFocus
-              onChange={(e) => setName(e.target.value)}
+              onChange={(e) => setMainUserFullName(e.target.value)}
             />
             <FormControl
               variant='outlined'
               style={{ width: '43%', marginLeft: '6px' }}
               margin='normal'
-              textAlign='left'
+              textalign='left'
             >
               <InputLabel id='demo-simple-select-outlined-label'>
                 Your Role
@@ -134,9 +137,9 @@ export default function RegisterPage() {
               <Select
                 labelId='demo-simple-select-outlined-label'
                 id='teamSelection'
-                // onChange={(e) => setTeamSelection(e.target.value)}
+                value = {mainUserRole}
+                onChange={(e) => setMainUserRole(e.target.value)}
               >
-                <MenuItem value=''></MenuItem>
                 <MenuItem value='bride'>Bride</MenuItem>
                 <MenuItem value='groom'>Groom</MenuItem>
               </Select>
@@ -152,7 +155,7 @@ export default function RegisterPage() {
               name='email'
               autoComplete='email'
               autoFocus
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => setMainUserEmail(e.target.value)}
             />
 
             <TextField
@@ -165,7 +168,7 @@ export default function RegisterPage() {
               name='partnerName'
               autoComplete='name'
               autoFocus
-              // onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => setSecondaryUserFullName(e.target.value)}
             />
 
             <TextField
@@ -178,7 +181,7 @@ export default function RegisterPage() {
               name='partnerEmail'
               autoComplete='email'
               autoFocus
-              // onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => setSecondaryUserEmail(e.target.value)}
             />
 
             <Button

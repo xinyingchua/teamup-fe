@@ -18,7 +18,6 @@ import BudgetEdit from './components/pages/Budget/Budget-Edit'
 import ToDoMain from './components/pages/To-Do/Todo-Main'
 import ToDoEdit from './components/pages/To-Do/Todo-Edit'
 import GuestlistCreate from './components/pages/Guestlist/Guestlist-Form'
-// import GuestListEdit from './components/pages/Guestlist/Guestlist-Edit'
 import GuestListMain from './components/pages/Guestlist/Guestlist-Main'
 import EventEdit from './components/pages/Event-Schedule/Event-Edit'
 import BudgetMain from './components/pages/Budget/Budget-Main'
@@ -69,6 +68,7 @@ class App extends React.Component {
                 />
 
                 <Route path='/register' component={RegisterPage} />
+      
                 <Route path='/guest/login' component={LoginGuest} />
                 <Route path='/guest/RSVP' component={GuestRSVP} />
                 <Route path='/updates' component={UpdateUser} />
