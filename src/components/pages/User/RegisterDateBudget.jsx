@@ -131,7 +131,6 @@ export default function RegisterDateBudget() {
             <TextField
               variant="outlined"
               margin="normal"
-              halflWidth
               required
               id="wedding-budget"
               label="Amount"
