@@ -1,14 +1,14 @@
-import React, { useEffect } from "react";
-import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
-import Box from '@material-ui/core/Box';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
+import React, { useEffect } from 'react'
+import { makeStyles } from '@material-ui/core/styles'
+import Container from '@material-ui/core/Container'
+import Box from '@material-ui/core/Box'
+import TextField from '@material-ui/core/TextField'
+import Button from '@material-ui/core/Button'
 import NavBar from '../Navbar/NavBar'
 import axios from 'axios'
 import { useHistory } from 'react-router-dom'
 import { useCookies } from 'react-cookie'
-import moment from 'moment';
+import moment from 'moment'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -51,9 +51,8 @@ export default function EventForm(props) {
 
   // use useState hooks
   const [cookies] = useCookies(['auth_token'])
-  const [selectedDate, setSelectedDate] = React.useState(
-    new Date('2021-08-18T21:11:54')
-  )
+  const [fromDate, setFromDate] = React.useState()
+  const [toDate, setToDate] = React.useState()
   const [eventName, setEventName] = React.useState('')
   const [eventStart, setEventStart] = React.useState('')
   const [eventEnd, setEventEnd] = React.useState('')
@@ -63,8 +62,8 @@ export default function EventForm(props) {
 
   useEffect(() => {
     // GET A SINGLE EVENT DATA //
-    const getOnEventData = () => {
-      axios
+    const getOnEventData = async () => {
+      await axios
         .get(
           'https://teamup-be.herokuapp.com/api/v1/users/events/' +
             props.location.state._id,
@@ -74,23 +73,18 @@ export default function EventForm(props) {
           const allData = response.data[0]
           setEventLocation(allData.location.name)
           setEventName(allData.event_name)
-          setEventStart(moment(allData.from).format("yyyy-MM-dd-T:ss.SSS"))
-          setEventEnd(allData.to)
+          setFromDate(moment(allData.from).format('yyyy-MM-ddThh:mm:ss.SSS'))
+          setToDate(moment(allData.to).format('yyyy-MM-ddThh:mm:ss.SSS'))
           setEventDescription(allData.description)
-          console.log(allData.from)
-          // defaultValue="2021-05-24T10:30"
-          console.log(eventStart)
-         
         })
-        .catch((error) => console.log(error))
+        .catch((error) => {
+          return error
+        })
     }
-
     if (props.location.state && props.location.state._id) {
       getOnEventData()
     }
   }, [])
-
-  console.log(eventEnd)
 
   // POST - CREATE NEW EVENT
   let postNewEvent = async () => {
@@ -100,8 +94,8 @@ export default function EventForm(props) {
       url: 'https://teamup-be.herokuapp.com/api/v1/users/events/create',
       data: {
         event_name: eventName,
-        from: eventStart,
-        to: eventEnd,
+        from: fromDate,
+        to: toDate,
         location: eventLocation,
         description: eventDescription,
       },
@@ -130,10 +124,10 @@ export default function EventForm(props) {
       .then((response) => {
         return
       })
-      .catch((error) => console.log(error))
+      .catch((error) => {
+        return error
+      })
   }
-
-
 
   // DELETE EVENT //
   const deleteEvent = () => {
@@ -149,12 +143,18 @@ export default function EventForm(props) {
       .then((response) => {
         return
       })
-      .catch((error) => console.log(error))
+      .catch((error) => {
+        return error
+      })
   }
 
   // DATE FORM HANDLER
-  const handleDateChange = (date) => {
-    setSelectedDate(date)
+  const handleFromDateChange = (date) => {
+    setFromDate(date)
+  }
+
+  const handleToDateChange = (date) => {
+    setToDate(date)
   }
 
   // FORM SUBMISSION
@@ -219,11 +219,10 @@ export default function EventForm(props) {
                 margin='normal'
                 label='Event Start'
                 type='datetime-local'
-                defaultValue="2021-05-24T10:30"
-                // defaultValue='2021-12-23T13:33:00.000Z'
-                // value={eventStart}
-                // 2021-07-31T09:52:00.000Z
-                onChange={(e) => setEventStart(e.target.value)}
+                value={fromDate}
+                onChange={(e) => {
+                  handleFromDateChange(e.target.value)
+                }}
                 // className={classes.textField}
                 InputLabelProps={{
                   shrink: true,
@@ -237,9 +236,10 @@ export default function EventForm(props) {
                 margin='normal'
                 label='Event End'
                 type='datetime-local'
-                // defaultValue='2021-12-23T13:33:00.000Z'
-                value={eventEnd}
-                onChange={(e) => setEventEnd(e.target.value)}
+                value={toDate}
+                onChange={(e) => {
+                  handleToDateChange(e.target.value)
+                }}
                 // className={classes.textField}
                 InputLabelProps={{
                   shrink: true,
