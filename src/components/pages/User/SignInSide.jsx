@@ -83,14 +83,14 @@ export default function SignInSide() {
   // submit form function
   const handleFormSubmission = async (e) => {
     e.preventDefault()
-    let response = await fetchData()
 
-    if (!response.data.token) {
-      console.log('authentication failed')
-      return
+    try {
+      let response = await fetchData()
+      setCookie('auth_token', response.data.token)
+      history.push('/dashboard')
+    } catch (err) {
+      console.log(`authentication failed`)
     }
-    setCookie('auth_token', response.data.token)
-    history.push('/dashboard')
   }
 
   return (
