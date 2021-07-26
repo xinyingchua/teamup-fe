@@ -4,6 +4,7 @@ import Typography from '@material-ui/core/Typography'
 import { Chart, PieSeries } from '@devexpress/dx-react-chart-material-ui'
 import { Animation } from '@devexpress/dx-react-chart'
 
+
 const data = [
   { region: 'Asia', val: 4119626293 },
   { region: 'Africa', val: 1012956064 },

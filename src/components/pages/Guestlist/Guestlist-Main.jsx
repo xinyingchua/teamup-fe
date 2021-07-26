@@ -89,6 +89,7 @@ const useStyles = makeStyles((theme) => ({
 export default function GuestList() {
   const classes = useStyles()
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
+  const test = "dummy"
 
   // use useState hooks
   const [cookies] = useCookies(['auth_token'])
@@ -97,6 +98,7 @@ export default function GuestList() {
 
 
   // MAKING MULTIPLE AXIOS CALLS //
+
   let urls = [
     'https://teamup-be.herokuapp.com/api/v1/users/dashboard',
     'https://teamup-be.herokuapp.com/api/v1/users/guests/',
@@ -192,12 +194,14 @@ export default function GuestList() {
               {/* Team Groom */}
               <Grid item xs={12} md={6} lg={6}>
                 <Paper className={fixedHeightPaper}>
+                 { guestSummaryData }
                   <GuestListItem title='Groom' />
                   {/* <GuestListItem title="Groom" teampax={guestSummaryData.groom.total}/> */}
 
                   <div style={{ margin: '25px' }}>
                     <List className={classes.ulroot}>
                       <Grid container>
+
                         {guestListData.map((item, pos) => {
                           return(
                           item.role === "groom"
@@ -205,7 +209,6 @@ export default function GuestList() {
                           ? 
                           <TeamGroomBrideGuestList
                             key={pos}
-
                             name={item.guest_first_name}
                             guest_contact={item.guest_contact}
                             status={item.status}
@@ -215,6 +218,7 @@ export default function GuestList() {
                           : <div key={pos}></div>
                           )
                         })}
+
                       </Grid>
                     </List>
                   </div>
@@ -237,7 +241,6 @@ export default function GuestList() {
                           ? 
                           <TeamGroomBrideGuestList
                             key={pos}
-
                             name={item.guest_first_name}
                             guest_contact={item.guest_contact}
                             status={item.status}
@@ -247,6 +250,7 @@ export default function GuestList() {
                           : <div key={pos}></div>
                           )
                         })}
+
                       </Grid>
                     </List>
                   </div>
