@@ -2,6 +2,7 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import ListItemText from "@material-ui/core/ListItemText";
 import IconButton from "@material-ui/core/IconButton";
+import Button from '@material-ui/core/Button'
 import Grid from "@material-ui/core/Grid";
 import { Typography } from "@material-ui/core";
 import { Link } from "react-router-dom"
@@ -33,10 +34,27 @@ export default function TeamGroomBrideGuestList(props) {
                     ></Grid>
                     <ListItemSecondaryAction>
 
-                                  
-                      {/* <Button variant="contained" color="secondary" style={{background:'#60C3F1'}}>
-                      Attending
-                    </Button> */}
+                    {props.status ==="attending"
+                    ?
+                   (<Button variant="contained" color="secondary" style={{background:'#AAD1CA'}}>
+                    Attending
+                    </Button>)
+                    : 
+                    props.status ==="unavailable" 
+                    ?
+                    (<Button variant="contained" color="secondary" style={{background:'#F2BFD8'}}>
+                    Not Attending
+                    </Button>)
+                    :
+                    props.status ==="pending" 
+                    ?
+                    (<Button variant="contained" color="secondary" style={{background:'#FFCCA7'}}>
+                    Pending
+                    </Button>)
+                    :
+                   ( <div></div>)
+                    }
+   
                       <IconButton edge="end" aria-label="edit">
                       <Typography style={{fontWeight:'500', color:'#5EAB50', marginRight:'20px'}}>
                       {props.pax}
