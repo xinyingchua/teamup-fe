@@ -192,14 +192,15 @@ export default function GuestList() {
               {/* Team Groom */}
               <Grid item xs={12} md={6} lg={6}>
                 <Paper className={fixedHeightPaper}>
-                  <GuestListItem title='Groom' />
-
                   {/* if guesSummaryData.groom.total is empty then render somthing else */}
-
-                  {/* <GuestListItem
+                  { guestSummaryData
+                  ?   
+                  <GuestListItem
                     title='Groom'
                     teampax={guestSummaryData.groom.total}
-                  /> */}
+                  />
+                  : <GuestListItem title='Groom' />
+                  }
 
                   <div style={{ margin: '25px' }}>
                     <List className={classes.ulroot}>
@@ -227,8 +228,15 @@ export default function GuestList() {
               {/* Team Bride */}
               <Grid item xs={12} md={6} lg={6}>
                 <Paper className={fixedHeightPaper}>
-                  <GuestListItem title='Bride' />
-                  {/* <GuestListItem title="Bride" teampax={guestSummaryData.bride.total}/> */}
+                  {/* if guesSummaryData.bride.total is empty then render somthing else */}
+                { guestSummaryData
+                  ?   
+                  <GuestListItem
+                    title='Bride'
+                    teampax={guestSummaryData.bride.total}
+                  />
+                  : <GuestListItem title='Bride' />
+                  }
 
                   <div style={{ margin: '25px' }}>
                     <List className={classes.ulroot}>
