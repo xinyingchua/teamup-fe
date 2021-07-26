@@ -4,14 +4,7 @@ import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import Grid from '@material-ui/core/Grid';
 import NavBar from '../Navbar/NavBar';
-import MomentUtils from '@date-io/moment';
-import {
-  MuiPickersUtilsProvider,
-  KeyboardDatePicker,
-} from '@material-ui/pickers'
-import { CookiesProvider } from 'react-cookie';
 import axios from 'axios'
 import { useHistory } from "react-router-dom";
 import { useCookies } from "react-cookie";
