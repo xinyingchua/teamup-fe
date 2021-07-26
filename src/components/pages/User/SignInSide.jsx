@@ -55,7 +55,7 @@ export default function SignInSide() {
   const [passwordLogin, setPasswordLogin] = React.useState()
   // Npm Cookies  => [ value, setter ] ==> if we want to use setter, we need to set value
   const [cookie, setCookie] = useCookies(['auth_token'])
-  let [response, setFetchedData] = React.useState(null)
+  let [fetchedData, setFetchedData] = React.useState('')
   let history = useHistory()
 
   // use api callback
@@ -72,25 +72,22 @@ export default function SignInSide() {
     } catch (err) {
       return err
     }
-
     return response
   }
-
-  // React.useEffect(() => {
-  //   fetchData()
-  // }, [])
 
   // submit form function
   const handleFormSubmission = async (e) => {
     e.preventDefault()
 
-    try {
-      let response = await fetchData()
-      setCookie('auth_token', response.data.token)
-      history.push('/dashboard')
-    } catch (err) {
-      console.log(`authentication failed`)
+    let response = await fetchData()
+
+    if (!response.data) {
+      return console.log('Email or Password is incorrect, please try again')
     }
+
+    setCookie('auth_token', response.data.token)
+    history.push('/dashboard')
+    return
   }
 
   return (
@@ -131,7 +128,7 @@ export default function SignInSide() {
               autoComplete='email'
               autoFocus
               onChange={(e) => {
-              setEmailLogin(e.target.value)
+                setEmailLogin(e.target.value)
               }}
             />
             <TextField
