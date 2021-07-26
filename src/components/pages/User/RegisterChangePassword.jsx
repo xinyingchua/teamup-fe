@@ -10,7 +10,8 @@ import PropTypes from 'prop-types'
 import axios from 'axios'
 import { withCookies } from 'react-cookie'
 
-const styles = (theme) => ({
+const styles = theme => ({
+
   root: {
     height: '100vh',
   },
@@ -53,7 +54,7 @@ class RegisterChangePassword extends React.Component {
       confirmPass: '',
     }
   }
-
+  
   handleFormChange(e, fieldName) {
     let newState = {
       // reuse the current state and update this state
@@ -127,6 +128,7 @@ class RegisterChangePassword extends React.Component {
                 }}
               />
               <TextField
+
                 variant='outlined'
                 margin='normal'
                 required
@@ -139,6 +141,7 @@ class RegisterChangePassword extends React.Component {
                 onChange={(e) => {
                   this.handleFormChange(e, 'confirmPass')
                 }}
+
               />
               <Button
                 type='submit'
