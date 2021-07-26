@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles'
-import React, { useState } from 'react'
+import React from 'react'
 import Button from '@material-ui/core/Button'
 import Card from '@material-ui/core/Card'
 import CardActions from '@material-ui/core/CardActions'
@@ -56,7 +56,7 @@ export default function ToDoGrid(props) {
 
 
   // Delete TO DO //
-  const deleteToDoData = (e) => {
+  const deleteToDoData = () => {
     axios
       .delete(
         'https://teamup-be.herokuapp.com/api/v1/users/todos/' +
