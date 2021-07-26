@@ -4,17 +4,16 @@ import ListItemText from "@material-ui/core/ListItemText";
 import IconButton from "@material-ui/core/IconButton";
 import Grid from "@material-ui/core/Grid";
 import { Typography } from "@material-ui/core";
-import Button from "@material-ui/core/Button";
 import { Link } from "react-router-dom"
+import EditIcon from '@material-ui/icons/Edit'
 
 
 export default function TeamGroomBrideGuestList(props) {
 
   return (
 
-              <Grid item key={props} xs={12} md={11} lg={12}>
+              <Grid item  xs={12} md={11} lg={12}>
                   <ListItem
-                    // key={props.role}
                     dense
                     style={{ paddingBottom:'30px'}}
                   >
@@ -33,16 +32,26 @@ export default function TeamGroomBrideGuestList(props) {
 
                     ></Grid>
                     <ListItemSecondaryAction>
+
+                                  
+                      {/* <Button variant="contained" color="secondary" style={{background:'#60C3F1'}}>
+                      Attending
+                    </Button> */}
                       <IconButton edge="end" aria-label="edit">
                       <Typography style={{fontWeight:'500', color:'#5EAB50', marginRight:'20px'}}>
                       {props.pax}
                       </Typography>
                       </IconButton>
                       
+
                       <Link to={{ pathname: '/guest-lists/edit', state: { _id: props._id} }} style={{ textDecoration: "none", color:'#fff' }}>
-                      <Button variant="contained" color="secondary" style={{background:'#60C3F1'}}>
-                      Attending
-                    </Button>
+                      
+                     
+                      <IconButton edge='end' aria-label='edit'>
+                      <EditIcon />
+                      </IconButton>
+          
+                 
                     </Link>
                     </ListItemSecondaryAction>
                   </ListItem>

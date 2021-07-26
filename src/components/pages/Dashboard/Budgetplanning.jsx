@@ -1,7 +1,7 @@
 import React from 'react'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
-import { Chart, PieSeries, Title } from '@devexpress/dx-react-chart-material-ui'
+import { Chart, PieSeries } from '@devexpress/dx-react-chart-material-ui'
 import { Animation } from '@devexpress/dx-react-chart'
 
 const data = [

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
 import Button from '@material-ui/core/Button'
@@ -8,16 +8,16 @@ import FormControl from '@material-ui/core/FormControl'
 import Select from '@material-ui/core/Select'
 import InputLabel from '@material-ui/core/InputLabel'
 import MenuItem from '@material-ui/core/MenuItem'
-import { CookiesProvider } from 'react-cookie'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import TodoItem from '../../assets/TodoItem'
+import { useCookies } from 'react-cookie'
 
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     background: '#F9F8FF',
-  },  
+  },
 
   rootcard: {
     height: 300,
@@ -54,82 +54,82 @@ export default function TodoMain() {
 
   // use useState hooks
   const [todoData, setTodoData] = React.useState([])
+  const [cookies] = useCookies(['auth_token'])
+
   const url = 'https://teamup-be.herokuapp.com/api/v1/users/todos'
 
-  const getAllTodoData = () => {
-    axios
-      .get(`${url}`, {
-        headers: {
-          auth_token:
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imx1Y2FzZXMuc2VldEBnbWFpbC5jb20iLCJpYXQiOjE2MjcxMDYwMTgsImV4cCI6MTYyNzE5MjQxOH0.5Cc7IWlbge8_Pppp_UMx7NrARy1oJhIrHXW_h2G7BdA',
-        },
-      })
-      .then((response) => {
-        const allData = response.data
-        console.log(allData)
-        console.log(response.data)
-        setTodoData(response.data)
-      })
-      .catch((error) => console.log('error'))
-  }
+  React.useEffect(() => {
+    const getAllTodoData = () => {
+      axios
+        .get(`${url}`, {
+          headers: cookies,
+        })
+        .then((response) => {
+          const allData = response.data
+          setTodoData(response.data)
+        })
+        .catch((error) => console.log(error))
+    }
 
-  useEffect(() => {
     getAllTodoData()
   }, [])
 
   return (
-    <CookiesProvider>
-      <div className={classes.root}>
-        <NavBar title="To Do's Before 'I Do'" />
-        <main className={classes.content}>
-          <div className={classes.appBarSpacer} />
-          <Container maxWidth='lg' className={classes.container}>
-            <Grid container>
-              <Grid item xs={12} sm={6} lg={6}>
-                <FormControl
-                  variant='outlined'
-                  style={{ width: '150px', marginBottom: '20px' }}
+    <div className={classes.root}>
+      <NavBar title="To Do's Before 'I Do'" />
+      <main className={classes.content}>
+        <div className={classes.appBarSpacer} />
+        <Container maxWidth='lg' className={classes.container}>
+          <Grid container>
+            <Grid item xs={12} sm={6} lg={6}>
+              <FormControl
+                variant='outlined'
+                style={{ width: '150px', marginBottom: '20px' }}
+              >
+                <InputLabel id='category'>Filter By</InputLabel>
+                <Select
+                  labelId='demo-simple-select-outlined-label'
+                  id='demo-simple-select-outlined'
                 >
-                  <InputLabel id='category'>Filter By</InputLabel>
-                  <Select
-                    labelId='demo-simple-select-outlined-label'
-                    id='demo-simple-select-outlined'
-                  >
-                    <MenuItem value=''></MenuItem>
-                    <MenuItem value='groom'>Groom</MenuItem>
-                    <MenuItem value='bride'>Bride</MenuItem>
-                    <MenuItem value='both'>Both</MenuItem>
-                    <MenuItem value='completed'>Completed</MenuItem>
-                  </Select>
-                </FormControl>
-              </Grid>
-
-              <Grid item xs={12} sm={6} lg={6} style={{ textAlign: 'right' }}>
-                <Link
-                  to='/to-do/create'
-                  style={{ textDecoration: 'none', color: '#fff' }}
-                >
-                  <Button
-                    type='submit'
-                    variant='contained'
-                    color='primary'
-                    className={classes.submit}
-                  >
-                    Add To Do
-                  </Button>
-                </Link>
-              </Grid>
+                  <MenuItem value=''></MenuItem>
+                  <MenuItem value='groom'>Groom</MenuItem>
+                  <MenuItem value='bride'>Bride</MenuItem>
+                  <MenuItem value='both'>Both</MenuItem>
+                  <MenuItem value='completed'>Completed</MenuItem>
+                </Select>
+              </FormControl>
             </Grid>
 
-            {/* Map card here */}
-            <Grid container spacing={4}>
-              {todoData.map((item) => (
-                <TodoItem role={item.role} task={item.task} _id={item._id} />
-              ))}
+            <Grid item xs={12} sm={6} lg={6} style={{ textAlign: 'right' }}>
+              <Link
+                to='/to-do/create'
+                style={{ textDecoration: 'none', color: '#fff' }}
+              >
+                <Button
+                  type='submit'
+                  variant='contained'
+                  color='primary'
+                  className={classes.submit}
+                >
+                  Add To Do
+                </Button>
+              </Link>
             </Grid>
-          </Container>
-        </main>
-      </div>
-    </CookiesProvider>
+          </Grid>
+
+          {/* Map card here */}
+          <Grid container spacing={4}>
+            {todoData.map((item, pos) => (
+              <TodoItem
+                key={pos}
+                role={`Team ${item.role.toUpperCase()}`}
+                task={item.task}
+                _id={item._id}
+              />
+            ))}
+          </Grid>
+        </Container>
+      </main>
+    </div>
   )
 }

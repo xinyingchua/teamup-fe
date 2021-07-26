@@ -1,47 +1,46 @@
-import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
-import Button from "@material-ui/core/Button";
-import NavBar from "../Navbar/NavBar";
-import Grid from "@material-ui/core/Grid";
-import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
-import InputLabel from "@material-ui/core/InputLabel";
-import MenuItem from "@material-ui/core/MenuItem";
-import { Link } from "react-router-dom"
+import React from 'react'
+import { makeStyles } from '@material-ui/core/styles'
+import Container from '@material-ui/core/Container'
+import Button from '@material-ui/core/Button'
+import NavBar from '../Navbar/NavBar'
+import Grid from '@material-ui/core/Grid'
+import FormControl from '@material-ui/core/FormControl'
+import Select from '@material-ui/core/Select'
+import InputLabel from '@material-ui/core/InputLabel'
+import MenuItem from '@material-ui/core/MenuItem'
+import { Link } from 'react-router-dom'
 import axios from 'axios'
-import { useEffect } from "react";
-import { useCookies } from 'react-cookie';
-import List from "@material-ui/core/List";
-import GuestListItem from '../../assets/GuestListItem';
-import GuestListSummary from '../../assets/GuestListSummary';
+import { useEffect } from 'react'
+import { useCookies } from 'react-cookie'
+import List from '@material-ui/core/List'
+import GuestListItem from '../../assets/GuestListItem'
+import GuestListSummary from '../../assets/GuestListSummary'
 import TeamGroomBrideGuestList from './TeamGroomBride-List'
-import Paper from "@material-ui/core/Paper";
-import clsx from "clsx";
+import Paper from '@material-ui/core/Paper'
+import clsx from 'clsx'
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: "flex",
-    background: "#F9F8FF",
+    display: 'flex',
+    background: '#F9F8FF',
   },
-
 
   appBarSpacer: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
-    height: "100vh",
-    overflow: "auto",
+    height: '100vh',
+    overflow: 'auto',
   },
   container: {
     paddingTop: theme.spacing(3),
-    textAlign: "center",
+    textAlign: 'center',
   },
 
   submit: {
     margin: theme.spacing(3, 0, 2),
-    background: "#AAD1CA",
-    width: "200px",
-    color: "black",
+    background: '#AAD1CA',
+    width: '200px',
+    color: 'black',
   },
   fixedHeight: {
     height: 1000,
@@ -52,111 +51,89 @@ const useStyles = makeStyles((theme) => ({
   },
 
   filter: {
-    justifyContent: "flex-start",
+    justifyContent: 'flex-start',
   },
   purplebox: {
-    height: "100px",
-    width: "100px",
-    borderRadius: "5px",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#e0dbff",
-    color:'#7865E5'
+    height: '100px',
+    width: '100px',
+    borderRadius: '5px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#e0dbff',
+    color: '#7865E5',
   },
 
   outerbox: {
-    display: "flex",
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "center",
-    alignContent: "center",
-    color:'#7865E5'
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    alignContent: 'center',
+    color: '#7865E5',
   },
 
   teamtitle: {
-    display: "flex",
-    flexDirection: "row",
-    paddingTop: "30px",
-    alignItems: "center",
-    justifyContent: "center",
-    
+    display: 'flex',
+    flexDirection: 'row',
+    paddingTop: '30px',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 
-  paper2:{
+  paper2: {
     height: '70px',
-  }
-}));
+  },
+}))
 
 export default function GuestList() {
-  const classes = useStyles();
-  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+  const classes = useStyles()
+  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
+
+  // use useState hooks
+  const [cookies] = useCookies(['auth_token'])
+  const [guestSummaryData, getGuestSummaryData] = React.useState('')
+  const [guestListData, getGuestListData] = React.useState([])
 
 
-// use useState hooks
-const [cookies] = useCookies(['auth_token'])
-const [guestSummaryData, getGuestSummaryData] = React.useState('')
-const [guestListData, getGuestListData] = React.useState([])
+  // MAKING MULTIPLE AXIOS CALLS //
+  let urls = [
+    'https://teamup-be.herokuapp.com/api/v1/users/dashboard',
+    'https://teamup-be.herokuapp.com/api/v1/users/guests/',
+  ]
 
+  useEffect(() => {
+    const getAllGuestData = () => {
+      let requests = urls.map((url) => {
+        return axios.get(url, {
+          headers: cookies,
+        })
+      })
 
-// const getAllGuestData = () => {
-//   axios.get(`${url}`, {
-//     headers: cookies
-//   })
-//   .then((response) => {
-//     const allData = response.data
-//     getGuestSummaryData(allData.guests)
-//   })
-//   .catch((error => 
-//     console.log("error")))
-// }
+      Promise.all(requests)
+        .then((responses) => {
+          const DashboardData = responses[0].data
+          const GuestListData = responses[1].data
+          getGuestSummaryData(DashboardData.guests)
+          getGuestListData(GuestListData)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    }
 
+    getAllGuestData()
+  }, [])
 
-
-
-// TRY //
-let urls = [
-  'https://teamup-be.herokuapp.com/api/v1/users/dashboard',
-  'https://teamup-be.herokuapp.com/api/v1/users/guests/'
-]
-
-console.log(cookies)
-
-const getAllGuestData = () => {
-let requests = urls.map((url) => {
-  return axios.get(url, {
-    headers: cookies
-    
-  });
-});   
-
-Promise.all(requests).then((responses) => {
-  const DashboardData = responses[0].data
-  const GuestListData = responses[1].data
-  getGuestSummaryData(DashboardData.guests)
-  getGuestListData(GuestListData)
-  console.log(responses);
-  console.log(GuestListData);
-  console.log(DashboardData.guests.bride.total);
-   
-}).catch((err) => {
-   console.log(err)
-});
-}
-
-useEffect(() => {
-  getAllGuestData()
-}, []
-)
   return (
     <div className={classes.root}>
-      <NavBar title = "Guestlists" />
-     
-     {/* Guest Pax Summary  */}
+      <NavBar title='Guestlists' />
+
+      {/* Guest Pax Summary  */}
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
-        <Container maxWidth="lg" className={classes.container}>
-          <div item={12} style={{ margin: "50px" }}>
+        <Container maxWidth='lg' className={classes.container}>
+          <div item={12} style={{ margin: '50px' }}>
             <Grid
               container
               item
@@ -166,41 +143,47 @@ useEffect(() => {
               lg={12}
               className={classes.outerbox}
             >
-              <GuestListSummary attending= {guestSummaryData.totalAttending} unavailable={guestSummaryData.totalUnavailable} pending= {guestSummaryData.totalPending} total= {guestSummaryData.totalGuests}/>
-
+              <GuestListSummary
+                attending={guestSummaryData.totalAttending}
+                unavailable={guestSummaryData.totalUnavailable}
+                pending={guestSummaryData.totalPending}
+                total={guestSummaryData.totalGuests}
+              />
             </Grid>
           </div>
 
           {/* Filter */}
-          <div style={{ margin: "50px" }}>
-            <Grid container style={{ marginTop: "50px" }}>
-              <Grid item xs={12} sm={6} lg={6} style={{ textAlign: "left" }}>
-                <FormControl variant="outlined" style={{ width: "200px" }}>
-                  <InputLabel id="category">Filter By</InputLabel>
+          <div style={{ margin: '50px' }}>
+            <Grid container style={{ marginTop: '50px' }}>
+              <Grid item xs={12} sm={6} lg={6} style={{ textAlign: 'left' }}>
+                <FormControl variant='outlined' style={{ width: '200px' }}>
+                  <InputLabel id='category'>Filter By</InputLabel>
                   <Select
-                    value = " "
-                    labelId="demo-simple-select-outlined-label"
-                    id="demo-simple-select-outlined"
+                    value=' '
+                    labelId='demo-simple-select-outlined-label'
+                    id='demo-simple-select-outlined'
                   >
-                    <MenuItem value=" "></MenuItem>
-                    <MenuItem value="pending">Pending</MenuItem>
-                    <MenuItem value="attending">Attending</MenuItem>
-                    <MenuItem value="notattending">Not Attending</MenuItem>
+                    <MenuItem value=' '></MenuItem>
+                    <MenuItem value='pending'>Pending</MenuItem>
+                    <MenuItem value='attending'>Attending</MenuItem>
+                    <MenuItem value='notattending'>Not Attending</MenuItem>
                   </Select>
                 </FormControl>
               </Grid>
 
-              <Grid item xs={12} sm={6} lg={6} style={{ textAlign: "right" }}>
-              <Link to="/guest-lists/create" style={{ textDecoration: "none", color:'#fff' }}>
-                <Button
-                  type="submit"
-                  variant="contained"
-                  color="#60C3F1"
-                  className={classes.submit}
-                  style={{background:'#7865E5', color:'white'}}
+              <Grid item xs={12} sm={6} lg={6} style={{ textAlign: 'right' }}>
+                <Link
+                  to='/guest-lists/create'
+                  style={{ textDecoration: 'none', color: '#fff' }}
                 >
-                  Add Guest
-                </Button>
+                  <Button
+                    type='submit'
+                    variant='contained'
+                    className={classes.submit}
+                    style={{ background: '#7865E5', color: 'white' }}
+                  >
+                    Add Guest
+                  </Button>
                 </Link>
               </Grid>
             </Grid>
@@ -208,54 +191,71 @@ useEffect(() => {
             <Grid container spacing={3}>
               {/* Team Groom */}
               <Grid item xs={12} md={6} lg={6}>
-              <Paper className={fixedHeightPaper}>
-              <GuestListItem title="Groom" />
-              {/* <GuestListItem title="Groom" teampax={guestSummaryData.groom.total}/> */}
+                <Paper className={fixedHeightPaper}>
+                  <GuestListItem title='Groom' />
+                  {/* <GuestListItem title="Groom" teampax={guestSummaryData.groom.total}/> */}
 
-              <div style={{ margin:'25px'}}>
-                <List className={classes.ulroot}>
-                <Grid container>
+                  <div style={{ margin: '25px' }}>
+                    <List className={classes.ulroot}>
+                      <Grid container>
+                        {guestListData.map((item, pos) => {
+                          return(
+                          item.role === "groom"
+                 
+                          ? 
+                          <TeamGroomBrideGuestList
+                            key={pos}
 
-                {guestListData.map((item) => (
-  
-                <TeamGroomBrideGuestList role= {item.role} name={item.guest_first_name} guest_contact={item.guest_contact} status={item.status} pax={item.pax} _id={item._id} />
-                ))}
-
-        
-                </Grid>  
-                </List>
-        
-              </div>
-              </Paper>
+                            name={item.guest_first_name}
+                            guest_contact={item.guest_contact}
+                            status={item.status}
+                            pax={item.pax}
+                            _id={item._id}
+                          />
+                          : <div key={pos}></div>
+                          )
+                        })}
+                      </Grid>
+                    </List>
+                  </div>
+                </Paper>
               </Grid>
-              
 
+              {/* Team Bride */}
+              <Grid item xs={12} md={6} lg={6}>
+                <Paper className={fixedHeightPaper}>
+                  <GuestListItem title='Bride' />
+                  {/* <GuestListItem title="Bride" teampax={guestSummaryData.bride.total}/> */}
 
-               {/* Team Bride */}
-               <Grid item xs={12} md={6} lg={6}>
-              <Paper className={fixedHeightPaper}>
-              <GuestListItem title="Bride" />
-              {/* <GuestListItem title="Bride" teampax={guestSummaryData.bride.total}/> */}
+                  <div style={{ margin: '25px' }}>
+                    <List className={classes.ulroot}>
+                      <Grid container>
+                      {guestListData.map((item, pos) => {
+                          return(
+                          item.role === "bride"
+                 
+                          ? 
+                          <TeamGroomBrideGuestList
+                            key={pos}
 
-              <div style={{ margin:'25px'}}>
-                <List className={classes.ulroot}>
-                <Grid container>
-
-                {guestListData.map((item) => (
-  
-                <TeamGroomBrideGuestList role= {item.role} name={item.guest_first_name} guest_contact={item.guest_contact} status={item.status} pax={item.pax} _id={item._id}  />
-                ))}
-                </Grid>  
-                </List>
-        
-              </div>
-              </Paper>
+                            name={item.guest_first_name}
+                            guest_contact={item.guest_contact}
+                            status={item.status}
+                            pax={item.pax}
+                            _id={item._id}
+                          />
+                          : <div key={pos}></div>
+                          )
+                        })}
+                      </Grid>
+                    </List>
+                  </div>
+                </Paper>
               </Grid>
             </Grid>
-            
           </div>
         </Container>
       </main>
     </div>
-  );
+  )
 }
