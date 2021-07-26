@@ -1,23 +1,23 @@
-import React from 'react';
-import clsx from 'clsx';
-import { makeStyles } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Drawer from '@material-ui/core/Drawer';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
-import { mainListItems, secondaryListItems } from './listItems';
+import React from 'react'
+import clsx from 'clsx'
+import { makeStyles } from '@material-ui/core/styles'
+import CssBaseline from '@material-ui/core/CssBaseline'
+import Drawer from '@material-ui/core/Drawer'
+import AppBar from '@material-ui/core/AppBar'
+import Toolbar from '@material-ui/core/Toolbar'
+import List from '@material-ui/core/List'
+import Typography from '@material-ui/core/Typography'
+import Divider from '@material-ui/core/Divider'
+import IconButton from '@material-ui/core/IconButton'
+import { mainListItems, secondaryListItems } from './listItems'
+import { useCookies } from 'react-cookie'
 
-
-const drawerWidth = 240;
+const drawerWidth = 240
 
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
-    background: '#F9F8FF'
+    background: '#F9F8FF',
   },
   toolbar: {
     paddingRight: 24, // keep right padding when drawer closed
@@ -105,60 +105,79 @@ const useStyles = makeStyles((theme) => ({
     background: '#fff',
   },
 
-  username:{
-
+  username: {
     color: '#000',
     fontWeight: 300,
   },
 
   divider: {
     // Theme Color, or use css color in quote
-    background: "theme.palette.divider",
-},
-listdecoration: {
-  textDecoration: 'none',
-},
-
-}));
+    background: 'theme.palette.divider',
+  },
+  listdecoration: {
+    textDecoration: 'none',
+  },
+}))
 
 export default function NavBar(props) {
-  const classes = useStyles();
-  const [open, setOpen] = React.useState(true);
+  const classes = useStyles()
+  const [open, setOpen] = React.useState(true)
   const handleDrawerOpen = () => {
-    setOpen(true);
-  };
+    setOpen(true)
+  }
   const handleDrawerClose = () => {
-    setOpen(false);
-  };
+    setOpen(false)
+  }
+
+  const [cookies] = useCookies(['auth_token'])
 
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <AppBar position="absolute" className={clsx(classes.appBar,classes.style, open && classes.appBarShift)}>
+      <AppBar
+        position='absolute'
+        className={clsx(
+          classes.appBar,
+          classes.style,
+          open && classes.appBarShift
+        )}
+      >
         <Toolbar className={classes.toolbar}>
           <IconButton
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
+            edge='start'
+            color='inherit'
+            aria-label='open drawer'
             onClick={handleDrawerOpen}
-            className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
+            className={clsx(
+              classes.menuButton,
+              open && classes.menuButtonHidden
+            )}
           >
             {/* <MenuIcon /> */}
-            <img src="https://res.cloudinary.com/dhexix4cn/image/upload/v1626617737/teamup/logo_sbei3p.png" alt="logo" className={classes.logo} />
+            <img
+              src='https://res.cloudinary.com/dhexix4cn/image/upload/v1626617737/teamup/logo_sbei3p.png'
+              alt='logo'
+              className={classes.logo}
+            />
           </IconButton>
-          <AppBar/>
-          <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
+          <AppBar />
+          <Typography
+            component='h1'
+            variant='h6'
+            color='inherit'
+            noWrap
+            className={classes.title}
+          >
             {props.title}
           </Typography>
 
-          <Typography variant="body2" className={classes.username}>
-            Welcome Lucas And Xin Ying!
+          <Typography variant='body2' className={classes.username}>
+            Welcome!
           </Typography>
-          
         </Toolbar>
       </AppBar>
       <Drawer
-        variant="permanent"
+        variant='permanent'
         classes={{
           paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
         }}
@@ -166,15 +185,18 @@ export default function NavBar(props) {
       >
         <div className={classes.toolbarIcon}>
           <IconButton onClick={handleDrawerClose}>
-            <img src="https://res.cloudinary.com/dhexix4cn/image/upload/v1626617737/teamup/logo2_ihf6xr.png" alt="logo" className={classes.logo }/>
+            <img
+              src='https://res.cloudinary.com/dhexix4cn/image/upload/v1626617737/teamup/logo2_ihf6xr.png'
+              alt='logo'
+              className={classes.logo}
+            />
             {/* <ChevronLeftIcon /> */}
           </IconButton>
         </div>
-        <List style={{ color: 'white'}}>{mainListItems}</List>
+        <List style={{ color: 'white' }}>{mainListItems}</List>
         <Divider />
         <List style={{ color: 'white' }}>{secondaryListItems}</List>
       </Drawer>
-      
     </div>
-  );
+  )
 }
