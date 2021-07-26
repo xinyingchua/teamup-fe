@@ -10,6 +10,7 @@ import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline'
 import { useCookies } from 'react-cookie'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -47,9 +48,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function ToDoGrid(props, hooks) {
+export default function ToDoGrid(props) {
   const classes = useStyles()
   const [cookies] = useCookies(['auth_token'])
+  let history = useHistory()
 
   // Delete TO DO //
   const deleteToDoData = () => {
@@ -63,17 +65,15 @@ export default function ToDoGrid(props, hooks) {
         }
       )
       .then((response) => {
-        console.log(props.state[0])
-        console.log(response)
+        return
       })
-      .catch((error) => console.log('error'))
+      .catch((error) => console.log(error))
   }
 
   // submit form function
   const handleFormSummit = async (e) => {
     e.preventDefault()
-
-    deleteToDoData()
+    history.push('/to-do')
   }
 
   return (
@@ -114,18 +114,22 @@ export default function ToDoGrid(props, hooks) {
                   to={{ state: { _id: props._id } }}
                   style={{ textDecoration: 'none', color: '#fff' }}
                 >
-                  <Button
-                    variant='contained'
-                    justify='right'
-                    color='secondary'
-                    className={classes.button}
-                    onClick={(e) => {
+                  <form
+                    onSubmit={(e) => {
                       handleFormSummit(e)
                     }}
-                    startIcon={<CheckCircleOutlineIcon />}
                   >
-                    Done
-                  </Button>
+                    <Button
+                      variant='contained'
+                      justify='right'
+                      color='secondary'
+                      className={classes.button}
+                      onClick={deleteToDoData}
+                      startIcon={<CheckCircleOutlineIcon />}
+                    >
+                      Done
+                    </Button>
+                  </form>
                 </Link>
               </CardActions>
             </Grid>
