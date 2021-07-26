@@ -17,10 +17,9 @@ import GuestRSVP from './components/pages/User/GuestRSVP'
 import BudgetEdit from './components/pages/Budget/Budget-Edit'
 import ToDoMain from './components/pages/To-Do/Todo-Main'
 import ToDoEdit from './components/pages/To-Do/Todo-Edit'
-import GuestlistCreate from './components/pages/Guestlist/Guestlist-Form'
-// import GuestListEdit from './components/pages/Guestlist/Guestlist-Edit'
+import GuestlistForm from './components/pages/Guestlist/Guestlist-Form'
 import GuestListMain from './components/pages/Guestlist/Guestlist-Main'
-import EventEdit from './components/pages/Event-Schedule/Event-Edit'
+import EventForm from './components/pages/Event-Schedule/Event-Form'
 import BudgetMain from './components/pages/Budget/Budget-Main'
 import EventMain from './components/pages/Event-Schedule/Event-Main'
 import UpdateUser from './components/pages/User/UpdateUser'
@@ -87,13 +86,13 @@ class App extends React.Component {
                 <Route path='/to-do' component={ToDoMain} />
 
                 {/* Guest List Routes*/}
-                <Route path='/guest-lists/create' component={GuestlistCreate} />
-                <Route path='/guest-lists/edit' component={GuestlistCreate} />
+                <Route path='/guest-lists/create' component={GuestlistForm} />
+                <Route path='/guest-lists/edit' component={GuestlistForm} />
                 <Route path='/guest-lists' component={GuestListMain} />
 
                 {/* Events Routes*/}
-                <Route path='/events/create' component={EventEdit} />
-                <Route path='/events/edit' component={EventEdit} />
+                <Route path='/events/create' component={EventForm} />
+                <Route path='/events/edit' component={EventForm} />
                 <Route path='/events' component={EventMain} />
               </Switch>
             </div>

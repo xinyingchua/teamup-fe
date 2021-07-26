@@ -85,13 +85,12 @@ export default function EventByLine(props) {
                 edge='start'
                 disableTypography
                 style={{ fontWeight: 'bold', fontSize: '28px' }}
-                // id={labelId}
                 primary={props.from}
               />
             </Grid>
 
             {/* Event Details */}
-            <Grid
+            <Grid item
               xs={12}
               md={11}
               lg={12}
@@ -102,7 +101,6 @@ export default function EventByLine(props) {
                 <ListItemText
                   disableTypography
                   style={{ fontWeight: 'bold', fontSize: '30px' }}
-                  // id={labelId}
                   primary={props.name}
                 />
               </ListItem>
@@ -111,7 +109,6 @@ export default function EventByLine(props) {
                 <QueryBuilderIcon className={classes.icon} />
                 <ListItemText
                   style={{ flexDirection: 'column' }}
-                  // id={labelId}
                   primary={props.from}
                 />
               </ListItem>
@@ -120,7 +117,6 @@ export default function EventByLine(props) {
                 <QueryBuilderIcon className={classes.icon} />
                 <ListItemText
                   style={{ flexDirection: 'column' }}
-                  // id={labelId}
                   primary={props.to}
                 />
               </ListItem>
@@ -129,14 +125,12 @@ export default function EventByLine(props) {
                 <LocationOnIcon className={classes.icon} />
                 <ListItemText
                   style={{ flexDirection: 'column' }}
-                  // id={labelId}
                   primary={props.location}
                 />
               </ListItem>
             </Grid>
 
             <Grid edge='end' style={{ display: 'flex', flexDirection: 'row' }}>
-              {/* <DeleteIcon className={classes.icon}/> */}
             </Grid>
 
             <ListItemSecondaryAction>
