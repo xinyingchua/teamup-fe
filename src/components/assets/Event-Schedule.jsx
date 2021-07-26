@@ -91,7 +91,7 @@ export default function EventByLine(props) {
             </Grid>
 
             {/* Event Details */}
-            <Grid
+            <Grid item
               xs={12}
               md={11}
               lg={12}
@@ -138,7 +138,7 @@ export default function EventByLine(props) {
             <Grid edge='end' style={{ display: 'flex', flexDirection: 'row' }}>
               {/* <DeleteIcon className={classes.icon}/> */}
             </Grid>
-
+            <div>
             <ListItemSecondaryAction>
               <Link
                 to={{ pathname: '/events/edit', state: { _id: props._id } }}
@@ -149,6 +149,7 @@ export default function EventByLine(props) {
                 </IconButton>
               </Link>
             </ListItemSecondaryAction>
+            </div>
           </ListItem>
         </Paper>
       </Grid>

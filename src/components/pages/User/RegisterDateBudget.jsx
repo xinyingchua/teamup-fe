@@ -5,10 +5,9 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import { Link } from 'react-router-dom'
 import { useHistory } from 'react-router-dom'
 import axios from 'axios'
-import { useCookies } from 'react-cookie'
+import {useCookies } from 'react-cookie'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -43,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
     
   },
   icons: {
-    maxWidth: 100,
+    maxWidth: 80,
     marginRight: theme.spacing(2),
     
   },
@@ -64,32 +63,33 @@ export default function RegisterDateBudget() {
 
   const [eDate, setEDate] = React.useState('')
   const [budget, setBudget] = React.useState('')
-  const [cookie, setCookie] = useCookies(['auth_token'])
-  let [response, setFetchedData] = React.useState(null)
+  const [cookies] = useCookies(['auth_token'])
   let history = useHistory()
 
-  // POST REQUEST TO UPDATE EDATE AND BUDGET // 
-    let fetchData = async (response) => {
-      try {
-        response = await axios({
-          method: 'post',
-          // url: 'https://teamup-be.herokuapp.com/api/v1/login', --> TBC
-          data: {
-            edate: eDate,
-            ebudget: budget,
-          },
-        })
-      } catch (err) {
-        return err
-      }
-  
-      return response
-    }
+  // PATCH REQUEST TO UPDATE EDATE AND BUDGET // 
+  const updateUserProfile = () => {
+    axios
+      .patch(
+        'https://teamup-be.herokuapp.com/api/v1/users/profile/update',
+        {
+          d_date: eDate,
+          e_budget: budget,
+        },
+        {
+          headers: cookies,
+        }
+      )
+      .then((response) => {
+        console.log(eDate)
+      })
+      .catch((error) => console.log('error'))
+  }
+
+  console.log(cookies)
 
   // submit form function
   const handleFormSubmission = async (e) => {
     e.preventDefault()
-    setCookie('auth_token', response.data.token)
     history.push('/dashboard')
   }
 
@@ -147,6 +147,7 @@ export default function RegisterDateBudget() {
               variant="contained"
               color="primary"
               className={classes.submit}
+              onClick={updateUserProfile()}
             >
               Continue
             </Button>
