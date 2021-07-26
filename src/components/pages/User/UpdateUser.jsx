@@ -1,12 +1,16 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
 import Box from '@material-ui/core/Box'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import NavBar from '../Navbar/NavBar'
-import { useCookies, CookiesProvider } from 'react-cookie'
+import { useCookies } from 'react-cookie'
 import axios from 'axios'
+import moment from 'moment';
+import { useHistory } from 'react-router-dom'
+
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,40 +38,76 @@ const useStyles = makeStyles((theme) => ({
 export default function UpdateUser() {
   const classes = useStyles()
 
+
   // use useState hooks
-  const [task, setTask] = React.useState('')
+  const [firstName, setFirstName] = React.useState('')
+  const [lastName, setLastName] = React.useState('')
+  const [email, setEmail] = React.useState('')
+  const [password, setPassword] = React.useState('')
+  const [dDate, setDdate] = React.useState('')
+  const [dDestination, setDdestination] = React.useState('')
+  const [budget, setBudget] = React.useState('')
+  let history = useHistory()
   const [cookies] = useCookies(['auth_token'])
-  // const [status, setStatus] = React.useState(false)
-  // const [role, setRole] = React.useState('')
-  let [fetchedData, setFetchedData] = React.useState('')
 
-  // function toggle() {
-  //   setStatus(!status)
-  // }
 
-  // use api callback
-  let fetchData = async () => {
-    const response = await axios({
-      method: 'post',
-      headers: cookies,
-      url: 'https://teamup-be.herokuapp.com/api/v1/users/todos/create',
-      data: {
-        task: '',
-        status: false,
-        role: '',
-      },
-    })
-    setFetchedData(response)
+  
+  useEffect(() => {
+    // GET //
+    const getUserData = () => {
+      axios
+        .get(
+          'https://teamup-be.herokuapp.com/api/v1/users/profile',
+          { headers: cookies }
+        )
+        .then((response) => {
+          const allUserData = response.data
+          setFirstName(allUserData.first_name)
+          setLastName(allUserData.last_name)
+          setEmail(allUserData.email)
+          setDdate(moment(allUserData.d_date).format("YYYY-MM-DD"))
+          setDdestination(allUserData.d_destination.name)
+          setBudget(allUserData.e_budget)   
+        })
+        .catch((error) => console.log(error))
+    }
+    getUserData()
+  }, [])
+
+
+  // Patch User Profile //
+  const updateUserProfile = () => {
+    axios
+      .patch(
+        'https://teamup-be.herokuapp.com/api/v1/users/profile/update',
+        {
+          first_name: firstName,
+          last_namet: lastName,
+          email: email,
+          password: password,
+          d_date: dDate,
+          d_destination: dDestination,
+          e_budget: budget
+        },
+        {
+          headers: cookies,
+        }
+      )
+      .then((response) => {
+        return
+      })
+      .catch((error) => console.log('error'))
   }
 
+
+  
   // submit form function
   const handleFormSummit = async (e) => {
     e.preventDefault()
-    fetchData()
+    history.push('/dashboard')
   }
 
   return (
-    <CookiesProvider>
       <div className={classes.root}>
         <NavBar title='Update Personal Information' />
         <main className={classes.content}>
@@ -85,9 +125,10 @@ export default function UpdateUser() {
                   required
                   style={{ width: '55%' }}
                   id='firstnameInput'
-                  label='FirstName'
+                  label='First Name'
                   name='firstname'
-                  onChange={(e) => setTask(e.target.value)}
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
                   autoFocus
                 />
 
@@ -99,7 +140,8 @@ export default function UpdateUser() {
                   id='lastnameInput'
                   label='Last Name'
                   name='lastname'
-                  onChange={(e) => setTask(e.target.value)}
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
                   autoFocus
                 />
 
@@ -108,10 +150,10 @@ export default function UpdateUser() {
                   margin='normal'
                   required
                   fullWidth
-                  id='emailInput'
                   label='Email'
                   name='email'
-                  onChange={(e) => setTask(e.target.value)}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   autoFocus
                 />
 
@@ -120,10 +162,9 @@ export default function UpdateUser() {
                   margin='normal'
                   required
                   fullWidth
-                  id='emailInput'
                   label='Password'
                   name='password'
-                  onChange={(e) => setTask(e.target.value)}
+                  onChange={(e) => setPassword(e.target.value)}
                   autoFocus
                 />
 
@@ -136,9 +177,9 @@ export default function UpdateUser() {
                   }}
                   label='Wedding Date'
                   type='date'
-                  defaultValue='2017-05-24'
+                  value={dDate}
                   className={classes.textField}
-                  onChange={(e) => setTask(e.target.value)}
+                  onChange={(e) => setDdate(e.target.value)}
                   InputLabelProps={{
                     shrink: true,
                   }}
@@ -152,7 +193,8 @@ export default function UpdateUser() {
                   id='d-destination'
                   label='D-Destination'
                   name='d-destination'
-                  onChange={(e) => setTask(e.target.value)}
+                  value={dDestination}
+                  onChange={(e) => setDdestination(e.target.value)}
                   autoFocus
                 />
 
@@ -164,7 +206,8 @@ export default function UpdateUser() {
                   id='emailInput'
                   label='Budget'
                   name='password'
-                  onChange={(e) => setTask(e.target.value)}
+                  value={budget}
+                  onChange={(e) => setBudget(e.target.value)}
                   autoFocus
                 />
 
@@ -173,6 +216,7 @@ export default function UpdateUser() {
                   // fullWidth
                   variant='contained'
                   color='primary'
+                  onClick={updateUserProfile()}
                   className={classes.submit}
                 >
                   Update User
@@ -182,6 +226,5 @@ export default function UpdateUser() {
           </Container>
         </main>
       </div>
-    </CookiesProvider>
   )
 }
