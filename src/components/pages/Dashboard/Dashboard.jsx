@@ -78,17 +78,16 @@ class Dashboard extends React.Component {
     Promise.all([promise1, promise2])
       .then((response) => {
         this.setState({
-          daysLeft: `0` || response[0].data.calendar.daysLeft,
-          budget: `0` || response[0].data.budget.initialBudget.toFixed(2),
-          currentBudget:
-            `0` || response[0].data.budget.currentBudget.toFixed(2),
-          attending: `0` || response[0].data.guests.totalAttending,
-          notAttending: `0` || response[0].data.guests.totalUnavailable,
-          pending: `0` || response[0].data.guests.totalPending,
-          total: `0` || response[0].data.guests.totalGuests,
-          totalTasks: `0` || response[0].data.todos.total,
-          completedTasks: `0` || response[0].data.todos.completed,
-          numberOfEvents: `0` || response[0].data.events.total,
+          daysLeft: response[0].data.calendar.daysLeft,
+          budget: response[0].data.budget.initialBudget.toFixed(2),
+          currentBudget: response[0].data.budget.currentBudget.toFixed(2),
+          attending: response[0].data.guests.totalAttending,
+          notAttending: response[0].data.guests.totalUnavailable,
+          pending: response[0].data.guests.totalPending,
+          total: response[0].data.guests.totalGuests,
+          totalTasks: response[0].data.todos.total,
+          completedTasks: response[0].data.todos.completed,
+          numberOfEvents: response[0].data.events.total,
           allEventData: response[1].data,
         })
       })
