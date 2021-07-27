@@ -25,6 +25,8 @@ import EventEdit from './components/pages/Event-Schedule/Event-Edit'
 import BudgetMain from './components/pages/Budget/Budget-Main'
 import EventMain from './components/pages/Event-Schedule/Event-Main'
 import UpdateUser from './components/pages/User/UpdateUser'
+import LandingPage from './components/pages/Landing-Page/LandingPage'
+
 
 const theme = createTheme({
   typography: {
@@ -108,6 +110,12 @@ class App extends React.Component {
                 <Route path='/events/create' component={EventEdit} />
                 <Route path='/events/edit' component={EventEdit} />
                 <Route path='/events' component={EventMain} />
+
+                {/* Landing Page*/}
+                <Route path='/' component={LandingPage} />
+
+
+
               </Switch>
             </div>
           </Router>

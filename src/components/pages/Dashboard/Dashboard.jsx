@@ -13,7 +13,9 @@ import axios from 'axios'
 import { withStyles } from '@material-ui/core/styles'
 import { withCookies } from 'react-cookie'
 import { Redirect } from 'react-router-dom'
-import Pagination from '@material-ui/lab/Pagination'
+import Pagination from '@material-ui/lab/Pagination';
+import _ from 'lodash'
+
 
 const styles = (theme) => ({
   root: {
@@ -43,6 +45,7 @@ const styles = (theme) => ({
   },
 })
 
+
 // export default function Dashboard() {
 class Dashboard extends React.Component {
   constructor(props) {
@@ -52,7 +55,6 @@ class Dashboard extends React.Component {
 
     this.state = {
       user: cookies.get('auth_token'),
-      // response[0].data: null,
       daysLeft: '',
       budget: '',
       currentBudget: '',
@@ -61,8 +63,11 @@ class Dashboard extends React.Component {
       pending: '',
       total: '',
       allEventData: [],
+      currentPage: 0,
     }
   }
+
+  
 
   async componentDidMount() {
     let dashboardURL = 'https://teamup-be.herokuapp.com/api/v1/users/dashboard'
@@ -75,9 +80,11 @@ class Dashboard extends React.Component {
       headers: { auth_token: this.state.user },
     })
 
+
     Promise.all([promise1, promise2])
       .then((response) => {
         this.setState({
+
           daysLeft: response[0].data.calendar.daysLeft || 0,
           budget: response[0].data.budget.initialBudget.toFixed(2) || 0,
           currentBudget: response[0].data.budget.currentBudget.toFixed(2) || 0,
@@ -88,44 +95,19 @@ class Dashboard extends React.Component {
           totalTasks: response[0].data.todos.total || 0,
           completedTasks: response[0].data.todos.completed || 0,
           numberOfEvents: response[0].data.events.total || 0,
-          allEventData: response[1].data,
+          allEventData: _.chunk(response[1].data, 4),
         })
       })
       .catch((err) => {
         return err
       })
 
-    // const response = await axios({
-    //   method: 'get',
-    //   url: 'https://teamup-be.herokuapp.com/api/v1/users/dashboard',
-    //   headers: {
-    //     auth_token: this.state.user,
-    //   },
-    // })
 
-    //   this.setState({
-    //     response[0].data: response.data,
-    //   })
-    // } catch (err) {
-    //   // Handle Error Here
-    //   console.error(err)
-    // }
-
-    // this.setState({
-    //   daysLeft: this.state.response[0].data.calendar.daysLeft,
-    //   budget: this.state.response[0].data.budget.initialBudget.toFixed(2),
-    //   currentBudget: this.state.response[0].data.budget.currentBudget.toFixed(2),
-    //   attending: this.state.response[0].data.guests.totalAttending,
-    //   notAttending: this.state.response[0].data.guests.totalUnavailable,
-    //   pending: this.state.response[0].data.guests.totalPending,
-    //   total: this.state.response[0].data.guests.totalGuests,
-    //   totalTasks: this.state.response[0].data.todos.total,
-    //   completedTasks: this.state.response[0].data.todos.completed,
-    //   numberOfEvents: this.state.response[0].data.events.total,
-
-    // },
-    // )
   }
+
+ 
+
+  
 
   render() {
     if (!this.state.user) {
@@ -134,6 +116,14 @@ class Dashboard extends React.Component {
     const { classes } = this.props
 
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
+
+
+    // To handle page change to show array of items
+    const handlePageChange = ((e) => {
+      this.setState({
+        currentPage: e.target.innerText - 1
+    })
+    });
 
     return (
       <div className={classes.root}>
@@ -181,12 +171,14 @@ class Dashboard extends React.Component {
                 </Paper>
               </Grid>
               <Grid container spacing={2}>
+
                 {this.state.allEventData.length === 0 ? (
+
                   <h6>There are no items at the moment.</h6>
                 ) : (
-                  this.state.allEventData.map((item, pos) => {
+                  this.state.allEventData[this.state.currentPage].map((item, pos) => {
                     return (
-                      <Grid item xs={3}>
+                      <Grid key={pos} item xs={3}>
                         <Paper className={classes.paper}>
                           <UpcomingEvents
                             eventName={item.event_name}
@@ -198,10 +190,14 @@ class Dashboard extends React.Component {
                     )
                   })
                 )}
+
+                
+
                 <Grid item xs={12}>
                   <Pagination
-                    count={this.state.numberOfEvents}
+                    count={Math.ceil(this.state.numberOfEvents/4)}
                     color='primary'
+                    onChange={e => handlePageChange(e)}
                   />
                 </Grid>
               </Grid>

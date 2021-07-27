@@ -12,6 +12,7 @@ import axios from 'axios'
 import { Link } from 'react-router-dom'
 import { useCookies } from 'react-cookie'
 import EventByLine from '../../assets/Event-Schedule'
+import { DataGrid } from '@material-ui/data-grid';
 
 const useStyles = makeStyles((theme) => ({
   root: {
