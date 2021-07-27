@@ -52,7 +52,6 @@ class Dashboard extends React.Component {
 
     this.state = {
       user: cookies.get('auth_token'),
-      // response[0].data: null,
       daysLeft: '',
       budget: '',
       currentBudget: '',
@@ -79,9 +78,8 @@ class Dashboard extends React.Component {
       .then((response) => {
         this.setState({
           daysLeft: response[0].data.calendar.daysLeft,
-          budget: `0` || response[0].data.budget.initialBudget.toFixed(2),
-          currentBudget:
-            `0` || response[0].data.budget.currentBudget.toFixed(2),
+          budget: response[0].data.budget.initialBudget.toFixed(2) || `0` ,
+          currentBudget: response[0].data.budget.currentBudget.toFixed(2) ||  `0` ,
           attending: response[0].data.guests.totalAttending,
           notAttending: response[0].data.guests.totalUnavailable,
           pending: response[0].data.guests.totalPending,
@@ -91,41 +89,12 @@ class Dashboard extends React.Component {
           numberOfEvents: response[0].data.events.total,
           allEventData: response[1].data,
         })
+        console.log(response[0].data.budget.initialBudget.toFixed(2))
       })
       .catch((err) => {
         return err
       })
 
-    // const response = await axios({
-    //   method: 'get',
-    //   url: 'https://teamup-be.herokuapp.com/api/v1/users/dashboard',
-    //   headers: {
-    //     auth_token: this.state.user,
-    //   },
-    // })
-
-    //   this.setState({
-    //     response[0].data: response.data,
-    //   })
-    // } catch (err) {
-    //   // Handle Error Here
-    //   console.error(err)
-    // }
-
-    // this.setState({
-    //   daysLeft: this.state.response[0].data.calendar.daysLeft,
-    //   budget: this.state.response[0].data.budget.initialBudget.toFixed(2),
-    //   currentBudget: this.state.response[0].data.budget.currentBudget.toFixed(2),
-    //   attending: this.state.response[0].data.guests.totalAttending,
-    //   notAttending: this.state.response[0].data.guests.totalUnavailable,
-    //   pending: this.state.response[0].data.guests.totalPending,
-    //   total: this.state.response[0].data.guests.totalGuests,
-    //   totalTasks: this.state.response[0].data.todos.total,
-    //   completedTasks: this.state.response[0].data.todos.completed,
-    //   numberOfEvents: this.state.response[0].data.events.total,
-
-    // },
-    // )
   }
 
   render() {
@@ -182,7 +151,7 @@ class Dashboard extends React.Component {
                 </Paper>
               </Grid>
               <Grid container spacing={2}>
-                {this.state.allEventData.length !== 0 ? (
+              {this.state.allEventData.length !== 0 ? (
                   <Grid item xs={3}>
                     <Paper className={classes.paper}>
                       <UpcomingEvents eventName={`No Event`} />
@@ -203,6 +172,9 @@ class Dashboard extends React.Component {
                     )
                   })
                 )}
+
+                
+
                 <Grid item xs={12}>
                   <Pagination
                     count={this.state.numberOfEvents}

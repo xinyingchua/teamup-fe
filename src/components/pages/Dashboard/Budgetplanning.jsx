@@ -16,11 +16,12 @@ const data = [
 export default class Demo extends React.PureComponent {
   constructor(props) {
     super(props)
-
     this.state = {
       data,
     }
   }
+
+  
 
   render() {
     const { data: chartData } = this.state
