@@ -86,7 +86,9 @@ export default function EventMain() {
         const getData = response.data
         getEventData(getData)
       })
-      .catch((error) => console.log(error))
+      .catch((error) => {
+        return error
+      })
   }
 
   React.useEffect(() => {

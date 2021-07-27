@@ -67,7 +67,9 @@ export default function TodoMain() {
         const allData = response.data
         setTodoData(response.data)
       })
-      .catch((error) => console.log(error))
+      .catch((error) => {
+        return error
+      })
   }
 
   React.useEffect(() => {

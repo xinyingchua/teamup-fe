@@ -118,7 +118,7 @@ export default function GuestList() {
           getGuestListData(GuestListData)
         })
         .catch((err) => {
-          console.log(err)
+          return err
         })
     }
 

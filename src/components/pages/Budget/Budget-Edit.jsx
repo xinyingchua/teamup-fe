@@ -88,7 +88,9 @@ export default function NewBudget(props) {
           setCategory(allData.category)
           setStatus(allData.status)
         })
-        .catch((error) => console.log(error))
+        .catch((error) => {
+          return error
+        })
     }
 
     if (props.location.state && props.location.state._id) {
@@ -134,7 +136,9 @@ export default function NewBudget(props) {
       .then((response) => {
         return
       })
-      .catch((error) => console.log('error'))
+      .catch((error) => {
+        return error
+      })
   }
 
   // Delete TO DO //
@@ -151,7 +155,9 @@ export default function NewBudget(props) {
       .then((response) => {
         return
       })
-      .catch((error) => console.log(error))
+      .catch((error) => {
+        return error
+      })
   }
 
   // submit form function

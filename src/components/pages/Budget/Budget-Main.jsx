@@ -107,7 +107,7 @@ export default function BudgetMain() {
           setWeddingBudget(responses[0].data.budget.initialBudget.toFixed(2))
         })
         .catch((err) => {
-          console.log(err)
+          return err
         })
     }
 
