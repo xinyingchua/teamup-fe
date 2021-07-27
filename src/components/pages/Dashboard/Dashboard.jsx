@@ -183,11 +183,7 @@ class Dashboard extends React.Component {
               </Grid>
               <Grid container spacing={2}>
                 {this.state.allEventData.length !== 0 ? (
-                  <Grid item xs={3}>
-                    <Paper className={classes.paper}>
-                      <UpcomingEvents eventName={`No Event`} />
-                    </Paper>
-                  </Grid>
+                  <h6>There are no items at the moment.</h6>
                 ) : (
                   this.state.allEventData.map((item, pos) => {
                     return (
