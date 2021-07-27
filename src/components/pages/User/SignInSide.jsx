@@ -61,6 +61,8 @@ export default function SignInSide() {
   let [fetchedData, setFetchedData] = React.useState('')
   let history = useHistory()
 
+  console.log(cookie)
+
   // use api callback
   let fetchData = async (response) => {
     try {
@@ -77,6 +79,7 @@ export default function SignInSide() {
     }
     return response
   }
+  
 
   // submit form function
   const handleFormSubmission = async (e) => {
