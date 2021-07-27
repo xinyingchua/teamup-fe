@@ -13,6 +13,13 @@ import ToggleOnIcon from '@material-ui/icons/ToggleOn';
 import { Link } from "react-router-dom"
 
 
+// const [cookies, removeCookie] = useCookies(['auth_token'])
+// const handleRemoveCookie = async(e) => {
+//   removeCookie('auth_token');
+//   console.log("hello")
+
+// } 
+  
 
 export const mainListItems = (
   <div >
@@ -74,6 +81,7 @@ export const mainListItems = (
 );
 
 export const secondaryListItems = (
+
   <div>
     <ListItem button>
       <ListItemIcon style={{ color: 'white' }}>
@@ -83,10 +91,12 @@ export const secondaryListItems = (
     </ListItem>
    
     <ListItem button>
+    {/* <ListItem button onClick={(e) => { handleRemoveCookie(e)}}> */}
       <ListItemIcon style={{ color: 'white' }}>
         <ExitToAppIcon />
       </ListItemIcon>
-      <ListItemText primary="Log Out" />
+      <ListItemText 
+      primary="Log Out" />
     </ListItem>
   </div>
 );

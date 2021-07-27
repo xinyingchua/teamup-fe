@@ -98,7 +98,7 @@ class Dashboard extends React.Component {
         return err
       })
 
-      console.log(user)
+      // console.log(user)
     // const response = await axios({
     //   method: 'get',
     //   url: 'https://teamup-be.herokuapp.com/api/v1/users/dashboard',
