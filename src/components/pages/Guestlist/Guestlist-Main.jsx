@@ -205,7 +205,7 @@ export default function GuestList() {
                   <div style={{ margin: '25px' }}>
                     <List className={classes.ulroot}>
                       <Grid container>
-                        {guestListData.length !== 0 ? (
+                        {guestListData.length === 0 ? (
                           <h6>There are no items at the moment.</h6>
                         ) : (
                           guestListData.map((item, pos) => {
@@ -245,7 +245,7 @@ export default function GuestList() {
                   <div style={{ margin: '25px' }}>
                     <List className={classes.ulroot}>
                       <Grid container>
-                        {guestListData.length !== 0 ? (
+                        {guestListData.length === 0 ? (
                           <h6>There are no items at the moment.</h6>
                         ) : (
                           guestListData.map((item, pos) => {
