@@ -10,6 +10,7 @@ import axios from 'axios'
 import { useHistory } from 'react-router-dom'
 import { useCookies } from 'react-cookie'
 import { Link } from 'react-router-dom'
+import { toast } from 'material-react-toastify'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -49,6 +50,8 @@ const useStyles = makeStyles((theme) => ({
 export default function SignInSide() {
   const classes = useStyles()
 
+  const notify = (message) => toast.dark(message)
+
   // use useState hooks
 
   const [emailLogin, setEmailLogin] = React.useState('')
@@ -81,8 +84,9 @@ export default function SignInSide() {
 
     let response = await fetchData()
 
-    if (!response.data) {
-      return console.log('Email or Password is incorrect, please try again')
+    if (!response.data.token) {
+      notify('Email or password is incorrect. Please try again.')
+      return
     }
 
     setCookie('auth_token', response.data.token)

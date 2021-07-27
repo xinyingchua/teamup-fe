@@ -5,6 +5,8 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import { withCookies, Cookies } from 'react-cookie'
 import { instanceOf } from 'prop-types'
 import { CookiesProvider } from 'react-cookie'
+import { ToastContainer } from 'material-react-toastify'
+import 'material-react-toastify/dist/ReactToastify.css'
 
 // PAGES //
 import Dashboard from './components/pages/Dashboard/Dashboard'
@@ -23,6 +25,8 @@ import EventEdit from './components/pages/Event-Schedule/Event-Edit'
 import BudgetMain from './components/pages/Budget/Budget-Main'
 import EventMain from './components/pages/Event-Schedule/Event-Main'
 import UpdateUser from './components/pages/User/UpdateUser'
+import LandingPage from './components/pages/Landing-Page/LandingPage'
+
 
 const theme = createTheme({
   typography: {
@@ -52,6 +56,17 @@ class App extends React.Component {
   render() {
     return (
       <CookiesProvider>
+        <ToastContainer
+          position='bottom-right'
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable={false}
+          pauseOnHover
+        />
         <ThemeProvider theme={theme}>
           <Router>
             <div className='App'>
@@ -95,6 +110,12 @@ class App extends React.Component {
                 <Route path='/events/create' component={EventEdit} />
                 <Route path='/events/edit' component={EventEdit} />
                 <Route path='/events' component={EventMain} />
+
+                {/* Landing Page*/}
+                <Route path='/' component={LandingPage} />
+
+
+
               </Switch>
             </div>
           </Router>

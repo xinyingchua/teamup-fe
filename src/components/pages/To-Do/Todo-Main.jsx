@@ -119,15 +119,21 @@ export default function TodoMain() {
 
           {/* Map card here */}
           <Grid container spacing={4}>
-            {todoData.map((item, pos) => (
-              <TodoItem
-                key={pos}
-                role={`Team ${item.role.toUpperCase()}`}
-                task={item.task}
-                _id={item._id}
-                refreshItems={getAllTodoData}
-              />
-            ))}
+            {todoData.length !== 0 ? (
+              <h6>There are no items at the moment.</h6>
+            ) : (
+              todoData.map((item, pos) => {
+                return (
+                  <TodoItem
+                    key={pos}
+                    role={`Team ${item.role.toUpperCase()}`}
+                    task={item.task}
+                    _id={item._id}
+                    refreshItems={getAllTodoData}
+                  />
+                )
+              })
+            )}
           </Grid>
         </Container>
       </main>

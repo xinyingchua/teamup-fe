@@ -11,7 +11,7 @@ export default function Deposits(props) {
     <React.Fragment>
     <Box m={2}>
       {/* <h6 >test</h6> */}
-      <h6 >{props.eventName}</h6>
+      <h6 style={{fontSize:'15px', fontWeight:'400'}}>{props.eventName}</h6>
       <Typography component="p" variant="h4" style={{fontWeight:"500" }}>
       {moment(props.eventDate).format("DD MMMM YYYY")}
       </Typography>

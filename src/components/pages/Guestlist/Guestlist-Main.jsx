@@ -193,32 +193,36 @@ export default function GuestList() {
               <Grid item xs={12} md={6} lg={6}>
                 <Paper className={fixedHeightPaper}>
                   {/* if guesSummaryData.groom.total is empty then render somthing else */}
-                  { guestSummaryData
-                  ?   
-                  <GuestListItem
-                    title='Groom'
-                    teampax={guestSummaryData.groom.total}
-                  />
-                  : <GuestListItem title='Groom' />
-                  }
+                  {guestSummaryData ? (
+                    <GuestListItem
+                      title='Groom'
+                      teampax={guestSummaryData.groom.total}
+                    />
+                  ) : (
+                    <GuestListItem title='Groom' />
+                  )}
 
                   <div style={{ margin: '25px' }}>
                     <List className={classes.ulroot}>
                       <Grid container>
-                        {guestListData.map((item, pos) => {
-                          return item.role === 'groom' ? (
-                            <TeamGroomBrideGuestList
-                              key={pos}
-                              name={item.guest_first_name}
-                              guest_contact={item.guest_contact}
-                              status={item.status}
-                              pax={item.pax}
-                              _id={item._id}
-                            />
-                          ) : (
-                            <div key={pos}></div>
-                          )
-                        })}
+                        {guestListData.length !== 0 ? (
+                          <h6>There are no items at the moment.</h6>
+                        ) : (
+                          guestListData.map((item, pos) => {
+                            return item.role === 'groom' ? (
+                              <TeamGroomBrideGuestList
+                                key={pos}
+                                name={item.guest_first_name}
+                                guest_contact={item.guest_contact}
+                                status={item.status}
+                                pax={item.pax}
+                                _id={item._id}
+                              />
+                            ) : (
+                              <div key={pos}></div>
+                            )
+                          })
+                        )}
                       </Grid>
                     </List>
                   </div>
@@ -229,32 +233,36 @@ export default function GuestList() {
               <Grid item xs={12} md={6} lg={6}>
                 <Paper className={fixedHeightPaper}>
                   {/* if guesSummaryData.bride.total is empty then render somthing else */}
-                { guestSummaryData
-                  ?   
-                  <GuestListItem
-                    title='Bride'
-                    teampax={guestSummaryData.bride.total}
-                  />
-                  : <GuestListItem title='Bride' />
-                  }
+                  {guestSummaryData ? (
+                    <GuestListItem
+                      title='Bride'
+                      teampax={guestSummaryData.bride.total}
+                    />
+                  ) : (
+                    <GuestListItem title='Bride' />
+                  )}
 
                   <div style={{ margin: '25px' }}>
                     <List className={classes.ulroot}>
                       <Grid container>
-                        {guestListData.map((item, pos) => {
-                          return item.role === 'bride' ? (
-                            <TeamGroomBrideGuestList
-                              key={pos}
-                              name={item.guest_first_name}
-                              guest_contact={item.guest_contact}
-                              status={item.status}
-                              pax={item.pax}
-                              _id={item._id}
-                            />
-                          ) : (
-                            <div key={pos}></div>
-                          )
-                        })}
+                        {guestListData.length !== 0 ? (
+                          <h6>There are no items at the moment.</h6>
+                        ) : (
+                          guestListData.map((item, pos) => {
+                            return item.role === 'bride' ? (
+                              <TeamGroomBrideGuestList
+                                key={pos}
+                                name={item.guest_first_name}
+                                guest_contact={item.guest_contact}
+                                status={item.status}
+                                pax={item.pax}
+                                _id={item._id}
+                              />
+                            ) : (
+                              <div key={pos}></div>
+                            )
+                          })
+                        )}
                       </Grid>
                     </List>
                   </div>

@@ -12,6 +12,7 @@ import axios from 'axios'
 import { Link } from 'react-router-dom'
 import { useCookies } from 'react-cookie'
 import EventByLine from '../../assets/Event-Schedule'
+import { DataGrid } from '@material-ui/data-grid';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -100,7 +101,6 @@ export default function EventMain() {
         <div className={classes.appBarSpacer} />
         <Container maxWidth='lg' className={classes.container}>
           <Grid container spacing={3}>
-            
             {/* Show Current Date & Time */}
 
             <Grid item xs={12} md={4} lg={5}>
@@ -138,22 +138,28 @@ export default function EventMain() {
           </Grid>
 
           <List className={classes.ulroot}>
-            {eventData.map((item, pos) => {
-              /* Return Event by line by map */
-              return (
-                <EventByLine
-                  from={
-                    <Moment format='DD MMMM YYYY hh:mm A'>{item.from}</Moment>
-                  }
-                  to={<Moment format='DD MMMM YYYY hh:mm A'>{item.to}</Moment>}
-                  key={pos}
-                  name={item.event_name}
-                  description={item.description}
-                  location={item.location.name}
-                  _id={item._id}
-                />
-              )
-            })}
+            {eventData.length !== 0 ? (
+              <h6>There are no items at the moment.</h6>
+            ) : (
+              eventData.map((item, pos) => {
+                /* Return Event by line by map */
+                return (
+                  <EventByLine
+                    from={
+                      <Moment format='DD MMMM YYYY hh:mm A'>{item.from}</Moment>
+                    }
+                    to={
+                      <Moment format='DD MMMM YYYY hh:mm A'>{item.to}</Moment>
+                    }
+                    key={pos}
+                    name={item.event_name}
+                    description={item.description}
+                    location={item.location.name}
+                    _id={item._id}
+                  />
+                )
+              })
+            )}
           </List>
         </Container>
       </main>
