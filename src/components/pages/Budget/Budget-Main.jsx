@@ -180,17 +180,21 @@ export default function BudgetMain() {
           </Grid>
 
           <List className={classes.ulroot}>
-            {AllBudgetData.map((item, pos) => {
-              return (
-                <BudgetListItem
-                  key={pos}
-                  status={item.status}
-                  _id={item._id}
-                  itemName={item.item_name}
-                  amount={`$${parseFloat(item.amount).toFixed(2)}`}
-                />
-              )
-            })}
+            {AllBudgetData.length !== 0 ? (
+              <h6>There are no items at the moment.</h6>
+            ) : (
+              AllBudgetData.map((item, pos) => {
+                return (
+                  <BudgetListItem
+                    key={pos}
+                    status={item.status}
+                    _id={item._id}
+                    itemName={item.item_name}
+                    amount={`$${parseFloat(item.amount).toFixed(2)}`}
+                  />
+                )
+              })
+            )}
           </List>
         </Container>
       </main>
