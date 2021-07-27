@@ -61,8 +61,6 @@ export default function SignInSide() {
   let [fetchedData, setFetchedData] = React.useState('')
   let history = useHistory()
 
-  console.log(cookie)
-
   // use api callback
   let fetchData = async (response) => {
     try {
@@ -79,7 +77,6 @@ export default function SignInSide() {
     }
     return response
   }
-  
 
   // submit form function
   const handleFormSubmission = async (e) => {
@@ -87,7 +84,9 @@ export default function SignInSide() {
 
     let response = await fetchData()
 
-    if (!response.data.token) {
+    console.log(response)
+
+    if (!response.data) {
       notify('Email or password is incorrect. Please try again.')
       return
     }

@@ -72,7 +72,9 @@ export default function TodoForm(props) {
           setRole(todo.role)
           setStatus(todo.status)
         })
-        .catch((error) => console.log(error))
+        .catch((error) => {
+          return error
+        })
     }
 
     if (props.location.state && props.location.state._id) {
@@ -114,7 +116,9 @@ export default function TodoForm(props) {
       .then((response) => {
         return
       })
-      .catch((error) => console.log('error'))
+      .catch((error) => {
+        return error
+      })
   }
 
   // Delete TO DO //
@@ -131,7 +135,9 @@ export default function TodoForm(props) {
       .then((response) => {
         return
       })
-      .catch((error) => console.log('error'))
+      .catch((error) => {
+        return error
+      })
   }
 
   // submit form function

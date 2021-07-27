@@ -48,7 +48,6 @@ export default function EventCreate() {
   )
   const handleDateChange = (date) => {
     setSelectedDate(date)
-    console.log(selectedDate)
   }
   // const [state, setState] = React.useState({
   //   checkedG: true,

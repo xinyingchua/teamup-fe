@@ -55,10 +55,6 @@ export default function GuestListForm(props) {
   let [response, setFetchedData] = React.useState('')
   let history = useHistory()
 
-
-  // console.log(cookies)
-
-
   // POST - CREATE NEW GUEST //
   let postNewGuest = async () => {
     response = await axios({
@@ -74,7 +70,6 @@ export default function GuestListForm(props) {
         pax: addPax,
       },
     })
-    // console.log(response.data)
 
     setFetchedData(response)
   }
@@ -91,15 +86,15 @@ export default function GuestListForm(props) {
         const allData = response.data
         const guestListData = allData[0]
 
-        // console.log(allData[0].status)
-
         setGuestMobile(guestListData.guest_contact)
         setTeamSelection(guestListData.role)
         setGuestName(guestListData.guest_first_name)
         setAddPax(guestListData.pax)
         setRSVP(guestListData.status)
       })
-      .catch((error) => console.log('error'))
+      .catch((error) => {
+        return error
+      })
   }
 
   // PATCH - EDIT SINGLE GUEST //
@@ -122,9 +117,11 @@ export default function GuestListForm(props) {
         }
       )
       .then((response) => {
-        console.log(response)
+        return
       })
-      .catch((error) => console.log('error'))
+      .catch((error) => {
+        return error
+      })
   }
 
   // DELETE - DELETE SINGLE GUEST //
@@ -139,9 +136,11 @@ export default function GuestListForm(props) {
         }
       )
       .then((response) => {
-        console.log(response)
+        return
       })
-      .catch((error) => console.log('error'))
+      .catch((error) => {
+        return error
+      })
   }
 
   useEffect(() => {
@@ -161,9 +160,6 @@ export default function GuestListForm(props) {
       postNewGuest()
     }
     history.push('/guest-lists')
-    console.log(
-      `form submitted with values: ${guestname}, ${guestmobile}, ${teamSelection}, ${rsvp}  `
-    )
   }
 
   return (
@@ -274,7 +270,6 @@ export default function GuestListForm(props) {
                   <MenuItem value='attending'>Attending</MenuItem>
                   <MenuItem value='unavailable'>Not Attending</MenuItem>
                   <MenuItem value='pending'>To Be Confirmed</MenuItem>
-
                 </Select>
               </FormControl>
 

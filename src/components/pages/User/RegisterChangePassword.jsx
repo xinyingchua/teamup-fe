@@ -78,7 +78,7 @@ class RegisterChangePassword extends React.Component {
         this.props.history.push('/login')
       })
       .catch((err) => {
-        console.log(err)
+        return err
       })
   }
 
