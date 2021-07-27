@@ -180,7 +180,7 @@ export default function BudgetMain() {
           </Grid>
 
           <List className={classes.ulroot}>
-            {AllBudgetData.length !== 0 ? (
+            {AllBudgetData.length === 0 ? (
               <h6>There are no items at the moment.</h6>
             ) : (
               AllBudgetData.map((item, pos) => {
