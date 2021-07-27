@@ -87,6 +87,7 @@ export default function NewBudget(props) {
           setPaymentType(allData.payment_type)
           setCategory(allData.category)
           setStatus(allData.status)
+          setDescription(allData.description)
         })
         .catch((error) => {
           return error
@@ -108,6 +109,7 @@ export default function NewBudget(props) {
         payment_type: paymentType,
         category: category,
         status: status,
+        description: description,
       },
       {
         headers: cookies,
@@ -128,6 +130,7 @@ export default function NewBudget(props) {
           payment_type: paymentType,
           category: category,
           status: status,
+          description: description,
         },
         {
           headers: cookies,
@@ -213,7 +216,13 @@ export default function NewBudget(props) {
                 <InputLabel id='category'>Payment option</InputLabel>
                 <Select
                   value={paymentType}
-                  onChange={(e) => setPaymentType(e.target.value)}
+                  onChange={(e) => {
+                    paymentType !== 'credit'
+                      ? setAmount(-Math.abs(amount))
+                      : setAmount(Math.abs(amount))
+
+                    setPaymentType(e.target.value)
+                  }}
                 >
                   <MenuItem value='credit'>Credit</MenuItem>
                   <MenuItem value='debit'>Debit</MenuItem>
@@ -236,13 +245,25 @@ export default function NewBudget(props) {
                   </Select>
                 </FormControl>
               </Box>
+              <Box mt={1}>
+                <FormControl variant='outlined' fullWidth>
+                  <InputLabel id='category'>Payment Status</InputLabel>
+                  <Select
+                    value={status}
+                    onChange={(e) => setStatus(e.target.value)}
+                  >
+                    <MenuItem value='not paid'>Not Paid</MenuItem>
+                    <MenuItem value='paid'>Paid</MenuItem>
+                  </Select>
+                </FormControl>
+              </Box>
 
               <TextField
                 id='status'
-                label='Item Status (notes)'
+                label='Item Description (optional)'
                 variant='outlined'
-                value={status}
-                onChange={(e) => setStatus(e.target.value)}
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
                 rows={9}
                 multiline
                 fullWidth
