@@ -54,7 +54,6 @@ export default function ToDoGrid(props) {
   const [cookies] = useCookies(['auth_token'])
   let history = useHistory()
 
-
   // Delete TO DO //
   const deleteToDoData = () => {
     axios
@@ -66,12 +65,13 @@ export default function ToDoGrid(props) {
           headers: cookies,
         }
       )
-      .then(async(response) => {
+      .then(async (response) => {
         await props.refreshItems()
         return
-        
       })
-      .catch((error) => console.log(error))
+      .catch((error) => {
+        return error
+      })
   }
 
   // submit form function

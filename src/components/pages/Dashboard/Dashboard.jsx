@@ -84,16 +84,17 @@ class Dashboard extends React.Component {
     Promise.all([promise1, promise2])
       .then((response) => {
         this.setState({
-          daysLeft: response[0].data.calendar.daysLeft,
-          budget: response[0].data.budget.initialBudget.toFixed(2) || `0` ,
-          currentBudget: response[0].data.budget.currentBudget.toFixed(2) ||  `0` ,
-          attending: response[0].data.guests.totalAttending,
-          notAttending: response[0].data.guests.totalUnavailable,
-          pending: response[0].data.guests.totalPending,
-          total: response[0].data.guests.totalGuests,
-          totalTasks: response[0].data.todos.total,
-          completedTasks: response[0].data.todos.completed,
-          numberOfEvents: response[0].data.events.total,
+
+          daysLeft: response[0].data.calendar.daysLeft || 0,
+          budget: response[0].data.budget.initialBudget.toFixed(2) || 0,
+          currentBudget: response[0].data.budget.currentBudget.toFixed(2) || 0,
+          attending: response[0].data.guests.totalAttending || 0,
+          notAttending: response[0].data.guests.totalUnavailable || 0,
+          pending: response[0].data.guests.totalPending || 0,
+          total: response[0].data.guests.totalGuests || 0,
+          totalTasks: response[0].data.todos.total || 0,
+          completedTasks: response[0].data.todos.completed || 0,
+          numberOfEvents: response[0].data.events.total || 0,
           allEventData: _.chunk(response[1].data, 4),
         })
       })
@@ -171,7 +172,8 @@ class Dashboard extends React.Component {
               </Grid>
               <Grid container spacing={2}>
 
-                {this.state.allEventData.length == 0 ? (
+                {this.state.allEventData.length === 0 ? (
+
                   <h6>There are no items at the moment.</h6>
                 ) : (
                   this.state.allEventData[this.state.currentPage].map((item, pos) => {

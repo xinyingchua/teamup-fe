@@ -107,7 +107,7 @@ export default function BudgetMain() {
           setWeddingBudget(responses[0].data.budget.initialBudget.toFixed(2))
         })
         .catch((err) => {
-          console.log(err)
+          return err
         })
     }
 
@@ -180,7 +180,7 @@ export default function BudgetMain() {
           </Grid>
 
           <List className={classes.ulroot}>
-            {AllBudgetData.length !== 0 ? (
+            {AllBudgetData.length === 0 ? (
               <h6>There are no items at the moment.</h6>
             ) : (
               AllBudgetData.map((item, pos) => {

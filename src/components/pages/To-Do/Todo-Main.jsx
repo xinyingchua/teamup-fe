@@ -67,7 +67,9 @@ export default function TodoMain() {
         const allData = response.data
         setTodoData(response.data)
       })
-      .catch((error) => console.log(error))
+      .catch((error) => {
+        return error
+      })
   }
 
   React.useEffect(() => {
@@ -119,7 +121,7 @@ export default function TodoMain() {
 
           {/* Map card here */}
           <Grid container spacing={4}>
-            {todoData.length !== 0 ? (
+            {todoData.length === 0 ? (
               <h6>There are no items at the moment.</h6>
             ) : (
               todoData.map((item, pos) => {

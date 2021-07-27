@@ -87,7 +87,9 @@ export default function EventMain() {
         const getData = response.data
         getEventData(getData)
       })
-      .catch((error) => console.log(error))
+      .catch((error) => {
+        return error
+      })
   }
 
   React.useEffect(() => {
@@ -138,7 +140,7 @@ export default function EventMain() {
           </Grid>
 
           <List className={classes.ulroot}>
-            {eventData.length !== 0 ? (
+            {eventData.length === 0 ? (
               <h6>There are no items at the moment.</h6>
             ) : (
               eventData.map((item, pos) => {
