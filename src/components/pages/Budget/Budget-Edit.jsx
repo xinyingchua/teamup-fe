@@ -67,6 +67,7 @@ export default function NewBudget(props) {
   const [paymentType, setPaymentType] = React.useState('')
   const [category, setCategory] = React.useState('')
   const [status, setStatus] = React.useState('')
+  const [description, setDescription] = React.useState('')
   let history = useHistory()
   const [cookies] = useCookies(['auth_token'])
 

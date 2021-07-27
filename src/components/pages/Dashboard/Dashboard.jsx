@@ -182,7 +182,7 @@ class Dashboard extends React.Component {
                 </Paper>
               </Grid>
               <Grid container spacing={2}>
-                {this.state.allEventData.length !== 0 ? (
+                {this.state.allEventData.length === 0 ? (
                   <h6>There are no items at the moment.</h6>
                 ) : (
                   this.state.allEventData.map((item, pos) => {
