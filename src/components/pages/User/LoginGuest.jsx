@@ -9,6 +9,7 @@ import { withStyles } from '@material-ui/core/styles'
 import PropTypes from 'prop-types'
 import axios from 'axios'
 import { withCookies } from 'react-cookie'
+import { toast } from 'material-react-toastify'
 
 const styles = (theme) => ({
   root: {
@@ -45,6 +46,8 @@ const styles = (theme) => ({
   },
 })
 
+const notify = (message) => toast.dark(message)
+
 class LoginGuest extends React.Component {
   constructor(props) {
     super(props)
@@ -57,21 +60,20 @@ class LoginGuest extends React.Component {
     e.preventDefault()
 
     axios
-      .post('https://teamup-be.herokuapp.com/api/v1/guests/login', {
+      .post('https://teamup-be.herokuapp.com/api/v1/users/guests/login', {
         guest_contact: this.state.guest_contact,
       })
       .then((response) => {
         // after successful login, store the token as cookie
         const { cookies } = this.props
 
-        cookies.set('auth_token', response.data.token, {
+        cookies.set('auth_token', response.data, {
           path: '/',
         })
-
         this.props.history.push('/guest/rsvp')
       })
       .catch((err) => {
-        return err
+        notify('Please try again with your contact number!')
       })
   }
 
@@ -96,7 +98,7 @@ class LoginGuest extends React.Component {
               className={classes.logo}
             />
             <Typography style={{ fontWeight: '700' }} variant='h4' align='left'>
-              Welcome!
+              Welcome Guest!
             </Typography>
             <Typography
               style={{ fontWeight: '200', fontSize: '18px', marginTop: '10px' }}
