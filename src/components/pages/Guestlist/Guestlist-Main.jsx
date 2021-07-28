@@ -112,10 +112,10 @@ export default function GuestList() {
 
       Promise.all(requests)
         .then((responses) => {
-          const DashboardData = responses[0].data
-          const GuestListData = responses[1].data
-          getGuestSummaryData(DashboardData.guests)
-          getGuestListData(GuestListData)
+          const dashboardData = responses[0].data
+          const guestListData = responses[1].data
+          getGuestSummaryData(dashboardData.guests)
+          getGuestListData(guestListData)
         })
         .catch((err) => {
           return err
@@ -212,7 +212,7 @@ export default function GuestList() {
                             return item.role === 'groom' ? (
                               <TeamGroomBrideGuestList
                                 key={pos}
-                                name={item.guest_first_name}
+                                name={`${item.guest_first_name} ${item.guest_last_name}`}
                                 guest_contact={item.guest_contact}
                                 status={item.status}
                                 pax={item.pax}
@@ -252,7 +252,7 @@ export default function GuestList() {
                             return item.role === 'bride' ? (
                               <TeamGroomBrideGuestList
                                 key={pos}
-                                name={item.guest_first_name}
+                                name={`${item.guest_first_name} ${item.guest_last_name}`}
                                 guest_contact={item.guest_contact}
                                 status={item.status}
                                 pax={item.pax}

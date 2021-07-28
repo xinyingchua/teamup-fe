@@ -96,7 +96,7 @@ export default function TodoMain() {
                   <MenuItem value=''></MenuItem>
                   <MenuItem value='groom'>Groom</MenuItem>
                   <MenuItem value='bride'>Bride</MenuItem>
-                  <MenuItem value='both'>Both</MenuItem>
+                  <MenuItem value='both'>Bride & Groom</MenuItem>
                   <MenuItem value='completed'>Completed</MenuItem>
                 </Select>
               </FormControl>
@@ -120,7 +120,7 @@ export default function TodoMain() {
           </Grid>
 
           {/* Map card here */}
-          <Grid container spacing={4}>
+          <Grid container spacing={2}>
             {todoData.length === 0 ? (
               <h6>There are no items at the moment.</h6>
             ) : (

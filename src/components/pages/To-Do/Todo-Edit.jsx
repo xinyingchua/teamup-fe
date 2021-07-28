@@ -187,7 +187,7 @@ export default function TodoForm(props) {
                 <Select value={role} onChange={(e) => setRole(e.target.value)}>
                   <MenuItem value='bride'>Bride</MenuItem>
                   <MenuItem value='groom'>Groom</MenuItem>
-                  <MenuItem value='bridegroom'>Groom & Bride</MenuItem>
+                  <MenuItem value='both'>Groom & Bride</MenuItem>
                 </Select>
               </FormControl>
 

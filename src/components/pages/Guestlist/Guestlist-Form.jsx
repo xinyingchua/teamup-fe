@@ -46,10 +46,10 @@ export default function GuestListForm(props) {
   const classes = useStyles()
 
   // use useState hooks
-  const [guestname, setGuestName] = React.useState('')
-  const [guestmobile, setGuestMobile] = React.useState('')
+  const [guestFullName, setGuestFullName] = React.useState('')
+  const [guestContact, setGuestContact] = React.useState('')
   const [teamSelection, setTeamSelection] = React.useState('')
-  const [addPax, setAddPax] = React.useState('')
+  const [numOfPax, setNumOfPax] = React.useState('')
   const [rsvp, setRSVP] = React.useState('')
   const [cookies] = useCookies(['auth_token'])
   let [response, setFetchedData] = React.useState('')
@@ -62,12 +62,11 @@ export default function GuestListForm(props) {
       headers: cookies,
       url: 'https://teamup-be.herokuapp.com/api/v1/users/guests/create',
       data: {
-        guest_first_name: guestname,
-        guest_last_name: guestname,
-        guest_contact: guestmobile,
+        guest_fullName: guestFullName,
+        guest_contact: guestContact,
         role: teamSelection,
         status: rsvp,
-        pax: addPax,
+        pax: numOfPax,
       },
     })
 
@@ -76,7 +75,7 @@ export default function GuestListForm(props) {
 
   // GET - GET SINGLE GUEST //
   let getGuestListData = async () => {
-    axios
+    await axios
       .get(
         'https://teamup-be.herokuapp.com/api/v1/users/guests/' +
           props.location.state._id,
@@ -85,11 +84,12 @@ export default function GuestListForm(props) {
       .then((response) => {
         const allData = response.data
         const guestListData = allData[0]
-
-        setGuestMobile(guestListData.guest_contact)
+        setGuestFullName(
+          `${guestListData.guest_first_name} ${guestListData.guest_last_name}`
+        )
+        setGuestContact(guestListData.guest_contact)
         setTeamSelection(guestListData.role)
-        setGuestName(guestListData.guest_first_name)
-        setAddPax(guestListData.pax)
+        setNumOfPax(guestListData.pax)
         setRSVP(guestListData.status)
       })
       .catch((error) => {
@@ -99,25 +99,24 @@ export default function GuestListForm(props) {
 
   // PATCH - EDIT SINGLE GUEST //
   let UpdateGuestListData = async () => {
-    axios
+    await axios
       .patch(
         'https://teamup-be.herokuapp.com/api/v1/users/guests/' +
           props.location.state._id +
           '/update',
         {
-          guest_first_name: guestname,
-          guest_last_name: guestname,
-          guest_contact: guestmobile + '',
+          guest_fullName: guestFullName,
+          guest_contact: guestContact,
           role: teamSelection,
           status: rsvp,
-          pax: addPax,
+          pax: numOfPax,
         },
         {
           headers: cookies,
         }
       )
       .then((response) => {
-        return
+        console.log(response.data)
       })
       .catch((error) => {
         return error
@@ -126,7 +125,7 @@ export default function GuestListForm(props) {
 
   // DELETE - DELETE SINGLE GUEST //
   let DeleteGuestListData = async () => {
-    axios
+    await axios
       .delete(
         'https://teamup-be.herokuapp.com/api/v1/users/guests/' +
           props.location.state._id +
@@ -152,13 +151,6 @@ export default function GuestListForm(props) {
   // FORM SUBMISSION
   const handleFormSubmission = async (e) => {
     e.preventDefault()
-
-    if (props.location.state && props.location.state._id) {
-      UpdateGuestListData()
-      DeleteGuestListData()
-    } else {
-      postNewGuest()
-    }
     history.push('/guest-lists')
   }
 
@@ -189,8 +181,8 @@ export default function GuestListForm(props) {
                 label='Guest Name'
                 name='guestname'
                 autoFocus
-                value={guestname}
-                onChange={(e) => setGuestName(e.target.value)}
+                value={guestFullName}
+                onChange={(e) => setGuestFullName(e.target.value)}
               />
 
               <TextField
@@ -202,8 +194,8 @@ export default function GuestListForm(props) {
                 label='Guest Mobile'
                 name='guestmobile'
                 autoFocus
-                value={guestmobile}
-                onChange={(e) => setGuestMobile(e.target.value)}
+                value={guestContact}
+                onChange={(e) => setGuestContact(e.target.value)}
               />
 
               <FormControl
@@ -217,8 +209,8 @@ export default function GuestListForm(props) {
                 <Select
                   labelId='demo-simple-select-outlined-label'
                   id='demo-simple-select-outlined'
-                  value={addPax}
-                  onChange={(e) => setAddPax(e.target.value)}
+                  value={numOfPax}
+                  onChange={(e) => setNumOfPax(e.target.value)}
                   defaultValue='0'
                 >
                   <MenuItem value='0'>0</MenuItem>
@@ -246,7 +238,6 @@ export default function GuestListForm(props) {
                   id='teamSelection'
                   onChange={(e) => setTeamSelection(e.target.value)}
                 >
-                  <MenuItem value=' '></MenuItem>
                   <MenuItem value='bride'>Bride</MenuItem>
                   <MenuItem value='groom'>Groom</MenuItem>
                 </Select>
@@ -279,6 +270,7 @@ export default function GuestListForm(props) {
                     type='submit'
                     variant='contained'
                     className={classes.submit}
+                    onClick={UpdateGuestListData}
                   >
                     Edit
                   </Button>
@@ -287,6 +279,7 @@ export default function GuestListForm(props) {
                     type='submit'
                     variant='contained'
                     className={classes.delete}
+                    onClick={DeleteGuestListData}
                   >
                     Delete
                   </Button>
@@ -297,6 +290,7 @@ export default function GuestListForm(props) {
                   variant='contained'
                   color='primary'
                   className={classes.submit}
+                  onClick={postNewGuest}
                 >
                   Add Guest
                 </Button>
