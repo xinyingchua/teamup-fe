@@ -8,7 +8,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import { useHistory } from 'react-router-dom'
 import axios from 'axios'
 import { useCookies } from 'react-cookie'
-import { Link } from 'react-router-dom'
+import { toast } from 'material-react-toastify'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -86,6 +86,10 @@ export default function RegisterDateBudget() {
         return error
       })
   }
+
+  const notify = (message) => toast.dark(message)
+
+  notify('Please provide your Event Date and Budget!')
 
   // submit form function
   const handleFormSubmission = async (e) => {
