@@ -84,8 +84,6 @@ export default function SignInSide() {
 
     let response = await fetchData()
 
-    console.log(response)
-
     if (!response.data) {
       notify('Email or password is incorrect. Please try again.')
       return

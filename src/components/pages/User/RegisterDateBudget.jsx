@@ -8,6 +8,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import { useHistory } from 'react-router-dom'
 import axios from 'axios'
 import { useCookies } from 'react-cookie'
+import { Link } from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -66,8 +67,8 @@ export default function RegisterDateBudget() {
   let history = useHistory()
 
   // PATCH REQUEST TO UPDATE EDATE AND BUDGET //
-  const updateUserProfile = () => {
-    axios
+  const updateUserProfile = async () => {
+    await axios
       .patch(
         'https://teamup-be.herokuapp.com/api/v1/users/profile/update',
         {
@@ -79,7 +80,7 @@ export default function RegisterDateBudget() {
         }
       )
       .then((response) => {
-        console.log(eDate)
+        return response
       })
       .catch((error) => {
         return error
@@ -88,7 +89,18 @@ export default function RegisterDateBudget() {
 
   // submit form function
   const handleFormSubmission = async (e) => {
+    let response = {}
+
     e.preventDefault()
+    try {
+      response = await updateUserProfile()
+    } catch (err) {
+      return err
+    }
+
+    if (!response) {
+      return
+    }
     history.push('/dashboard')
   }
 
@@ -123,7 +135,10 @@ export default function RegisterDateBudget() {
               label='Wedding Date'
               type='date'
               defaultValue='2022-05-24'
-              onChange={(e) => setEDate(e.target.value)}
+              onChange={(e) => {
+                setEDate(e.target.value)
+                console.log(eDate)
+              }}
               className={classes.textField}
               InputLabelProps={{
                 shrink: true,
@@ -149,7 +164,10 @@ export default function RegisterDateBudget() {
               id='wedding-budget'
               label='Amount'
               name='weddingBudget'
-              onChange={(e) => setBudget(e.target.value)}
+              onChange={(e) => {
+                setBudget(e.target.value)
+                console.log(budget)
+              }}
               className={classes.textField}
               autoFocus
             />
@@ -160,7 +178,6 @@ export default function RegisterDateBudget() {
               variant='contained'
               color='primary'
               className={classes.submit}
-              onClick={updateUserProfile()}
             >
               Continue
             </Button>
