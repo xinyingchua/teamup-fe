@@ -142,7 +142,6 @@ export default function RegisterDateBudget() {
               defaultValue='2022-05-24'
               onChange={(e) => {
                 setEDate(e.target.value)
-                console.log(eDate)
               }}
               className={classes.textField}
               InputLabelProps={{
@@ -171,7 +170,6 @@ export default function RegisterDateBudget() {
               name='weddingBudget'
               onChange={(e) => {
                 setBudget(e.target.value)
-                console.log(budget)
               }}
               className={classes.textField}
               autoFocus
