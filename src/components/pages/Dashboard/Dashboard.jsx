@@ -52,7 +52,6 @@ class Dashboard extends React.Component {
     const { cookies } = props
 
     this.state = {
-      userMessage: '',
       user: cookies.get('auth_token'),
       daysLeft: '',
       budget: '',
@@ -82,8 +81,8 @@ class Dashboard extends React.Component {
         this.setState({
           userMessage: response[0].data.message,
           daysLeft: response[0].data.calendar.daysLeft,
-          budget: response[0].data.budget.initialBudget.toFixed(2) || 0,
-          currentBudget: response[0].data.budget.currentBudget.toFixed(2) || 0,
+          budget: response[0].data.budget.initialBudget,
+          currentBudget: response[0].data.budget.currentBudget,
           attending: response[0].data.guests.totalAttending || 0,
           notAttending: response[0].data.guests.totalUnavailable || 0,
           pending: response[0].data.guests.totalPending || 0,
@@ -126,7 +125,7 @@ class Dashboard extends React.Component {
 
     return (
       <div className={classes.root}>
-        <NavBar title='Dashboard' message={this.state.userMessage} />
+        <NavBar title='Dashboard' message={`test`} />
         <main className={classes.content}>
           <div className={classes.appBarSpacer} />
           <Container maxWidth='lg' className={classes.container}>
@@ -142,8 +141,10 @@ class Dashboard extends React.Component {
               <Grid item xs={12} md={8} lg={9}>
                 <Paper className={fixedHeightPaper}>
                   <Budgetplanning
-                    budget={`$${this.state.budget}`}
-                    currentBudget={`$${this.state.currentBudget}`}
+                    budget={`$${parseFloat(this.state.budget).toFixed(2)}`}
+                    currentBudget={`$${parseFloat(
+                      this.state.currentBudget
+                    ).toFixed(2)}`}
                   />
                 </Paper>
               </Grid>

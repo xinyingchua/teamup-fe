@@ -66,6 +66,12 @@ export default function RegisterDateBudget() {
   const [cookies] = useCookies(['auth_token'])
   let history = useHistory()
 
+  React.useEffect(() => {
+    const notify = (message) => toast.dark(message)
+
+    notify('Please provide your Event Date and Budget!')
+  }, [])
+
   // PATCH REQUEST TO UPDATE EDATE AND BUDGET //
   const updateUserProfile = async () => {
     await axios
@@ -86,10 +92,6 @@ export default function RegisterDateBudget() {
         return error
       })
   }
-
-  const notify = (message) => toast.dark(message)
-
-  notify('Please provide your Event Date and Budget!')
 
   // submit form function
   const handleFormSubmission = async (e) => {
