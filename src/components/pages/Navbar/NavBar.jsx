@@ -11,6 +11,10 @@ import Divider from '@material-ui/core/Divider'
 import IconButton from '@material-ui/core/IconButton'
 import { mainListItems, secondaryListItems } from './listItems'
 import { useCookies } from 'react-cookie'
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import { Link } from "react-router-dom"
+import ListItem from '@material-ui/core/ListItem';
+import {useHistory} from "react-router-dom";
 
 const drawerWidth = 240
 
@@ -122,6 +126,7 @@ const useStyles = makeStyles((theme) => ({
 export default function NavBar(props) {
   const classes = useStyles()
   const [open, setOpen] = React.useState(true)
+
   const handleDrawerOpen = () => {
     setOpen(true)
   }
@@ -129,7 +134,14 @@ export default function NavBar(props) {
     setOpen(false)
   }
 
-  const [cookies] = useCookies(['auth_token'])
+  const [cookies, removeCookie] = useCookies(['auth_token'])
+  const history = useHistory();
+
+
+  // Removing User's Session Upon Log out
+  function handleRemoveCookie() {
+    removeCookie('auth_token');
+    }
 
   return (
     <div className={classes.root}>
@@ -161,6 +173,19 @@ export default function NavBar(props) {
             />
           </IconButton>
           <AppBar />
+
+          {props.title !== "Dashboard"
+          ?
+          (<Link to = "#" style={{ textDecoration: "none", color:'#fff' }} >
+             <ListItem button style={{ color: '#7865E5' }}>
+                 {/* <ListItemIcon style={{ color: '#7865E5' }}> */}
+                <ArrowBackIcon onClick={() => history.goBack()} />
+                {/* </ListItemIcon> */}
+              </ListItem>
+              </Link>
+              ) : (<div></div>) }
+            
+
           <Typography
             component='h1'
             variant='h6'
@@ -168,8 +193,10 @@ export default function NavBar(props) {
             noWrap
             className={classes.title}
           >
+      
             {props.title}
           </Typography>
+ 
 
           <Typography variant='body2' className={classes.username}>
             Welcome!
@@ -195,7 +222,8 @@ export default function NavBar(props) {
         </div>
         <List style={{ color: 'white' }}>{mainListItems}</List>
         <Divider />
-        <List style={{ color: 'white' }}>{secondaryListItems}</List>
+        <List style={{ color: 'white' }}>{secondaryListItems}
+        </List>
       </Drawer>
     </div>
   )

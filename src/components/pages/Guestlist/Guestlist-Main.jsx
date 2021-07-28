@@ -94,6 +94,8 @@ export default function GuestList() {
   const [cookies] = useCookies(['auth_token'])
   const [guestSummaryData, getGuestSummaryData] = React.useState('')
   const [guestListData, getGuestListData] = React.useState([])
+  const [filterData, getFilteredData] = React.useState([])
+  const [selectFilterRSVP, getSelectedFilterRSVP] = React.useState('')
 
   // MAKING MULTIPLE AXIOS CALLS //
 
@@ -112,10 +114,20 @@ export default function GuestList() {
 
       Promise.all(requests)
         .then((responses) => {
+
           const dashboardData = responses[0].data
           const guestListData = responses[1].data
           getGuestSummaryData(dashboardData.guests)
           getGuestListData(guestListData)
+
+          
+          getGuestListData(guestListData)
+          getFilteredData(guestListData)
+          console.log(guestListData.filter(item => item.status === "unavailable"))
+          // console.log(GuestListData.filter(rsvp => rsvp.status = "attending").map(filteredRSVP => filteredRSVP.status))
+          console.log(guestListData.filter(rsvp => rsvp.status = "pending").map(filteredRSVP => filteredRSVP.status))
+          // getFilteredData(GuestListData.filter(rsvp => rsvp.status = "").map(filteredRSVP => filteredRSVP.status))
+
         })
         .catch((err) => {
           return err
@@ -124,6 +136,21 @@ export default function GuestList() {
 
     getAllGuestData()
   }, [])
+
+
+  // performFilter(e) {
+  //   console.log(e.target.value)
+  // }
+
+
+  // FORM SUBMISSION
+  const performFilter = async (e) => {
+    // e.preventDefault()
+    // console.log(filterData.filter(rsvp => rsvp.status = e).map(filte))
+    console.log(e)
+
+  }
+
 
   return (
     <div className={classes.root}>
@@ -156,19 +183,22 @@ export default function GuestList() {
           <div style={{ margin: '50px' }}>
             <Grid container style={{ marginTop: '50px' }}>
               <Grid item xs={12} sm={6} lg={6} style={{ textAlign: 'left' }}>
+
                 <FormControl variant='outlined' style={{ width: '200px' }}>
                   <InputLabel id='category'>Filter By</InputLabel>
                   <Select
-                    value=' '
-                    labelId='demo-simple-select-outlined-label'
-                    id='demo-simple-select-outlined'
+                    defaultValue= "all"
+                    onChange={(e) => performFilter(e.target.value)}
+                    variant='outlined'
+                    id='rsvp'
                   >
-                    <MenuItem value=' '></MenuItem>
+                    <MenuItem value='all'>Show All</MenuItem>
                     <MenuItem value='pending'>Pending</MenuItem>
                     <MenuItem value='attending'>Attending</MenuItem>
                     <MenuItem value='notattending'>Not Attending</MenuItem>
                   </Select>
                 </FormControl>
+
               </Grid>
 
               <Grid item xs={12} sm={6} lg={6} style={{ textAlign: 'right' }}>
