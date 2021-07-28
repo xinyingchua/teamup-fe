@@ -94,8 +94,26 @@ export default function GuestList() {
   const [cookies] = useCookies(['auth_token'])
   const [guestSummaryData, getGuestSummaryData] = React.useState('')
   const [guestListData, getGuestListData] = React.useState([])
-  const [filterData, getFilteredData] = React.useState([])
-  const [selectFilterRSVP, getSelectedFilterRSVP] = React.useState('')
+
+  const [tryguest, setTryGuest] = React.useState([])
+  const [filterData, getFilteredData] = React.useState('')
+
+  // TBC
+
+const handleChange = (e) => {
+  // switch case for status 
+  switch(e.target.value) {
+    case 'attending':
+      return guestListData.filter(item => item.status === "attending")
+    case 'pending':
+      return guestListData.filter(item => item.status === "attending")
+      case 'unavailable':
+        return guestListData.filter(item => item.status === "attending")
+    default:
+      return guestListData
+  }
+}
+
 
   // MAKING MULTIPLE AXIOS CALLS //
 
@@ -119,14 +137,21 @@ export default function GuestList() {
           const guestListData = responses[1].data
           getGuestSummaryData(dashboardData.guests)
           getGuestListData(guestListData)
-
           
-          getGuestListData(guestListData)
-          getFilteredData(guestListData)
-          console.log(guestListData.filter(item => item.status === "unavailable"))
-          // console.log(GuestListData.filter(rsvp => rsvp.status = "attending").map(filteredRSVP => filteredRSVP.status))
-          console.log(guestListData.filter(rsvp => rsvp.status = "pending").map(filteredRSVP => filteredRSVP.status))
-          // getFilteredData(GuestListData.filter(rsvp => rsvp.status = "").map(filteredRSVP => filteredRSVP.status))
+          // getGuestListData(guestListData)
+          // console.log(selectFilterRSVP)
+        
+          // console.log(guestListData)
+          // getFilteredData(guestListData.filter(item => item.status === selectFilterRSVP))
+          // console.log(filterData)
+
+
+
+          // console.log(guestListData.filter(item => item.status === selectFilterRSVP))
+          // console.log(guestListData.filter(item => item.status === "unavailable"))
+          // console.log(guestListData.filter(item => item.status === "pending"))
+          // console.log(guestListData.filter(item => item.status === "attending"))
+          // console.log(guestListData.filter(item => item.status === "unavailable"))
 
         })
         .catch((err) => {
@@ -137,17 +162,18 @@ export default function GuestList() {
     getAllGuestData()
   }, [])
 
-
+  // console.log(guestListData)
   // performFilter(e) {
   //   console.log(e.target.value)
   // }
 
 
   // FORM SUBMISSION
-  const performFilter = async (e) => {
-    // e.preventDefault()
-    // console.log(filterData.filter(rsvp => rsvp.status = e).map(filte))
-    console.log(e)
+  const performFilter = async (e, filterType) => {
+
+    let newState = {}
+    newState[filterType] = e.target.value
+  
 
   }
 
@@ -188,14 +214,16 @@ export default function GuestList() {
                   <InputLabel id='category'>Filter By</InputLabel>
                   <Select
                     defaultValue= "all"
-                    onChange={(e) => performFilter(e.target.value)}
+                    // value ={guestListData}
+                    onChange={(e) => handleChange(e)}
+                    // onChange={(e) => getGuestListData(previous => previous.filter(item => item.status === e.target.value))}
                     variant='outlined'
                     id='rsvp'
                   >
                     <MenuItem value='all'>Show All</MenuItem>
                     <MenuItem value='pending'>Pending</MenuItem>
                     <MenuItem value='attending'>Attending</MenuItem>
-                    <MenuItem value='notattending'>Not Attending</MenuItem>
+                    <MenuItem value='unavailable'>Not Attending</MenuItem>
                   </Select>
                 </FormControl>
 
@@ -279,7 +307,8 @@ export default function GuestList() {
                           <h6>There are no items at the moment.</h6>
                         ) : (
                           guestListData.map((item, pos) => {
-                            return item.role === 'bride' ? (
+                            // return (item.role === 'bride' && item.status === selectFilterRSVP+ "") ? (
+                              return item.role === 'bride' ? (
                               <TeamGroomBrideGuestList
                                 key={pos}
                                 name={`${item.guest_first_name} ${item.guest_last_name}`}
