@@ -239,9 +239,10 @@ export default function NewBudget(props) {
                     onChange={(e) => setCategory(e.target.value)}
                   >
                     <MenuItem value=''></MenuItem>
+                    <MenuItem value='wedding'>Wedding Costs</MenuItem>
                     <MenuItem value='entertainment'>Entertainment</MenuItem>
-                    <MenuItem value='guest'>Guest</MenuItem>
-                    <MenuItem value='others'>Others</MenuItem>
+                    <MenuItem value='guests'>For Guests</MenuItem>
+                    <MenuItem value='others'>Miscellaneous</MenuItem>
                   </Select>
                 </FormControl>
               </Box>

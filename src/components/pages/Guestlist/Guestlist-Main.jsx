@@ -132,7 +132,7 @@ export default function GuestList() {
     }
 
     getAllGuestData()
-  }, [])
+  }, [guestListData])
 
   // performFilter(e) {
   //   console.log(e.target.value)

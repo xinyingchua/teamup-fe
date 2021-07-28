@@ -196,7 +196,7 @@ export default function NavBar(props) {
           </Typography>
 
           <Typography variant='body2' className={classes.username}>
-            {`${props.message}!`}
+            {`Welcome User!`}
           </Typography>
         </Toolbar>
       </AppBar>
