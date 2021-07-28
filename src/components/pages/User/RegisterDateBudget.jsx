@@ -80,7 +80,7 @@ export default function RegisterDateBudget() {
         }
       )
       .then((response) => {
-        return response
+        return
       })
       .catch((error) => {
         return error
@@ -102,6 +102,7 @@ export default function RegisterDateBudget() {
       return
     }
     history.push('/dashboard')
+    return
   }
 
   return (
