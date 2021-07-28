@@ -131,7 +131,7 @@ export default function ToDoGrid(props) {
                       onClick={deleteToDoData}
                       startIcon={<CheckCircleOutlineIcon />}
                     >
-                      Done
+                      Delete
                     </Button>
                   </form>
                 </Link>
