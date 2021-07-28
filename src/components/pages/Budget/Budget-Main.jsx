@@ -171,6 +171,8 @@ export default function BudgetMain() {
           </Grid>
 
           {/* Expense header */}
+
+          {/* Entertainment */}
           <Grid item xs={12} md={4} lg={3}>
             <Box className={classes.ulheader}>
               <Typography style={{ fontWeight: 'bold' }}>
@@ -184,18 +186,87 @@ export default function BudgetMain() {
               <h6>There are no items at the moment.</h6>
             ) : (
               AllBudgetData.map((item, pos) => {
-                return (
+                return item.category === 'entertainment' ? (
                   <BudgetListItem
                     key={pos}
                     status={item.status}
                     _id={item._id}
+                    category={item.category}
                     itemName={item.item_name}
                     amount={`$${parseFloat(item.amount).toFixed(2)}`}
                   />
-                )
+                  ) : (
+                    <div key={pos}></div>
+                  )
+                
               })
             )}
           </List>
+
+
+          {/* Guests */}
+          <Grid item xs={12} md={4} lg={3}>
+            <Box className={classes.ulheader}>
+              <Typography style={{ fontWeight: 'bold' }}>
+                Guest
+              </Typography>
+            </Box>
+          </Grid>
+
+          <List className={classes.ulroot}>
+            {AllBudgetData.length === 0 ? (
+              <h6>There are no items at the moment.</h6>
+            ) : (
+              AllBudgetData.map((item, pos) => {
+                return item.category === 'guest' ? (
+                  <BudgetListItem
+                    key={pos}
+                    status={item.status}
+                    _id={item._id}
+                    category={item.category}
+                    itemName={item.item_name}
+                    amount={`$${parseFloat(item.amount).toFixed(2)}`}
+                  />
+                  ) : (
+                    <div key={pos}></div>
+                  )
+                
+              })
+            )}
+          </List>
+
+          {/* Others */}
+          <Grid item xs={12} md={4} lg={3}>
+            <Box className={classes.ulheader}>
+              <Typography style={{ fontWeight: 'bold' }}>
+                Others
+              </Typography>
+            </Box>
+          </Grid>
+
+          <List className={classes.ulroot}>
+            {AllBudgetData.length === 0 ? (
+              <h6>There are no items at the moment.</h6>
+            ) : ( 
+              AllBudgetData.map((item, pos) => {
+                return item.category === 'others'? (
+                  <BudgetListItem
+                    key={pos}
+                    status={item.status}
+                    _id={item._id}
+                    category={item.category}
+                    itemName={item.item_name}
+                    amount={`$${parseFloat(item.amount).toFixed(2)}`}
+                  />
+                  ) : (
+                    <div key={pos}></div>
+                  )
+                
+              })
+            )}
+          </List>
+
+
         </Container>
       </main>
     </div>
