@@ -8,7 +8,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import { useHistory } from 'react-router-dom'
 import axios from 'axios'
 import { useCookies } from 'react-cookie'
-import { Link } from 'react-router-dom'
+import { toast } from 'material-react-toastify'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -87,6 +87,10 @@ export default function RegisterDateBudget() {
       })
   }
 
+  const notify = (message) => toast.dark(message)
+
+  notify('Please provide your Event Date and Budget!')
+
   // submit form function
   const handleFormSubmission = async (e) => {
     let response = {}
@@ -138,7 +142,6 @@ export default function RegisterDateBudget() {
               defaultValue='2022-05-24'
               onChange={(e) => {
                 setEDate(e.target.value)
-                console.log(eDate)
               }}
               className={classes.textField}
               InputLabelProps={{
@@ -167,7 +170,6 @@ export default function RegisterDateBudget() {
               name='weddingBudget'
               onChange={(e) => {
                 setBudget(e.target.value)
-                console.log(budget)
               }}
               className={classes.textField}
               autoFocus

@@ -103,7 +103,7 @@ class RegisterChangePassword extends React.Component {
               variant='h6'
               align='left'
             >
-              Please change a new password.
+              Please set a new password.
             </Typography>
             <form
               className={classes.form}

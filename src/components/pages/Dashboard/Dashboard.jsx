@@ -15,7 +15,6 @@ import { withCookies } from 'react-cookie'
 import { Redirect } from 'react-router-dom'
 import Pagination from '@material-ui/lab/Pagination'
 import _ from 'lodash'
-import toast from 'material-react-toastify'
 
 const styles = (theme) => ({
   root: {
@@ -83,8 +82,8 @@ class Dashboard extends React.Component {
         this.setState({
           userMessage: response[0].data.message,
           daysLeft: response[0].data.calendar.daysLeft,
-          // budget: response[0].data.budget.initialBudget,
-          // currentBudget: response[0].data.budget.currentBudget,
+          budget: response[0].data.budget.initialBudget.toFixed(2) || 0,
+          currentBudget: response[0].data.budget.currentBudget.toFixed(2) || 0,
           attending: response[0].data.guests.totalAttending || 0,
           notAttending: response[0].data.guests.totalUnavailable || 0,
           pending: response[0].data.guests.totalPending || 0,
@@ -96,7 +95,7 @@ class Dashboard extends React.Component {
         })
       })
       .catch((err) => {
-        console.log(err)
+        return err
       })
   }
 
@@ -105,9 +104,14 @@ class Dashboard extends React.Component {
       return <Redirect to='/login' />
     }
 
-    if (this.state.daysLeft === null || this.state.budget === null) {
+    if (this.state.daysLeft === 0 || this.state.budget === 0) {
       return <Redirect to='/register/date-and-budget' />
     }
+
+    // this.setState({
+    //   budget: this.state.budget.toFixed(2),
+    //   currentBudget: this.state.currentBudget.toFixed(2),
+    // })
 
     const { classes } = this.props
 

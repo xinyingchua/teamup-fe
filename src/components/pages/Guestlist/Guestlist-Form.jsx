@@ -116,7 +116,7 @@ export default function GuestListForm(props) {
         }
       )
       .then((response) => {
-        console.log(response.data)
+        return
       })
       .catch((error) => {
         return error
