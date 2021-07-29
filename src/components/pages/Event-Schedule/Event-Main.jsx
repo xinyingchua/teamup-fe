@@ -12,7 +12,6 @@ import axios from 'axios'
 import { Link } from 'react-router-dom'
 import { useCookies } from 'react-cookie'
 import EventByLine from '../../assets/Event-Schedule'
-import { DataGrid } from '@material-ui/data-grid'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -86,14 +85,15 @@ export default function EventMain() {
       .then((response) => {
         const getData = response.data
         getEventData(getData)
+        return
       })
       .catch((error) => {
         return error
       })
   }
 
-  React.useEffect(() => {
-    getAllEventData()
+  React.useEffect(async () => {
+    await getAllEventData()
   }, [])
 
   return (

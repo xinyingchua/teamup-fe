@@ -14,6 +14,7 @@ import NavBar from '../Navbar/NavBar'
 import axios from 'axios'
 import { useHistory } from 'react-router-dom'
 import { useCookies } from 'react-cookie'
+import { toast } from 'material-react-toastify'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -55,6 +56,9 @@ export default function TodoForm(props) {
   const [status, setStatus] = React.useState(false)
   const [cookies] = useCookies(['auth_token'])
   let history = useHistory()
+  const [apiStatus, setApiStatus] = React.useState('')
+
+  const notify = (message) => toast.dark(message)
 
   // GET - OK //
   const getOneToDoData = async () => {
@@ -80,21 +84,29 @@ export default function TodoForm(props) {
     if (props.location.state && props.location.state._id) {
       getOneToDoData()
     }
+    setApiStatus(false)
   }, [])
 
   // Create TO DO //
   let createToDoData = async () => {
-    await axios.post(
-      'https://teamup-be.herokuapp.com/api/v1/users/todos/create',
-      {
-        task: task,
-        status: '' + status,
-        role: role,
-      },
-      {
-        headers: cookies,
-      }
-    )
+    try {
+      await axios.post(
+        'https://teamup-be.herokuapp.com/api/v1/users/todos/create',
+        {
+          task: task,
+          status: '' + status,
+          role: role,
+        },
+        {
+          headers: cookies,
+        }
+      )
+      setApiStatus(true)
+      history.push('/to-do')
+      return
+    } catch (err) {
+      return notify('Please check your form again.')
+    }
   }
 
   // Patch TO DO //
@@ -114,10 +126,12 @@ export default function TodoForm(props) {
         }
       )
       .then((response) => {
+        setApiStatus(true)
+        history.push('/to-do')
         return
       })
       .catch((error) => {
-        return error
+        return notify('Please check your form again.')
       })
   }
 
@@ -133,16 +147,20 @@ export default function TodoForm(props) {
         }
       )
       .then((response) => {
+        history.push('/to-do')
         return
       })
       .catch((error) => {
-        return error
+        return notify('Form Delete unsuccessful.')
       })
   }
 
   // submit form function
   const handleFormSummit = (e) => {
     e.preventDefault()
+    if (apiStatus === false) {
+      return
+    }
     history.push('/to-do')
   }
 

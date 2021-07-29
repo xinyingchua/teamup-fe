@@ -79,39 +79,32 @@ export default function BudgetMain() {
   // use useState hooks
   const [cookies] = useCookies(['auth_token'])
   const [weddingBudget, setWeddingBudget] = React.useState('')
-  const [weddingAvailableBudget, setWeddingAvailableBudge] = React.useState('')
-  const [AllBudgetData, setAllBudgetData] = React.useState([])
+  const [weddingAvailableBudget, setWeddingAvailableBudget] = React.useState('')
+  const [allBudgetData, setAllBudgetData] = React.useState([])
 
-  // Get Multiple URL//
-  let urls = [
-    'https://teamup-be.herokuapp.com/api/v1/users/dashboard',
-    'https://teamup-be.herokuapp.com/api/v1/users/budget/',
-  ]
+  const getApiCall = async (url) => {
+    let response = null
 
-  // Get Multiple Data points//
-  const getAllBudgetData = async () => {
-    let requests = await urls.map((url) => {
-      axios.get(url, {
-        headers: cookies,
-      })
-    })
+    try {
+      response = await axios.get(url, { headers: cookies })
+    } catch (err) {
+      return err
+    }
 
-    // After retriving data, setState//
-    Promise.all(requests)
-      .then((responses) => {
-        setAllBudgetData(responses[1].data)
-        setWeddingAvailableBudge(
-          responses[0].data.budget.currentBudget.toFixed(2)
-        )
-        setWeddingBudget(responses[0].data.budget.initialBudget.toFixed(2))
-      })
-      .catch((err) => {
-        return err
-      })
+    return response.data
   }
 
-  useEffect(() => {
-    getAllBudgetData()
+  useEffect(async () => {
+    let dashboardData = await getApiCall(
+      'https://teamup-be.herokuapp.com/api/v1/users/dashboard'
+    )
+    let budgetData = await getApiCall(
+      'https://teamup-be.herokuapp.com/api/v1/users/budget/'
+    )
+
+    setWeddingBudget(dashboardData.budget.initialBudget)
+    setWeddingAvailableBudget(dashboardData.budget.currentBudget)
+    setAllBudgetData(budgetData)
   }, [])
 
   return (
@@ -128,7 +121,7 @@ export default function BudgetMain() {
                   color='secondary'
                   className={classes.costTypography}
                 >
-                  {`$${weddingBudget}`}
+                  {`$${parseFloat(weddingBudget).toFixed(2)}`}
                 </Typography>
               </Box>
               Estimated Wedding Cost
@@ -141,7 +134,7 @@ export default function BudgetMain() {
                   style={{ color: '#5EAB50' }}
                   className={classes.costTypography}
                 >
-                  {`$${weddingAvailableBudget}`}
+                  {`$${parseFloat(weddingAvailableBudget).toFixed(2)}`}
                 </Typography>
               </Box>
               Available in your budget
@@ -180,10 +173,10 @@ export default function BudgetMain() {
           </Grid>
 
           <List className={classes.ulroot}>
-            {AllBudgetData.length === 0 ? (
+            {allBudgetData.length === 0 ? (
               <h6>There are no items at the moment.</h6>
             ) : (
-              AllBudgetData.map((item, pos) => {
+              allBudgetData.map((item, pos) => {
                 return item.category === 'wedding' ? (
                   <BudgetListItem
                     key={pos}
@@ -210,10 +203,10 @@ export default function BudgetMain() {
           </Grid>
 
           <List className={classes.ulroot}>
-            {AllBudgetData.length === 0 ? (
+            {allBudgetData.length === 0 ? (
               <h6>There are no items at the moment.</h6>
             ) : (
-              AllBudgetData.map((item, pos) => {
+              allBudgetData.map((item, pos) => {
                 return item.category === 'entertainment' ? (
                   <BudgetListItem
                     key={pos}
@@ -238,10 +231,10 @@ export default function BudgetMain() {
           </Grid>
 
           <List className={classes.ulroot}>
-            {AllBudgetData.length === 0 ? (
+            {allBudgetData.length === 0 ? (
               <h6>There are no items at the moment.</h6>
             ) : (
-              AllBudgetData.map((item, pos) => {
+              allBudgetData.map((item, pos) => {
                 return item.category === 'guests' ? (
                   <BudgetListItem
                     key={pos}
@@ -268,10 +261,10 @@ export default function BudgetMain() {
           </Grid>
 
           <List className={classes.ulroot}>
-            {AllBudgetData.length === 0 ? (
+            {allBudgetData.length === 0 ? (
               <h6>There are no items at the moment.</h6>
             ) : (
-              AllBudgetData.map((item, pos) => {
+              allBudgetData.map((item, pos) => {
                 return item.category === 'others' ? (
                   <BudgetListItem
                     key={pos}

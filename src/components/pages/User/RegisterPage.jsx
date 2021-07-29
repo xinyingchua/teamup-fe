@@ -13,6 +13,7 @@ import Select from '@material-ui/core/Select'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 import { useHistory } from 'react-router-dom'
+import { toast } from 'material-react-toastify'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -58,23 +59,29 @@ export default function RegisterPage() {
   const [mainUserRole, setMainUserRole] = React.useState('')
   const [secondaryUserFullName, setSecondaryUserFullName] = React.useState('')
   const [secondaryUserEmail, setSecondaryUserEmail] = React.useState('')
-  let [fetchedData, setFetchedData] = React.useState('')
+  let [fetchedData, setFetchedData] = React.useState({})
   let history = useHistory()
+  const notify = (message) => toast.dark(message)
 
   // MAKING POST REQUEST TO REGISTER //
 
   let fetchData = async () => {
-    fetchedData = await axios({
-      method: 'post',
-      url: 'https://teamup-be.herokuapp.com/api/v1/register',
-      data: {
-        user_fullName: mainUserFullName,
-        user_email: mainUserEmail,
-        user_role: mainUserRole,
-        partner_fullName: secondaryUserFullName,
-        partner_email: secondaryUserEmail,
-      },
-    })
+    try {
+      fetchedData = await axios({
+        method: 'post',
+        url: 'https://teamup-be.herokuapp.com/api/v1/register',
+        data: {
+          user_fullName: mainUserFullName,
+          user_email: mainUserEmail,
+          user_role: mainUserRole,
+          partner_fullName: secondaryUserFullName,
+          partner_email: secondaryUserEmail,
+        },
+      })
+    } catch (err) {
+      return err
+    }
+
     setFetchedData(fetchedData)
     return
   }
@@ -83,6 +90,9 @@ export default function RegisterPage() {
   const handleFormSubmission = async (e) => {
     e.preventDefault()
     await fetchData()
+    if (fetchedData.status !== 201) {
+      return notify('Please check your form again.')
+    }
     history.push(`/register/change-password/${fetchedData.data.userRegisterId}`)
   }
   return (
