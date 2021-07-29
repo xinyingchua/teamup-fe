@@ -132,7 +132,6 @@ export default function GuestList() {
 
       Promise.all(requests)
         .then((responses) => {
-
           const dashboardData = responses[0].data
           const guestListData = responses[1].data
           getGuestSummaryData(dashboardData.guests)
@@ -153,6 +152,7 @@ export default function GuestList() {
           // console.log(guestListData.filter(item => item.status === "attending"))
           // console.log(guestListData.filter(item => item.status === "unavailable"))
 
+
         })
         .catch((err) => {
           return err
@@ -160,13 +160,14 @@ export default function GuestList() {
     }
 
     getAllGuestData()
+
   }, [])
 
   // console.log(guestListData)
+
   // performFilter(e) {
   //   console.log(e.target.value)
   // }
-
 
   // FORM SUBMISSION
   // const performFilter = async (e, filterType) => {
@@ -209,7 +210,6 @@ export default function GuestList() {
           <div style={{ margin: '50px' }}>
             <Grid container style={{ marginTop: '50px' }}>
               <Grid item xs={12} sm={6} lg={6} style={{ textAlign: 'left' }}>
-
                 <FormControl variant='outlined' style={{ width: '200px' }}>
                   <InputLabel id='category'>Filter By</InputLabel>
                   <Select
@@ -220,6 +220,7 @@ export default function GuestList() {
                     // true --> item is selected // refer to mdn 
                     onChange={(e) => setFilteredData(guestListData.filter(item => e.target.value === 'all' ? true :
                     item.status === e.target.value))}
+
                     variant='outlined'
                     id='rsvp'
                   >
@@ -229,7 +230,6 @@ export default function GuestList() {
                     <MenuItem value='unavailable'>Not Attending</MenuItem>
                   </Select>
                 </FormControl>
-
               </Grid>
 
               <Grid item xs={12} sm={6} lg={6} style={{ textAlign: 'right' }}>

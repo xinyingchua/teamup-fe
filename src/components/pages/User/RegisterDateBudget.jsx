@@ -8,6 +8,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import { useHistory } from 'react-router-dom'
 import axios from 'axios'
 import { useCookies } from 'react-cookie'
+import { toast } from 'material-react-toastify'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -65,9 +66,15 @@ export default function RegisterDateBudget() {
   const [cookies] = useCookies(['auth_token'])
   let history = useHistory()
 
+  React.useEffect(() => {
+    const notify = (message) => toast.dark(message)
+
+    notify('Please provide your Event Date and Budget!')
+  }, [])
+
   // PATCH REQUEST TO UPDATE EDATE AND BUDGET //
-  const updateUserProfile = () => {
-    axios
+  const updateUserProfile = async () => {
+    await axios
       .patch(
         'https://teamup-be.herokuapp.com/api/v1/users/profile/update',
         {
@@ -79,7 +86,7 @@ export default function RegisterDateBudget() {
         }
       )
       .then((response) => {
-        console.log(eDate)
+        return
       })
       .catch((error) => {
         return error
@@ -88,8 +95,20 @@ export default function RegisterDateBudget() {
 
   // submit form function
   const handleFormSubmission = async (e) => {
+    let response = {}
+
     e.preventDefault()
+    try {
+      response = await updateUserProfile()
+    } catch (err) {
+      return err
+    }
+
+    if (!response) {
+      return
+    }
     history.push('/dashboard')
+    return
   }
 
   return (
@@ -123,7 +142,9 @@ export default function RegisterDateBudget() {
               label='Wedding Date'
               type='date'
               defaultValue='2022-05-24'
-              onChange={(e) => setEDate(e.target.value)}
+              onChange={(e) => {
+                setEDate(e.target.value)
+              }}
               className={classes.textField}
               InputLabelProps={{
                 shrink: true,
@@ -149,7 +170,9 @@ export default function RegisterDateBudget() {
               id='wedding-budget'
               label='Amount'
               name='weddingBudget'
-              onChange={(e) => setBudget(e.target.value)}
+              onChange={(e) => {
+                setBudget(e.target.value)
+              }}
               className={classes.textField}
               autoFocus
             />
@@ -160,7 +183,6 @@ export default function RegisterDateBudget() {
               variant='contained'
               color='primary'
               className={classes.submit}
-              onClick={updateUserProfile()}
             >
               Continue
             </Button>

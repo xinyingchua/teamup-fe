@@ -13,9 +13,8 @@ import axios from 'axios'
 import { withStyles } from '@material-ui/core/styles'
 import { withCookies } from 'react-cookie'
 import { Redirect } from 'react-router-dom'
-import Pagination from '@material-ui/lab/Pagination';
+import Pagination from '@material-ui/lab/Pagination'
 import _ from 'lodash'
-
 
 const styles = (theme) => ({
   root: {
@@ -45,7 +44,6 @@ const styles = (theme) => ({
   },
 })
 
-
 // export default function Dashboard() {
 class Dashboard extends React.Component {
   constructor(props) {
@@ -67,27 +65,24 @@ class Dashboard extends React.Component {
     }
   }
 
-  
-
-  async componentDidMount() {
+  componentDidMount() {
     let dashboardURL = 'https://teamup-be.herokuapp.com/api/v1/users/dashboard'
     let eventURL = 'https://teamup-be.herokuapp.com/api/v1/users/events/'
 
-    const promise1 = await axios.get(dashboardURL, {
+    const promise1 = axios.get(dashboardURL, {
       headers: { auth_token: this.state.user },
     })
-    const promise2 = await axios.get(eventURL, {
+    const promise2 = axios.get(eventURL, {
       headers: { auth_token: this.state.user },
     })
-
 
     Promise.all([promise1, promise2])
       .then((response) => {
         this.setState({
-
-          daysLeft: response[0].data.calendar.daysLeft || 0,
-          budget: response[0].data.budget.initialBudget.toFixed(2) || 0,
-          currentBudget: response[0].data.budget.currentBudget.toFixed(2) || 0,
+          userMessage: response[0].data.message,
+          daysLeft: response[0].data.calendar.daysLeft,
+          budget: response[0].data.budget.initialBudget,
+          currentBudget: response[0].data.budget.currentBudget,
           attending: response[0].data.guests.totalAttending || 0,
           notAttending: response[0].data.guests.totalUnavailable || 0,
           pending: response[0].data.guests.totalPending || 0,
@@ -101,32 +96,36 @@ class Dashboard extends React.Component {
       .catch((err) => {
         return err
       })
-
   }
-
- 
-
-  
 
   render() {
     if (!this.state.user) {
       return <Redirect to='/login' />
     }
+
+    if (this.state.daysLeft === 0 || this.state.budget === 0) {
+      return <Redirect to='/register/date-and-budget' />
+    }
+
+    // this.setState({
+    //   budget: this.state.budget.toFixed(2),
+    //   currentBudget: this.state.currentBudget.toFixed(2),
+    // })
+
     const { classes } = this.props
 
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
 
-
     // To handle page change to show array of items
-    const handlePageChange = ((e) => {
+    const handlePageChange = (e) => {
       this.setState({
-        currentPage: e.target.innerText - 1
-    })
-    });
+        currentPage: e.target.innerText - 1,
+      })
+    }
 
     return (
       <div className={classes.root}>
-        <NavBar title='Dashboard' />
+        <NavBar title='Dashboard' message={`test`} />
         <main className={classes.content}>
           <div className={classes.appBarSpacer} />
           <Container maxWidth='lg' className={classes.container}>
@@ -142,8 +141,10 @@ class Dashboard extends React.Component {
               <Grid item xs={12} md={8} lg={9}>
                 <Paper className={fixedHeightPaper}>
                   <Budgetplanning
-                    budget={`$${this.state.budget}`}
-                    currentBudget={`$${this.state.currentBudget}`}
+                    budget={`$${parseFloat(this.state.budget).toFixed(2)}`}
+                    currentBudget={`$${parseFloat(
+                      this.state.currentBudget
+                    ).toFixed(2)}`}
                   />
                 </Paper>
               </Grid>
@@ -170,33 +171,31 @@ class Dashboard extends React.Component {
                 </Paper>
               </Grid>
               <Grid container spacing={2}>
-
                 {this.state.allEventData.length === 0 ? (
-
                   <h6>There are no items at the moment.</h6>
                 ) : (
-                  this.state.allEventData[this.state.currentPage].map((item, pos) => {
-                    return (
-                      <Grid key={pos} item xs={3}>
-                        <Paper className={classes.paper}>
-                          <UpcomingEvents
-                            eventName={item.event_name}
-                            eventDate={item.from}
-                            key={pos}
-                          />
-                        </Paper>
-                      </Grid>
-                    )
-                  })
+                  this.state.allEventData[this.state.currentPage].map(
+                    (item, pos) => {
+                      return (
+                        <Grid key={pos} item xs={3}>
+                          <Paper className={classes.paper}>
+                            <UpcomingEvents
+                              eventName={item.event_name}
+                              eventDate={item.from}
+                              key={pos}
+                            />
+                          </Paper>
+                        </Grid>
+                      )
+                    }
+                  )
                 )}
-
-                
 
                 <Grid item xs={12}>
                   <Pagination
-                    count={Math.ceil(this.state.numberOfEvents/4)}
+                    count={Math.ceil(this.state.numberOfEvents / 4)}
                     color='primary'
-                    onChange={e => handlePageChange(e)}
+                    onChange={(e) => handlePageChange(e)}
                   />
                 </Grid>
               </Grid>

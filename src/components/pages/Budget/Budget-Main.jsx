@@ -112,7 +112,7 @@ export default function BudgetMain() {
     }
 
     getAllBudgetData()
-  }, [])
+  }, [AllBudgetData])
 
   return (
     <div className={classes.root}>
@@ -171,6 +171,36 @@ export default function BudgetMain() {
           </Grid>
 
           {/* Expense header */}
+
+          {/* Wedding */}
+          <Grid item xs={12} md={4} lg={3}>
+            <Box className={classes.ulheader}>
+              <Typography style={{ fontWeight: 'bold' }}>Wedding</Typography>
+            </Box>
+          </Grid>
+
+          <List className={classes.ulroot}>
+            {AllBudgetData.length === 0 ? (
+              <h6>There are no items at the moment.</h6>
+            ) : (
+              AllBudgetData.map((item, pos) => {
+                return item.category === 'wedding' ? (
+                  <BudgetListItem
+                    key={pos}
+                    status={item.status}
+                    _id={item._id}
+                    category={item.category}
+                    itemName={item.item_name}
+                    amount={`$${parseFloat(item.amount).toFixed(2)}`}
+                  />
+                ) : (
+                  <div key={pos}></div>
+                )
+              })
+            )}
+          </List>
+
+          {/* Entertainment */}
           <Grid item xs={12} md={4} lg={3}>
             <Box className={classes.ulheader}>
               <Typography style={{ fontWeight: 'bold' }}>
@@ -184,14 +214,75 @@ export default function BudgetMain() {
               <h6>There are no items at the moment.</h6>
             ) : (
               AllBudgetData.map((item, pos) => {
-                return (
+                return item.category === 'entertainment' ? (
                   <BudgetListItem
                     key={pos}
                     status={item.status}
                     _id={item._id}
+                    category={item.category}
                     itemName={item.item_name}
                     amount={`$${parseFloat(item.amount).toFixed(2)}`}
                   />
+                ) : (
+                  <div key={pos}></div>
+                )
+              })
+            )}
+          </List>
+
+          {/* Guests */}
+          <Grid item xs={12} md={4} lg={3}>
+            <Box className={classes.ulheader}>
+              <Typography style={{ fontWeight: 'bold' }}>Guest</Typography>
+            </Box>
+          </Grid>
+
+          <List className={classes.ulroot}>
+            {AllBudgetData.length === 0 ? (
+              <h6>There are no items at the moment.</h6>
+            ) : (
+              AllBudgetData.map((item, pos) => {
+                return item.category === 'guests' ? (
+                  <BudgetListItem
+                    key={pos}
+                    status={item.status}
+                    _id={item._id}
+                    category={item.category}
+                    itemName={item.item_name}
+                    amount={`$${parseFloat(item.amount).toFixed(2)}`}
+                  />
+                ) : (
+                  <div key={pos}></div>
+                )
+              })
+            )}
+          </List>
+
+          {/* Misc */}
+          <Grid item xs={12} md={4} lg={3}>
+            <Box className={classes.ulheader}>
+              <Typography style={{ fontWeight: 'bold' }}>
+                Miscellaneous
+              </Typography>
+            </Box>
+          </Grid>
+
+          <List className={classes.ulroot}>
+            {AllBudgetData.length === 0 ? (
+              <h6>There are no items at the moment.</h6>
+            ) : (
+              AllBudgetData.map((item, pos) => {
+                return item.category === 'others' ? (
+                  <BudgetListItem
+                    key={pos}
+                    status={item.status}
+                    _id={item._id}
+                    category={item.category}
+                    itemName={item.item_name}
+                    amount={`$${parseFloat(item.amount).toFixed(2)}`}
+                  />
+                ) : (
+                  <div key={pos}></div>
                 )
               })
             )}
