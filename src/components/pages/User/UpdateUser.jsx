@@ -97,7 +97,7 @@ export default function UpdateUser() {
   }
 
   // submit form function
-  const handleFormSummit = async (e) => {
+  const handleFormSummit = (e) => {
     e.preventDefault()
     history.push('/login')
   }

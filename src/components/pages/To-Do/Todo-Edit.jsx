@@ -83,8 +83,8 @@ export default function TodoForm(props) {
   }, [])
 
   // Create TO DO //
-  let createToDoData = async () => {
-    await axios.post(
+  let createToDoData = () => {
+    axios.post(
       'https://teamup-be.herokuapp.com/api/v1/users/todos/create',
       {
         task: task,
@@ -141,7 +141,7 @@ export default function TodoForm(props) {
   }
 
   // submit form function
-  const handleFormSummit = async (e) => {
+  const handleFormSummit = (e) => {
     e.preventDefault()
     history.push('/to-do')
   }

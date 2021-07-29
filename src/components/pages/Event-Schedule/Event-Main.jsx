@@ -94,7 +94,7 @@ export default function EventMain() {
 
   React.useEffect(() => {
     getAllEventData()
-  }, [eventData])
+  }, [])
 
   return (
     <div className={classes.root}>

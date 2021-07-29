@@ -63,8 +63,8 @@ export default function RegisterPage() {
 
   // MAKING POST REQUEST TO REGISTER //
 
-  let fetchData = async () => {
-    fetchedData = await axios({
+  let fetchData = () => {
+    fetchedData = axios({
       method: 'post',
       url: 'https://teamup-be.herokuapp.com/api/v1/register',
       data: {
@@ -79,9 +79,9 @@ export default function RegisterPage() {
   }
 
   // submit form function
-  const handleFormSubmission = async (e) => {
+  const handleFormSubmission = (e) => {
     e.preventDefault()
-    await fetchData()
+    fetchData()
     history.push(`/register/change-password/${fetchedData.data.userRegisterId}`)
   }
   return (

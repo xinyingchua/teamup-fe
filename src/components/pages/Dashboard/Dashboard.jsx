@@ -171,7 +171,7 @@ class Dashboard extends React.Component {
                 </Paper>
               </Grid>
               <Grid container spacing={2}>
-                {this.state.allEventData.length === 0 ? (
+                {this.state.allEventData % 4 === 0 ? (
                   <h6>There are no items at the moment.</h6>
                 ) : (
                   this.state.allEventData[this.state.currentPage].map(
@@ -195,7 +195,9 @@ class Dashboard extends React.Component {
                   <Pagination
                     count={Math.ceil(this.state.numberOfEvents / 4)}
                     color='primary'
-                    onChange={(e) => handlePageChange(e)}
+                    onChange={(e) => {
+                      handlePageChange(e)
+                    }}
                   />
                 </Grid>
               </Grid>

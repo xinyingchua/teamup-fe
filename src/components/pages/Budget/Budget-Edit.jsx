@@ -100,8 +100,8 @@ export default function NewBudget(props) {
   }, [])
 
   // Create New Budget//
-  let CreateBudget = async () => {
-    await axios.post(
+  let CreateBudget = () => {
+    axios.post(
       'https://teamup-be.herokuapp.com/api/v1/users/budget/create',
       {
         item_name: itemName,
@@ -164,7 +164,7 @@ export default function NewBudget(props) {
   }
 
   // submit form function
-  const handleFormSummit = async (e) => {
+  const handleFormSummit = (e) => {
     e.preventDefault()
     history.push('/budget')
   }

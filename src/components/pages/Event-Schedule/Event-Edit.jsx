@@ -54,16 +54,14 @@ export default function EventForm(props) {
   const [fromDate, setFromDate] = React.useState()
   const [toDate, setToDate] = React.useState()
   const [eventName, setEventName] = React.useState('')
-  const [eventStart, setEventStart] = React.useState('')
-  const [eventEnd, setEventEnd] = React.useState('')
   const [eventLocation, setEventLocation] = React.useState('')
   const [eventDescription, setEventDescription] = React.useState('')
   let [fetchedData, setFetchedData] = React.useState('')
 
   useEffect(() => {
     // GET A SINGLE EVENT DATA //
-    const getOnEventData = async () => {
-      await axios
+    const getOnEventData = () => {
+      axios
         .get(
           'https://teamup-be.herokuapp.com/api/v1/users/events/' +
             props.location.state._id,
@@ -73,8 +71,8 @@ export default function EventForm(props) {
           const allData = response.data[0]
           setEventLocation(allData.location.name)
           setEventName(allData.event_name)
-          setFromDate(moment(allData.from).format('yyyy-MM-ddThh:mm:ss.SSS'))
-          setToDate(moment(allData.to).format('yyyy-MM-ddThh:mm:ss.SSS'))
+          setFromDate(moment(allData.from).format('yyyy-MM-DDThh:mm'))
+          setToDate(moment(allData.to).format('yyyy-MM-DDThh:mm'))
           setEventDescription(allData.description)
         })
         .catch((error) => {
@@ -87,8 +85,8 @@ export default function EventForm(props) {
   }, [])
 
   // POST - CREATE NEW EVENT
-  let postNewEvent = async () => {
-    const response = await axios({
+  let postNewEvent = () => {
+    const response = axios({
       method: 'post',
       headers: cookies,
       url: 'https://teamup-be.herokuapp.com/api/v1/users/events/create',
@@ -101,10 +99,14 @@ export default function EventForm(props) {
       },
     })
     setFetchedData(response)
+    console.log(response)
   }
 
   // PATCH EVENT//
   const updateEvent = () => {
+    let fromDateToIso = moment(fromDate).toISOString()
+    let toDateToIso = moment(toDate).toISOString()
+
     axios
       .patch(
         'https://teamup-be.herokuapp.com/api/v1/users/events/' +
@@ -112,8 +114,8 @@ export default function EventForm(props) {
           '/update',
         {
           event_name: eventName,
-          from: eventStart,
-          to: eventEnd,
+          from: fromDateToIso,
+          to: toDateToIso,
           location: eventLocation,
           description: eventDescription,
         },
@@ -158,7 +160,7 @@ export default function EventForm(props) {
   }
 
   // FORM SUBMISSION
-  const handleFormSubmission = async (e) => {
+  const handleFormSubmission = (e) => {
     e.preventDefault()
     history.push('/events')
   }
