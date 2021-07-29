@@ -73,8 +73,8 @@ export default function RegisterDateBudget() {
   }, [])
 
   // PATCH REQUEST TO UPDATE EDATE AND BUDGET //
-  const updateUserProfile = async () => {
-    await axios
+  const updateUserProfile = () => {
+    axios
       .patch(
         'https://teamup-be.herokuapp.com/api/v1/users/profile/update',
         {
@@ -94,12 +94,12 @@ export default function RegisterDateBudget() {
   }
 
   // submit form function
-  const handleFormSubmission = async (e) => {
+  const handleFormSubmission = (e) => {
     let response = {}
 
     e.preventDefault()
     try {
-      response = await updateUserProfile()
+      response = updateUserProfile()
     } catch (err) {
       return err
     }

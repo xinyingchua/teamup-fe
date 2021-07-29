@@ -100,67 +100,61 @@ export default function GuestList() {
 
   // TBC
 
-// const handleChange = (e) => {
-//   // switch case for status 
-//   switch(e.target.value) {
-//     case 'attending':
-//       return guestListData.filter(item => item.status === "attending")
-//     case 'pending':
-//       return guestListData.filter(item => item.status === "attending")
-//       case 'unavailable':
-//         return guestListData.filter(item => item.status === "attending")
-//     default:
-//       return guestListData
-//   }
-// }
+  // const handleChange = (e) => {
+  //   // switch case for status
+  //   switch(e.target.value) {
+  //     case 'attending':
+  //       return guestListData.filter(item => item.status === "attending")
+  //     case 'pending':
+  //       return guestListData.filter(item => item.status === "attending")
+  //       case 'unavailable':
+  //         return guestListData.filter(item => item.status === "attending")
+  //     default:
+  //       return guestListData
+  //   }
+  // }
 
+  const getAllGuestData = () => {
+    // MAKING MULTIPLE AXIOS CALLS //
 
-  // MAKING MULTIPLE AXIOS CALLS //
+    let urls = [
+      'https://teamup-be.herokuapp.com/api/v1/users/dashboard',
+      'https://teamup-be.herokuapp.com/api/v1/users/guests/',
+    ]
 
-  let urls = [
-    'https://teamup-be.herokuapp.com/api/v1/users/dashboard',
-    'https://teamup-be.herokuapp.com/api/v1/users/guests/',
-  ]
+    let requests = urls.map((url) => {
+      return axios.get(url, {
+        headers: cookies,
+      })
+    })
+
+    Promise.all(requests)
+      .then((responses) => {
+        const dashboardData = responses[0].data
+        const guestListData = responses[1].data
+        getGuestSummaryData(dashboardData.guests)
+        setGuestListData(guestListData)
+        setFilteredData(guestListData)
+
+        // setGuestListData(guestListData)
+        // console.log(selectFilterRSVP)
+        // console.log(guestListData)
+        // getFilteredData(guestListData.filter(item => item.status === selectFilterRSVP))
+        // console.log(filterData)
+
+        // console.log(guestListData.filter(item => item.status === selectFilterRSVP))
+        // console.log(guestListData.filter(item => item.status === "unavailable"))
+        // console.log(guestListData.filter(item => item.status === "pending"))
+        // console.log(guestListData.filter(item => item.status === "attending"))
+        // console.log(guestListData.filter(item => item.status === "unavailable"))
+      })
+      .catch((err) => {
+        return err
+      })
+  }
 
   useEffect(() => {
-    const getAllGuestData = () => {
-      let requests = urls.map((url) => {
-        return axios.get(url, {
-          headers: cookies,
-        })
-      })
-
-      Promise.all(requests)
-        .then((responses) => {
-          const dashboardData = responses[0].data
-          const guestListData = responses[1].data
-          getGuestSummaryData(dashboardData.guests)
-          setGuestListData(guestListData)
-          setFilteredData(guestListData)
-          
-          // setGuestListData(guestListData)
-          // console.log(selectFilterRSVP)
-          // console.log(guestListData)
-          // getFilteredData(guestListData.filter(item => item.status === selectFilterRSVP))
-          // console.log(filterData)
-
-
-
-          // console.log(guestListData.filter(item => item.status === selectFilterRSVP))
-          // console.log(guestListData.filter(item => item.status === "unavailable"))
-          // console.log(guestListData.filter(item => item.status === "pending"))
-          // console.log(guestListData.filter(item => item.status === "attending"))
-          // console.log(guestListData.filter(item => item.status === "unavailable"))
-
-
-        })
-        .catch((err) => {
-          return err
-        })
-    }
-
     getAllGuestData()
-
   }, [])
 
   // console.log(guestListData)
@@ -174,10 +168,8 @@ export default function GuestList() {
 
   //   let newState = {}
   //   newState[filterType] = e.target.value
-  
 
   // }
-
 
   return (
     <div className={classes.root}>
@@ -213,14 +205,20 @@ export default function GuestList() {
                 <FormControl variant='outlined' style={{ width: '200px' }}>
                   <InputLabel id='category'>Filter By</InputLabel>
                   <Select
-                    defaultValue= "all"
+                    defaultValue='all'
                     // value ={guestListData}
                     // onChange={(e) => handleChange(e)}
                     // if value is 'all', dont filter
-                    // true --> item is selected // refer to mdn 
-                    onChange={(e) => setFilteredData(guestListData.filter(item => e.target.value === 'all' ? true :
-                    item.status === e.target.value))}
-
+                    // true --> item is selected // refer to mdn
+                    onChange={(e) =>
+                      setFilteredData(
+                        guestListData.filter((item) =>
+                          e.target.value === 'all'
+                            ? true
+                            : item.status === e.target.value
+                        )
+                      )
+                    }
                     variant='outlined'
                     id='rsvp'
                   >
@@ -311,7 +309,7 @@ export default function GuestList() {
                         ) : (
                           filterData.map((item, pos) => {
                             // return (item.role === 'bride' && item.status === selectFilterRSVP+ "") ? (
-                              return item.role === 'bride' ? (
+                            return item.role === 'bride' ? (
                               <TeamGroomBrideGuestList
                                 key={pos}
                                 name={`${item.guest_first_name} ${item.guest_last_name}`}

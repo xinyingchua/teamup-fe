@@ -74,7 +74,7 @@ export default function TodoMain() {
 
   React.useEffect(() => {
     getAllTodoData()
-  }, [todoData])
+  }, [])
 
   return (
     <div className={classes.root}>

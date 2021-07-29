@@ -82,37 +82,37 @@ export default function BudgetMain() {
   const [weddingAvailableBudget, setWeddingAvailableBudge] = React.useState('')
   const [AllBudgetData, setAllBudgetData] = React.useState([])
 
-  useEffect(() => {
-    // Get Multiple URL//
-    let urls = [
-      'https://teamup-be.herokuapp.com/api/v1/users/dashboard',
-      'https://teamup-be.herokuapp.com/api/v1/users/budget/',
-    ]
+  // Get Multiple URL//
+  let urls = [
+    'https://teamup-be.herokuapp.com/api/v1/users/dashboard',
+    'https://teamup-be.herokuapp.com/api/v1/users/budget/',
+  ]
 
-    // Get Multiple Data points//
-    const getAllBudgetData = () => {
-      let requests = urls.map((url) => {
-        return axios.get(url, {
-          headers: cookies,
-        })
+  // Get Multiple Data points//
+  const getAllBudgetData = () => {
+    let requests = urls.map((url) => {
+      return axios.get(url, {
+        headers: cookies,
       })
+    })
 
-      // After retriving data, setState//
-      Promise.all(requests)
-        .then((responses) => {
-          setAllBudgetData(responses[1].data)
-          setWeddingAvailableBudge(
-            responses[0].data.budget.currentBudget.toFixed(2)
-          )
-          setWeddingBudget(responses[0].data.budget.initialBudget.toFixed(2))
-        })
-        .catch((err) => {
-          return err
-        })
-    }
+    // After retriving data, setState//
+    Promise.all(requests)
+      .then((responses) => {
+        setAllBudgetData(responses[1].data)
+        setWeddingAvailableBudge(
+          responses[0].data.budget.currentBudget.toFixed(2)
+        )
+        setWeddingBudget(responses[0].data.budget.initialBudget.toFixed(2))
+      })
+      .catch((err) => {
+        return err
+      })
+  }
 
+  useEffect(() => {
     getAllBudgetData()
-  }, [AllBudgetData])
+  }, [])
 
   return (
     <div className={classes.root}>

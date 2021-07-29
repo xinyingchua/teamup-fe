@@ -65,8 +65,8 @@ export default function ToDoGrid(props) {
           headers: cookies,
         }
       )
-      .then(async (response) => {
-        await props.refreshItems()
+      .then((response) => {
+        props.refreshItems()
         return
       })
       .catch((error) => {
@@ -75,7 +75,7 @@ export default function ToDoGrid(props) {
   }
 
   // submit form function
-  const handleFormSummit = async (e) => {
+  const handleFormSummit = (e) => {
     e.preventDefault()
     history.push('/to-do')
   }

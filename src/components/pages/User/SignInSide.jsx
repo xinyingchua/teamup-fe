@@ -62,9 +62,9 @@ export default function SignInSide() {
   let history = useHistory()
 
   // use api callback
-  let fetchData = async (response) => {
+  let fetchData = (response) => {
     try {
-      response = await axios({
+      response = axios({
         method: 'post',
         url: 'https://teamup-be.herokuapp.com/api/v1/login',
         data: {
@@ -79,10 +79,10 @@ export default function SignInSide() {
   }
 
   // submit form function
-  const handleFormSubmission = async (e) => {
+  const handleFormSubmission = (e) => {
     e.preventDefault()
 
-    let response = await fetchData()
+    let response = fetchData()
 
     if (!response.data) {
       notify('Email or password is incorrect. Please try again.')
