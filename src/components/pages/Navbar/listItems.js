@@ -11,19 +11,24 @@ import PaletteIcon from '@material-ui/icons/Palette';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import ToggleOnIcon from '@material-ui/icons/ToggleOn';
 import { Link } from "react-router-dom"
+import Divider from '@material-ui/core/Divider'
+import { useHistory } from 'react-router-dom'
+import { useCookies } from 'react-cookie'
 
 
+export default function ListItems(props) {
+  const [cookies, removeCookie] = useCookies(['auth_token'])
+  let history = useHistory()
 
-// change all funcitonal compoenent 
-// const [cookies, removeCookie] = useCookies(['auth_token'])
-// const handleRemoveCookie = async(e) => {
-//   removeCookie('auth_token');
-//   console.log("hello")
+  const handleRemoveCookie = async(e) => {
+  e.preventDefault()
+  removeCookie('auth_token');
+  history.push('/')
+  // console.log("User is logged out")
 
-// } 
-  
+} 
 
-export const mainListItems = (
+  return (
   <div >
     <Link to="/dashboard" style={{ textDecoration: "none", color:'#fff' }}>
     <ListItem button  >
@@ -79,12 +84,9 @@ export const mainListItems = (
     </ListItem>
     
     
-  </div>
-);
 
-export const secondaryListItems = (
+    <Divider />
 
-  <div>
     <ListItem button>
       <ListItemIcon style={{ color: 'white' }}>
         <ToggleOnIcon />
@@ -92,8 +94,8 @@ export const secondaryListItems = (
       <ListItemText primary="Dark Mode" />
     </ListItem>
    
-    <ListItem button>
-    {/* <ListItem button onClick={(e) => { handleRemoveCookie(e)}}> */}
+    {/* <ListItem button> */}
+    <ListItem button onClick={(e) => { handleRemoveCookie(e)}}>
       <ListItemIcon style={{ color: 'white' }}>
         <ExitToAppIcon />
       </ListItemIcon>
@@ -101,4 +103,6 @@ export const secondaryListItems = (
       primary="Log Out" />
     </ListItem>
   </div>
-);
+  )
+
+}
