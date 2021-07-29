@@ -57,11 +57,10 @@ export default function TodoMain() {
   const [cookies] = useCookies(['auth_token'])
   const [filterData, setFilteredData] = React.useState([])
 
+  const getAllTodoData = async () => {
+    const url = 'https://teamup-be.herokuapp.com/api/v1/users/todos'
 
-  const url = 'https://teamup-be.herokuapp.com/api/v1/users/todos'
-
-  const getAllTodoData = () => {
-    axios
+    await axios
       .get(`${url}`, {
         headers: cookies,
       })
@@ -69,8 +68,6 @@ export default function TodoMain() {
         const allData = response.data
         setTodoData(allData)
         setFilteredData(allData)
-        // console.log(filterData)
-        // console.log(filterData.filter(item => item.role === 'bride'))
       })
       .catch((error) => {
         return error
@@ -98,16 +95,23 @@ export default function TodoMain() {
                 <Select
                   labelId='demo-simple-select-outlined-label'
                   id='demo-simple-select-outlined'
-                  defaultValue= "all"
-                  onChange={(e) => setFilteredData(todoData.filter(item => e.target.value === 'all' ? true :
-                  item.role === e.target.value || item.status === e.target.value))} 
+                  defaultValue='all'
+                  onChange={(e) =>
+                    setFilteredData(
+                      todoData.filter((item) =>
+                        e.target.value === 'all'
+                          ? true
+                          : item.role === e.target.value ||
+                            item.status === e.target.value
+                      )
+                    )
+                  }
                 >
                   <MenuItem value='all'>Show All</MenuItem>
                   <MenuItem value='groom'>Groom</MenuItem>
                   <MenuItem value='bride'>Bride</MenuItem>
                   <MenuItem value='both'>Bride & Groom</MenuItem>
                   <MenuItem value={true}>Completed</MenuItem>
-                  
                 </Select>
               </FormControl>
             </Grid>

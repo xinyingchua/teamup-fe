@@ -114,7 +114,7 @@ export default function GuestList() {
   //   }
   // }
 
-  const getAllGuestData = () => {
+  const getAllGuestData = async () => {
     // MAKING MULTIPLE AXIOS CALLS //
 
     let urls = [
@@ -122,7 +122,7 @@ export default function GuestList() {
       'https://teamup-be.herokuapp.com/api/v1/users/guests/',
     ]
 
-    let requests = urls.map((url) => {
+    let requests = await urls.map((url) => {
       return axios.get(url, {
         headers: cookies,
       })
@@ -156,8 +156,6 @@ export default function GuestList() {
   useEffect(() => {
     getAllGuestData()
   }, [])
-
-  // console.log(guestListData)
 
   // performFilter(e) {
   //   console.log(e.target.value)

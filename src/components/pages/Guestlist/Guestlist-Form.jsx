@@ -56,8 +56,8 @@ export default function GuestListForm(props) {
   let history = useHistory()
 
   // POST - CREATE NEW GUEST //
-  let postNewGuest = () => {
-    response = axios({
+  let postNewGuest = async () => {
+    response = await axios({
       method: 'post',
       headers: cookies,
       url: 'https://teamup-be.herokuapp.com/api/v1/users/guests/create',
@@ -74,8 +74,8 @@ export default function GuestListForm(props) {
   }
 
   // GET - GET SINGLE GUEST //
-  let getGuestListData = () => {
-    axios
+  let getGuestListData = async () => {
+    await axios
       .get(
         'https://teamup-be.herokuapp.com/api/v1/users/guests/' +
           props.location.state._id,
@@ -98,8 +98,8 @@ export default function GuestListForm(props) {
   }
 
   // PATCH - EDIT SINGLE GUEST //
-  let UpdateGuestListData = () => {
-    axios
+  let UpdateGuestListData = async () => {
+   await axios
       .patch(
         'https://teamup-be.herokuapp.com/api/v1/users/guests/' +
           props.location.state._id +
@@ -124,8 +124,8 @@ export default function GuestListForm(props) {
   }
 
   // DELETE - DELETE SINGLE GUEST //
-  let DeleteGuestListData = () => {
-    axios
+  let DeleteGuestListData = async () => {
+   await axios
       .delete(
         'https://teamup-be.herokuapp.com/api/v1/users/guests/' +
           props.location.state._id +
