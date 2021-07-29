@@ -93,26 +93,26 @@ export default function GuestList() {
   // use useState hooks
   const [cookies] = useCookies(['auth_token'])
   const [guestSummaryData, getGuestSummaryData] = React.useState('')
-  const [guestListData, getGuestListData] = React.useState([])
+  const [guestListData, setGuestListData] = React.useState([])
 
-  const [tryguest, setTryGuest] = React.useState([])
-  const [filterData, getFilteredData] = React.useState('')
+  // const [tryguest, setTryGuest] = React.useState([])
+  const [filterData, setFilteredData] = React.useState([])
 
   // TBC
 
-const handleChange = (e) => {
-  // switch case for status 
-  switch(e.target.value) {
-    case 'attending':
-      return guestListData.filter(item => item.status === "attending")
-    case 'pending':
-      return guestListData.filter(item => item.status === "attending")
-      case 'unavailable':
-        return guestListData.filter(item => item.status === "attending")
-    default:
-      return guestListData
-  }
-}
+// const handleChange = (e) => {
+//   // switch case for status 
+//   switch(e.target.value) {
+//     case 'attending':
+//       return guestListData.filter(item => item.status === "attending")
+//     case 'pending':
+//       return guestListData.filter(item => item.status === "attending")
+//       case 'unavailable':
+//         return guestListData.filter(item => item.status === "attending")
+//     default:
+//       return guestListData
+//   }
+// }
 
 
   // MAKING MULTIPLE AXIOS CALLS //
@@ -136,11 +136,11 @@ const handleChange = (e) => {
           const dashboardData = responses[0].data
           const guestListData = responses[1].data
           getGuestSummaryData(dashboardData.guests)
-          getGuestListData(guestListData)
+          setGuestListData(guestListData)
+          setFilteredData(guestListData)
           
-          // getGuestListData(guestListData)
+          // setGuestListData(guestListData)
           // console.log(selectFilterRSVP)
-        
           // console.log(guestListData)
           // getFilteredData(guestListData.filter(item => item.status === selectFilterRSVP))
           // console.log(filterData)
@@ -169,13 +169,13 @@ const handleChange = (e) => {
 
 
   // FORM SUBMISSION
-  const performFilter = async (e, filterType) => {
+  // const performFilter = async (e, filterType) => {
 
-    let newState = {}
-    newState[filterType] = e.target.value
+  //   let newState = {}
+  //   newState[filterType] = e.target.value
   
 
-  }
+  // }
 
 
   return (
@@ -215,8 +215,11 @@ const handleChange = (e) => {
                   <Select
                     defaultValue= "all"
                     // value ={guestListData}
-                    onChange={(e) => handleChange(e)}
-                    // onChange={(e) => getGuestListData(previous => previous.filter(item => item.status === e.target.value))}
+                    // onChange={(e) => handleChange(e)}
+                    // if value is 'all', dont filter
+                    // true --> item is selected // refer to mdn 
+                    onChange={(e) => setFilteredData(guestListData.filter(item => e.target.value === 'all' ? true :
+                    item.status === e.target.value))}
                     variant='outlined'
                     id='rsvp'
                   >
@@ -263,10 +266,10 @@ const handleChange = (e) => {
                   <div style={{ margin: '25px' }}>
                     <List className={classes.ulroot}>
                       <Grid container>
-                        {guestListData.length === 0 ? (
+                        {filterData.length === 0 ? (
                           <h6>There are no items at the moment.</h6>
                         ) : (
-                          guestListData.map((item, pos) => {
+                          filterData.map((item, pos) => {
                             return item.role === 'groom' ? (
                               <TeamGroomBrideGuestList
                                 key={pos}
@@ -303,10 +306,10 @@ const handleChange = (e) => {
                   <div style={{ margin: '25px' }}>
                     <List className={classes.ulroot}>
                       <Grid container>
-                        {guestListData.length === 0 ? (
+                        {filterData.length === 0 ? (
                           <h6>There are no items at the moment.</h6>
                         ) : (
-                          guestListData.map((item, pos) => {
+                          filterData.map((item, pos) => {
                             // return (item.role === 'bride' && item.status === selectFilterRSVP+ "") ? (
                               return item.role === 'bride' ? (
                               <TeamGroomBrideGuestList
