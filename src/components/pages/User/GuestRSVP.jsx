@@ -61,11 +61,11 @@ export default function GuestRSVP() {
 
   let history = useHistory()
 
-  const RsvpReply = (e) => {
+  const RsvpReply = async (e) => {
     e.preventDefault()
 
     try {
-      let response = axios({
+      let response = await axios({
         method: 'patch',
         url: `https://teamup-be.herokuapp.com/api/v1/users/guests/${cookies.auth_token._id}/rsvp`,
         data: {

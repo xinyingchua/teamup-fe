@@ -65,14 +65,14 @@ class Dashboard extends React.Component {
     }
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     let dashboardURL = 'https://teamup-be.herokuapp.com/api/v1/users/dashboard'
     let eventURL = 'https://teamup-be.herokuapp.com/api/v1/users/events/'
 
-    const promise1 = axios.get(dashboardURL, {
+    const promise1 = await axios.get(dashboardURL, {
       headers: { auth_token: this.state.user },
     })
-    const promise2 = axios.get(eventURL, {
+    const promise2 = await axios.get(eventURL, {
       headers: { auth_token: this.state.user },
     })
 

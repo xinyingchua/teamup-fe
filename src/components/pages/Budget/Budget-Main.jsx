@@ -89,9 +89,9 @@ export default function BudgetMain() {
   ]
 
   // Get Multiple Data points//
-  const getAllBudgetData = () => {
-    let requests = urls.map((url) => {
-      return axios.get(url, {
+  const getAllBudgetData = async () => {
+    let requests = await urls.map((url) => {
+      axios.get(url, {
         headers: cookies,
       })
     })

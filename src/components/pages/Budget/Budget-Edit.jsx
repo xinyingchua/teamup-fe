@@ -71,37 +71,36 @@ export default function NewBudget(props) {
   let history = useHistory()
   const [cookies] = useCookies(['auth_token'])
 
-  useEffect(() => {
-    // GET //
-    const getOneBudgetData = () => {
-      axios
-        .get(
-          'https://teamup-be.herokuapp.com/api/v1/users/budget/' +
-            props.location.state._id,
-          { headers: cookies }
-        )
-        .then((response) => {
-          const allData = response.data[0]
-          setItemName(allData.item_name)
-          setAmount(allData.amount)
-          setPaymentType(allData.payment_type)
-          setCategory(allData.category)
-          setStatus(allData.status)
-          setDescription(allData.description)
-        })
-        .catch((error) => {
-          return error
-        })
-    }
+  const getOneBudgetData = async () => {
+    await axios
+      .get(
+        'https://teamup-be.herokuapp.com/api/v1/users/budget/' +
+          props.location.state._id,
+        { headers: cookies }
+      )
+      .then((response) => {
+        const allData = response.data[0]
+        setItemName(allData.item_name)
+        setAmount(allData.amount)
+        setPaymentType(allData.payment_type)
+        setCategory(allData.category)
+        setStatus(allData.status)
+        setDescription(allData.description)
+      })
+      .catch((error) => {
+        return error
+      })
+  }
 
+  useEffect(() => {
     if (props.location.state && props.location.state._id) {
       getOneBudgetData()
     }
   }, [])
 
   // Create New Budget//
-  let CreateBudget = () => {
-    axios.post(
+  let CreateBudget = async () => {
+    await axios.post(
       'https://teamup-be.herokuapp.com/api/v1/users/budget/create',
       {
         item_name: itemName,
@@ -118,8 +117,8 @@ export default function NewBudget(props) {
   }
 
   // Patch TO DO //
-  const updateBudget = () => {
-    axios
+  const updateBudget = async () => {
+    await axios
       .patch(
         'https://teamup-be.herokuapp.com/api/v1/users/budget/' +
           props.location.state._id +
@@ -145,8 +144,8 @@ export default function NewBudget(props) {
   }
 
   // Delete TO DO //
-  const deleteBudget = () => {
-    axios
+  const deleteBudget = async () => {
+    await axios
       .delete(
         'https://teamup-be.herokuapp.com/api/v1/users/budget/' +
           props.location.state._id +
