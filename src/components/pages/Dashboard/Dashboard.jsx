@@ -65,14 +65,14 @@ class Dashboard extends React.Component {
     }
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     let dashboardURL = 'https://teamup-be.herokuapp.com/api/v1/users/dashboard'
     let eventURL = 'https://teamup-be.herokuapp.com/api/v1/users/events/'
 
-    const promise1 = axios.get(dashboardURL, {
+    const promise1 = await axios.get(dashboardURL, {
       headers: { auth_token: this.state.user },
     })
-    const promise2 = axios.get(eventURL, {
+    const promise2 = await axios.get(eventURL, {
       headers: { auth_token: this.state.user },
     })
 
@@ -171,7 +171,7 @@ class Dashboard extends React.Component {
                 </Paper>
               </Grid>
               <Grid container spacing={2}>
-                {this.state.allEventData.length === 0 ? (
+                {this.state.allEventData % 4 === 0 ? (
                   <h6>There are no items at the moment.</h6>
                 ) : (
                   this.state.allEventData[this.state.currentPage].map(
@@ -195,7 +195,9 @@ class Dashboard extends React.Component {
                   <Pagination
                     count={Math.ceil(this.state.numberOfEvents / 4)}
                     color='primary'
-                    onChange={(e) => handlePageChange(e)}
+                    onChange={(e) => {
+                      handlePageChange(e)
+                    }}
                   />
                 </Grid>
               </Grid>

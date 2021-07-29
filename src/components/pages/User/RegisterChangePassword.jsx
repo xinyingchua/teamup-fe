@@ -63,10 +63,10 @@ class RegisterChangePassword extends React.Component {
     this.setState(newState)
   }
 
-  handleFormSubmission(e) {
+  async handleFormSubmission(e) {
     e.preventDefault()
 
-    axios
+    await axios
       .post(
         `https://teamup-be.herokuapp.com/api/v1/${this.props.match.params.activationId}`,
         {

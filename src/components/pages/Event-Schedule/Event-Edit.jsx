@@ -54,33 +54,31 @@ export default function EventForm(props) {
   const [fromDate, setFromDate] = React.useState()
   const [toDate, setToDate] = React.useState()
   const [eventName, setEventName] = React.useState('')
-  const [eventStart, setEventStart] = React.useState('')
-  const [eventEnd, setEventEnd] = React.useState('')
   const [eventLocation, setEventLocation] = React.useState('')
   const [eventDescription, setEventDescription] = React.useState('')
   let [fetchedData, setFetchedData] = React.useState('')
 
+  const getOnEventData = async () => {
+    await axios
+      .get(
+        'https://teamup-be.herokuapp.com/api/v1/users/events/' +
+          props.location.state._id,
+        { headers: cookies }
+      )
+      .then((response) => {
+        const allData = response.data[0]
+        setEventLocation(allData.location.name)
+        setEventName(allData.event_name)
+        setFromDate(moment(allData.from).format('yyyy-MM-DDThh:mm'))
+        setToDate(moment(allData.to).format('yyyy-MM-DDThh:mm'))
+        setEventDescription(allData.description)
+      })
+      .catch((error) => {
+        return error
+      })
+  }
+
   useEffect(() => {
-    // GET A SINGLE EVENT DATA //
-    const getOnEventData = async () => {
-      await axios
-        .get(
-          'https://teamup-be.herokuapp.com/api/v1/users/events/' +
-            props.location.state._id,
-          { headers: cookies }
-        )
-        .then((response) => {
-          const allData = response.data[0]
-          setEventLocation(allData.location.name)
-          setEventName(allData.event_name)
-          setFromDate(moment(allData.from).format('yyyy-MM-ddThh:mm:ss.SSS'))
-          setToDate(moment(allData.to).format('yyyy-MM-ddThh:mm:ss.SSS'))
-          setEventDescription(allData.description)
-        })
-        .catch((error) => {
-          return error
-        })
-    }
     if (props.location.state && props.location.state._id) {
       getOnEventData()
     }
@@ -101,19 +99,23 @@ export default function EventForm(props) {
       },
     })
     setFetchedData(response)
+    return
   }
 
   // PATCH EVENT//
-  const updateEvent = () => {
-    axios
+  const updateEvent = async () => {
+    let fromDateToIso = moment(fromDate).toISOString()
+    let toDateToIso = moment(toDate).toISOString()
+
+    await axios
       .patch(
         'https://teamup-be.herokuapp.com/api/v1/users/events/' +
           props.location.state._id +
           '/update',
         {
           event_name: eventName,
-          from: eventStart,
-          to: eventEnd,
+          from: fromDateToIso,
+          to: toDateToIso,
           location: eventLocation,
           description: eventDescription,
         },
@@ -130,8 +132,8 @@ export default function EventForm(props) {
   }
 
   // DELETE EVENT //
-  const deleteEvent = () => {
-    axios
+  const deleteEvent = async () => {
+    await axios
       .delete(
         'https://teamup-be.herokuapp.com/api/v1/users/events/' +
           props.location.state._id +
@@ -158,7 +160,7 @@ export default function EventForm(props) {
   }
 
   // FORM SUBMISSION
-  const handleFormSubmission = async (e) => {
+  const handleFormSubmission = (e) => {
     e.preventDefault()
     history.push('/events')
   }

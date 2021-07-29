@@ -56,10 +56,10 @@ class LoginGuest extends React.Component {
     }
   }
 
-  handleFormSubmission(e) {
+  async handleFormSubmission(e) {
     e.preventDefault()
 
-    axios
+    await axios
       .post('https://teamup-be.herokuapp.com/api/v1/users/guests/login', {
         guest_contact: this.state.guest_contact,
       })

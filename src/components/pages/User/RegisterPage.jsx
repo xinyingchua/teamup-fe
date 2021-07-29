@@ -76,6 +76,7 @@ export default function RegisterPage() {
       },
     })
     setFetchedData(fetchedData)
+    return
   }
 
   // submit form function

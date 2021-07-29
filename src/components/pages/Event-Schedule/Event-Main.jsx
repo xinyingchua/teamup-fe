@@ -80,8 +80,8 @@ export default function EventMain() {
   const [eventData, getEventData] = React.useState([])
   const url = 'https://teamup-be.herokuapp.com/api/v1/users/events'
 
-  const getAllEventData = () => {
-    axios
+  const getAllEventData = async () => {
+    await axios
       .get(`${url}`, { headers: cookies })
       .then((response) => {
         const getData = response.data
@@ -94,7 +94,7 @@ export default function EventMain() {
 
   React.useEffect(() => {
     getAllEventData()
-  }, [eventData])
+  }, [])
 
   return (
     <div className={classes.root}>

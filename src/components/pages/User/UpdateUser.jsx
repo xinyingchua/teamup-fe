@@ -47,32 +47,32 @@ export default function UpdateUser() {
   let history = useHistory()
   const [cookies] = useCookies(['auth_token'])
 
+  const getUserData = async () => {
+    await axios
+      .get('https://teamup-be.herokuapp.com/api/v1/users/profile', {
+        headers: cookies,
+      })
+      .then((response) => {
+        const allUserData = response.data
+        setFirstName(allUserData.first_name)
+        setLastName(allUserData.last_name)
+        setEmail(allUserData.email)
+        setDdate(moment(allUserData.d_date).format('YYYY-MM-DD'))
+        setDdestination(allUserData.d_destination.name)
+        setBudget(allUserData.e_budget)
+      })
+      .catch((error) => {
+        return error
+      })
+  }
+
   useEffect(() => {
-    // GET //
-    const getUserData = () => {
-      axios
-        .get('https://teamup-be.herokuapp.com/api/v1/users/profile', {
-          headers: cookies,
-        })
-        .then((response) => {
-          const allUserData = response.data
-          setFirstName(allUserData.first_name)
-          setLastName(allUserData.last_name)
-          setEmail(allUserData.email)
-          setDdate(moment(allUserData.d_date).format('YYYY-MM-DD'))
-          setDdestination(allUserData.d_destination.name)
-          setBudget(allUserData.e_budget)
-        })
-        .catch((error) => {
-          return error
-        })
-    }
     getUserData()
   }, [])
 
   // Patch User Profile //
-  const updateUserProfile = () => {
-    axios
+  const updateUserProfile = async () => {
+    await axios
       .patch(
         'https://teamup-be.herokuapp.com/api/v1/users/profile/update',
         {
@@ -97,7 +97,7 @@ export default function UpdateUser() {
   }
 
   // submit form function
-  const handleFormSummit = async (e) => {
+  const handleFormSummit = (e) => {
     e.preventDefault()
     history.push('/login')
   }

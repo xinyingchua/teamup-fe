@@ -55,17 +55,19 @@ export default function TodoMain() {
   // use useState hooks
   const [todoData, setTodoData] = React.useState([])
   const [cookies] = useCookies(['auth_token'])
+  const [filterData, setFilteredData] = React.useState([])
 
-  const url = 'https://teamup-be.herokuapp.com/api/v1/users/todos'
+  const getAllTodoData = async () => {
+    const url = 'https://teamup-be.herokuapp.com/api/v1/users/todos'
 
-  const getAllTodoData = () => {
-    axios
+    await axios
       .get(`${url}`, {
         headers: cookies,
       })
       .then((response) => {
         const allData = response.data
-        setTodoData(response.data)
+        setTodoData(allData)
+        setFilteredData(allData)
       })
       .catch((error) => {
         return error
@@ -74,7 +76,7 @@ export default function TodoMain() {
 
   React.useEffect(() => {
     getAllTodoData()
-  }, [todoData])
+  }, [])
 
   return (
     <div className={classes.root}>
@@ -88,16 +90,28 @@ export default function TodoMain() {
                 variant='outlined'
                 style={{ width: '150px', marginBottom: '20px' }}
               >
+                {/* Filter */}
                 <InputLabel id='category'>Filter By</InputLabel>
                 <Select
                   labelId='demo-simple-select-outlined-label'
                   id='demo-simple-select-outlined'
+                  defaultValue='all'
+                  onChange={(e) =>
+                    setFilteredData(
+                      todoData.filter((item) =>
+                        e.target.value === 'all'
+                          ? true
+                          : item.role === e.target.value ||
+                            item.status === e.target.value
+                      )
+                    )
+                  }
                 >
-                  <MenuItem value=''></MenuItem>
+                  <MenuItem value='all'>Show All</MenuItem>
                   <MenuItem value='groom'>Groom</MenuItem>
                   <MenuItem value='bride'>Bride</MenuItem>
                   <MenuItem value='both'>Bride & Groom</MenuItem>
-                  <MenuItem value='completed'>Completed</MenuItem>
+                  <MenuItem value={true}>Completed</MenuItem>
                 </Select>
               </FormControl>
             </Grid>
@@ -121,10 +135,10 @@ export default function TodoMain() {
 
           {/* Map card here */}
           <Grid container spacing={2}>
-            {todoData.length === 0 ? (
+            {filterData.length === 0 ? (
               <h6>There are no items at the moment.</h6>
             ) : (
-              todoData.map((item, pos) => {
+              filterData.map((item, pos) => {
                 return (
                   <TodoItem
                     key={pos}

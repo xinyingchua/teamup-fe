@@ -99,7 +99,7 @@ export default function GuestListForm(props) {
 
   // PATCH - EDIT SINGLE GUEST //
   let UpdateGuestListData = async () => {
-    await axios
+   await axios
       .patch(
         'https://teamup-be.herokuapp.com/api/v1/users/guests/' +
           props.location.state._id +
@@ -125,7 +125,7 @@ export default function GuestListForm(props) {
 
   // DELETE - DELETE SINGLE GUEST //
   let DeleteGuestListData = async () => {
-    await axios
+   await axios
       .delete(
         'https://teamup-be.herokuapp.com/api/v1/users/guests/' +
           props.location.state._id +
@@ -149,7 +149,7 @@ export default function GuestListForm(props) {
   }, [])
 
   // FORM SUBMISSION
-  const handleFormSubmission = async (e) => {
+  const handleFormSubmission = (e) => {
     e.preventDefault()
     history.push('/guest-lists')
   }

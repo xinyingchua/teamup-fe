@@ -56,27 +56,27 @@ export default function TodoForm(props) {
   const [cookies] = useCookies(['auth_token'])
   let history = useHistory()
 
-  useEffect(() => {
-    // GET - OK //
-    const getOneToDoData = () => {
-      axios
-        .get(
-          'https://teamup-be.herokuapp.com/api/v1/users/todos/' +
-            props.location.state._id,
-          { headers: cookies }
-        )
-        .then((response) => {
-          const allData = response.data
-          const todo = allData[0]
-          setTask(todo.task)
-          setRole(todo.role)
-          setStatus(todo.status)
-        })
-        .catch((error) => {
-          return error
-        })
-    }
+  // GET - OK //
+  const getOneToDoData = async () => {
+    await axios
+      .get(
+        'https://teamup-be.herokuapp.com/api/v1/users/todos/' +
+          props.location.state._id,
+        { headers: cookies }
+      )
+      .then((response) => {
+        const allData = response.data
+        const todo = allData[0]
+        setTask(todo.task)
+        setRole(todo.role)
+        setStatus(todo.status)
+      })
+      .catch((error) => {
+        return error
+      })
+  }
 
+  useEffect(() => {
     if (props.location.state && props.location.state._id) {
       getOneToDoData()
     }
@@ -98,8 +98,8 @@ export default function TodoForm(props) {
   }
 
   // Patch TO DO //
-  const updateToDoData = () => {
-    axios
+  const updateToDoData = async () => {
+    await axios
       .patch(
         'https://teamup-be.herokuapp.com/api/v1/users/todos/' +
           props.location.state._id +
@@ -122,8 +122,8 @@ export default function TodoForm(props) {
   }
 
   // Delete TO DO //
-  const deleteToDoData = () => {
-    axios
+  const deleteToDoData = async () => {
+    await axios
       .delete(
         'https://teamup-be.herokuapp.com/api/v1/users/todos/' +
           props.location.state._id +
@@ -141,7 +141,7 @@ export default function TodoForm(props) {
   }
 
   // submit form function
-  const handleFormSummit = async (e) => {
+  const handleFormSummit = (e) => {
     e.preventDefault()
     history.push('/to-do')
   }
