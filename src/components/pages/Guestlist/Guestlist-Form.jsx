@@ -12,6 +12,7 @@ import NavBar from '../Navbar/NavBar'
 import axios from 'axios'
 import { useHistory } from 'react-router-dom'
 import { useCookies } from 'react-cookie'
+import { toast } from 'material-react-toastify'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -52,25 +53,32 @@ export default function GuestListForm(props) {
   const [numOfPax, setNumOfPax] = React.useState('')
   const [rsvp, setRSVP] = React.useState('')
   const [cookies] = useCookies(['auth_token'])
-  let [response, setFetchedData] = React.useState('')
+  const [apiStatus, setApiStatus] = React.useState('')
   let history = useHistory()
+
+  const notify = (message) => toast.dark(message)
 
   // POST - CREATE NEW GUEST //
   let postNewGuest = async () => {
-    response = await axios({
-      method: 'post',
-      headers: cookies,
-      url: 'https://teamup-be.herokuapp.com/api/v1/users/guests/create',
-      data: {
-        guest_fullName: guestFullName,
-        guest_contact: guestContact,
-        role: teamSelection,
-        status: rsvp,
-        pax: numOfPax,
-      },
-    })
-
-    setFetchedData(response)
+    try {
+      let response = await axios({
+        method: 'post',
+        headers: cookies,
+        url: 'https://teamup-be.herokuapp.com/api/v1/users/guests/create',
+        data: {
+          guest_fullName: guestFullName,
+          guest_contact: guestContact,
+          role: teamSelection,
+          status: rsvp,
+          pax: numOfPax,
+        },
+      })
+      setApiStatus(true)
+      history.push('/guest-lists')
+      return
+    } catch (err) {
+      return notify('Please check your form again.')
+    }
   }
 
   // GET - GET SINGLE GUEST //
@@ -99,7 +107,7 @@ export default function GuestListForm(props) {
 
   // PATCH - EDIT SINGLE GUEST //
   let UpdateGuestListData = async () => {
-   await axios
+    await axios
       .patch(
         'https://teamup-be.herokuapp.com/api/v1/users/guests/' +
           props.location.state._id +
@@ -116,16 +124,18 @@ export default function GuestListForm(props) {
         }
       )
       .then((response) => {
+        setApiStatus(true)
+        history.push('/guest-lists')
         return
       })
       .catch((error) => {
-        return error
+        return notify('Please check your form again.')
       })
   }
 
   // DELETE - DELETE SINGLE GUEST //
   let DeleteGuestListData = async () => {
-   await axios
+    await axios
       .delete(
         'https://teamup-be.herokuapp.com/api/v1/users/guests/' +
           props.location.state._id +
@@ -135,10 +145,11 @@ export default function GuestListForm(props) {
         }
       )
       .then((response) => {
-        return
+        setApiStatus(true)
+        history.push('/guest-lists')
       })
       .catch((error) => {
-        return error
+        return notify('Form Delete unsuccessful.')
       })
   }
 
@@ -146,11 +157,15 @@ export default function GuestListForm(props) {
     if (props.location.state && props.location.state._id) {
       getGuestListData()
     }
+    setApiStatus(false)
   }, [])
 
   // FORM SUBMISSION
   const handleFormSubmission = (e) => {
     e.preventDefault()
+    if (apiStatus === false) {
+      return
+    }
     history.push('/guest-lists')
   }
 
@@ -238,8 +253,8 @@ export default function GuestListForm(props) {
                   id='teamSelection'
                   onChange={(e) => setTeamSelection(e.target.value)}
                 >
-                  <MenuItem value='bride'>Bride</MenuItem>
                   <MenuItem value='groom'>Groom</MenuItem>
+                  <MenuItem value='bride'>Bride</MenuItem>
                 </Select>
               </FormControl>
 

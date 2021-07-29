@@ -9,6 +9,7 @@ import { withStyles } from '@material-ui/core/styles'
 import PropTypes from 'prop-types'
 import axios from 'axios'
 import { withCookies } from 'react-cookie'
+import { toast } from 'material-react-toastify'
 
 const styles = (theme) => ({
   root: {
@@ -45,6 +46,8 @@ const styles = (theme) => ({
   },
 })
 
+const notify = (message) => toast.dark(message)
+
 class RegisterChangePassword extends React.Component {
   constructor(props) {
     super(props)
@@ -66,6 +69,15 @@ class RegisterChangePassword extends React.Component {
   async handleFormSubmission(e) {
     e.preventDefault()
 
+    if (
+      this.state.password.length === 0 ||
+      this.state.confirmPass.length === 0
+    ) {
+      return notify('Please check your password again.')
+    } else if (this.state.password !== this.state.confirmPass) {
+      return notify('Please check your form again.')
+    }
+
     await axios
       .post(
         `https://teamup-be.herokuapp.com/api/v1/${this.props.match.params.activationId}`,
@@ -75,11 +87,12 @@ class RegisterChangePassword extends React.Component {
         }
       )
       .then((response) => {
-        this.props.history.push('/login')
+        return response
       })
       .catch((err) => {
         return err
       })
+    this.props.history.push('/login')
   }
 
   render() {

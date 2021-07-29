@@ -9,6 +9,7 @@ import axios from 'axios'
 import { useHistory } from 'react-router-dom'
 import { useCookies } from 'react-cookie'
 import moment from 'moment'
+import { toast } from 'material-react-toastify'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -49,6 +50,8 @@ export default function EventForm(props) {
 
   const history = useHistory()
 
+  const notify = (message) => toast.dark(message)
+
   // use useState hooks
   const [cookies] = useCookies(['auth_token'])
   const [fromDate, setFromDate] = React.useState()
@@ -56,7 +59,10 @@ export default function EventForm(props) {
   const [eventName, setEventName] = React.useState('')
   const [eventLocation, setEventLocation] = React.useState('')
   const [eventDescription, setEventDescription] = React.useState('')
-  let [fetchedData, setFetchedData] = React.useState('')
+  const [apiStatus, setApiStatus] = React.useState('')
+
+  let fromDateToIso = moment(fromDate).toISOString()
+  let toDateToIso = moment(toDate).toISOString()
 
   const getOnEventData = async () => {
     await axios
@@ -82,24 +88,33 @@ export default function EventForm(props) {
     if (props.location.state && props.location.state._id) {
       getOnEventData()
     }
+    setApiStatus(false)
   }, [])
 
   // POST - CREATE NEW EVENT
   let postNewEvent = async () => {
-    const response = await axios({
-      method: 'post',
-      headers: cookies,
-      url: 'https://teamup-be.herokuapp.com/api/v1/users/events/create',
-      data: {
-        event_name: eventName,
-        from: fromDate,
-        to: toDate,
-        location: eventLocation,
-        description: eventDescription,
-      },
-    })
-    setFetchedData(response)
-    return
+    let fromDateToIso = moment(fromDate).toISOString()
+    let toDateToIso = moment(toDate).toISOString()
+
+    try {
+      const response = await axios({
+        method: 'post',
+        headers: cookies,
+        url: 'https://teamup-be.herokuapp.com/api/v1/users/events/create',
+        data: {
+          event_name: eventName,
+          from: fromDateToIso,
+          to: toDateToIso,
+          location: eventLocation,
+          description: eventDescription,
+        },
+      })
+      setApiStatus(true)
+      history.push('/events')
+      return
+    } catch (err) {
+      return notify('Please check your form again.')
+    }
   }
 
   // PATCH EVENT//
@@ -117,17 +132,19 @@ export default function EventForm(props) {
           from: fromDateToIso,
           to: toDateToIso,
           location: eventLocation,
-          description: eventDescription,
+          description: eventDescription || '',
         },
         {
           headers: cookies,
         }
       )
       .then((response) => {
+        setApiStatus(true)
+        history.push('/events')
         return
       })
       .catch((error) => {
-        return error
+        return notify('Please check your form again.')
       })
   }
 
@@ -143,10 +160,12 @@ export default function EventForm(props) {
         }
       )
       .then((response) => {
+        setApiStatus(true)
+        history.push('/events')
         return
       })
       .catch((error) => {
-        return error
+        return notify('Form Delete unsuccessful.')
       })
   }
 
@@ -162,6 +181,10 @@ export default function EventForm(props) {
   // FORM SUBMISSION
   const handleFormSubmission = (e) => {
     e.preventDefault()
+
+    if (apiStatus === false) {
+      return
+    }
     history.push('/events')
   }
 

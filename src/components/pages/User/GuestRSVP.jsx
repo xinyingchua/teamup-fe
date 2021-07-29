@@ -64,8 +64,10 @@ export default function GuestRSVP() {
   const RsvpReply = async (e) => {
     e.preventDefault()
 
+    let response = null
+
     try {
-      let response = await axios({
+      response = await axios({
         method: 'patch',
         url: `https://teamup-be.herokuapp.com/api/v1/users/guests/${cookies.auth_token._id}/rsvp`,
         data: {
@@ -77,8 +79,11 @@ export default function GuestRSVP() {
     } catch (err) {
       return err
     }
+    if (response.status !== 200) {
+      return notify('Please try to RSVP again')
+    }
 
-    removeCookie()
+    removeCookie('auth_token')
     notify(`Your RSVP has been saved!`)
     history.push('/guest/login')
     return

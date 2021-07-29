@@ -12,6 +12,7 @@ import NavBar from '../Navbar/NavBar'
 import { useHistory } from 'react-router-dom'
 import { useCookies } from 'react-cookie'
 import axios from 'axios'
+import { toast } from 'material-react-toastify'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -61,6 +62,8 @@ const useStyles = makeStyles((theme) => ({
 export default function NewBudget(props) {
   const classes = useStyles()
 
+  const notify = (message) => toast.dark(message)
+
   // use useState hooks
   const [itemName, setItemName] = React.useState('')
   const [amount, setAmount] = React.useState('')
@@ -70,6 +73,7 @@ export default function NewBudget(props) {
   const [description, setDescription] = React.useState('')
   let history = useHistory()
   const [cookies] = useCookies(['auth_token'])
+  const [apiStatus, setApiStatus] = React.useState('')
 
   const getOneBudgetData = async () => {
     await axios
@@ -96,24 +100,32 @@ export default function NewBudget(props) {
     if (props.location.state && props.location.state._id) {
       getOneBudgetData()
     }
+    setApiStatus(false)
   }, [])
 
   // Create New Budget//
   let CreateBudget = async () => {
-    await axios.post(
-      'https://teamup-be.herokuapp.com/api/v1/users/budget/create',
-      {
-        item_name: itemName,
-        amount: amount,
-        payment_type: paymentType,
-        category: category,
-        status: status,
-        description: description,
-      },
-      {
-        headers: cookies,
-      }
-    )
+    try {
+      await axios.post(
+        'https://teamup-be.herokuapp.com/api/v1/users/budget/create',
+        {
+          item_name: itemName,
+          amount: amount,
+          payment_type: paymentType,
+          category: category,
+          status: status,
+          description: description,
+        },
+        {
+          headers: cookies,
+        }
+      )
+      setApiStatus(true)
+      history.push('/budget')
+      return
+    } catch (err) {
+      return notify('Please check your form again.')
+    }
   }
 
   // Patch TO DO //
@@ -129,17 +141,18 @@ export default function NewBudget(props) {
           payment_type: paymentType,
           category: category,
           status: status,
-          description: description,
+          description: description || '',
         },
         {
           headers: cookies,
         }
       )
       .then((response) => {
-        return
+        setApiStatus(true)
+        history.push('/budget')
       })
       .catch((error) => {
-        return error
+        return notify('Please check your form again.')
       })
   }
 
@@ -155,16 +168,20 @@ export default function NewBudget(props) {
         }
       )
       .then((response) => {
+        history.push('/budget')
         return
       })
       .catch((error) => {
-        return error
+        return notify('Form Delete unsuccessful.')
       })
   }
 
   // submit form function
   const handleFormSummit = (e) => {
     e.preventDefault()
+    if (apiStatus === false) {
+      return
+    }
     history.push('/budget')
   }
 
