@@ -18,6 +18,7 @@ import GuestListSummary from '../../assets/GuestListSummary'
 import TeamGroomBrideGuestList from './TeamGroomBride-List'
 import Paper from '@material-ui/core/Paper'
 import clsx from 'clsx'
+import { filter } from 'lodash'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -98,76 +99,55 @@ export default function GuestList() {
   // const [tryguest, setTryGuest] = React.useState([])
   const [filterData, setFilteredData] = React.useState([])
 
-  // TBC
 
-  // const handleChange = (e) => {
-  //   // switch case for status
-  //   switch(e.target.value) {
-  //     case 'attending':
-  //       return guestListData.filter(item => item.status === "attending")
-  //     case 'pending':
-  //       return guestListData.filter(item => item.status === "attending")
-  //       case 'unavailable':
-  //         return guestListData.filter(item => item.status === "attending")
-  //     default:
-  //       return guestListData
-  //   }
-  // }
+  // MAKING MULTIPLE AXIOS CALLS //
 
-  const getAllGuestData = async () => {
-    // MAKING MULTIPLE AXIOS CALLS //
+  let urls = [
+    'https://teamup-be.herokuapp.com/api/v1/users/dashboard',
+    'https://teamup-be.herokuapp.com/api/v1/users/guests/',
+  ]
 
-    let urls = [
-      'https://teamup-be.herokuapp.com/api/v1/users/dashboard',
-      'https://teamup-be.herokuapp.com/api/v1/users/guests/',
-    ]
-
-    let requests = await urls.map((url) => {
-      return axios.get(url, {
-        headers: cookies,
+  useEffect(() => {
+    const getAllGuestData = () => {
+      let requests = urls.map((url) => {
+        return axios.get(url, {
+          headers: cookies,
+        })
       })
-    })
 
-    Promise.all(requests)
-      .then((responses) => {
-        const dashboardData = responses[0].data
-        const guestListData = responses[1].data
-        getGuestSummaryData(dashboardData.guests)
-        setGuestListData(guestListData)
-        setFilteredData(guestListData)
+      Promise.all(requests)
+        .then((responses) => {
+          const dashboardData = responses[0].data
+          const guestListData = responses[1].data
+          getGuestSummaryData(dashboardData.guests)
+          setGuestListData(guestListData)
+          setFilteredData(guestListData)
+        })
+        .catch((err) => {
+          return err
+        })
+    }
 
-        // setGuestListData(guestListData)
-        // console.log(selectFilterRSVP)
-        // console.log(guestListData)
-        // getFilteredData(guestListData.filter(item => item.status === selectFilterRSVP))
-        // console.log(filterData)
-
-        // console.log(guestListData.filter(item => item.status === selectFilterRSVP))
-        // console.log(guestListData.filter(item => item.status === "unavailable"))
-        // console.log(guestListData.filter(item => item.status === "pending"))
-        // console.log(guestListData.filter(item => item.status === "attending"))
-        // console.log(guestListData.filter(item => item.status === "unavailable"))
-      })
-      .catch((err) => {
-        return err
-      })
-  }
 
   useEffect(() => {
     getAllGuestData()
   }, [])
 
-  // performFilter(e) {
-  //   console.log(e.target.value)
-  // }
+// Getting Total of Filtered Guest Data
+  function sumOfBrideTeamPax() {
+    const teamArray= filterData.filter(item => item.role === "bride")
+    const total = teamArray.reduce(function(prev, cur) {
+      return prev + cur.pax},0)
+      return total
+    }
 
-  // FORM SUBMISSION
-  // const performFilter = async (e, filterType) => {
 
-  //   let newState = {}
-  //   newState[filterType] = e.target.value
-
-  // }
+    function sumOfGroomTeamPax() {
+      const teamArray= filterData.filter(item => item.role === "groom")
+      const total = teamArray.reduce(function(prev, cur) {
+        return prev + cur.pax},0)
+        return total
+      }
 
   return (
     <div className={classes.root}>
@@ -203,20 +183,12 @@ export default function GuestList() {
                 <FormControl variant='outlined' style={{ width: '200px' }}>
                   <InputLabel id='category'>Filter By</InputLabel>
                   <Select
-                    defaultValue='all'
-                    // value ={guestListData}
-                    // onChange={(e) => handleChange(e)}
-                    // if value is 'all', dont filter
-                    // true --> item is selected // refer to mdn
-                    onChange={(e) =>
-                      setFilteredData(
-                        guestListData.filter((item) =>
-                          e.target.value === 'all'
-                            ? true
-                            : item.status === e.target.value
-                        )
-                      )
-                    }
+                    defaultValue= "all"
+                    // if value is 'all', fil
+                    // true --> item is selected // refer to mdn 
+                    onChange={(e) => setFilteredData(guestListData.filter(item => e.target.value === 'all' ? true :
+                    item.status === e.target.value))}
+
                     variant='outlined'
                     id='rsvp'
                   >
@@ -253,7 +225,8 @@ export default function GuestList() {
                   {guestSummaryData ? (
                     <GuestListItem
                       title='Groom'
-                      teampax={guestSummaryData.groom.total}
+                      teampax= {sumOfGroomTeamPax()}
+
                     />
                   ) : (
                     <GuestListItem title='Groom' />
@@ -293,7 +266,7 @@ export default function GuestList() {
                   {guestSummaryData ? (
                     <GuestListItem
                       title='Bride'
-                      teampax={guestSummaryData.bride.total}
+                      teampax= {sumOfBrideTeamPax()}
                     />
                   ) : (
                     <GuestListItem title='Bride' />
@@ -306,8 +279,8 @@ export default function GuestList() {
                           <h6>There are no items at the moment.</h6>
                         ) : (
                           filterData.map((item, pos) => {
-                            // return (item.role === 'bride' && item.status === selectFilterRSVP+ "") ? (
-                            return item.role === 'bride' ? (
+                              return item.role === 'bride' ? (
+
                               <TeamGroomBrideGuestList
                                 key={pos}
                                 name={`${item.guest_first_name} ${item.guest_last_name}`}
