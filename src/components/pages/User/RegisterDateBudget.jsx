@@ -86,10 +86,10 @@ export default function RegisterDateBudget() {
         }
       )
       .then((response) => {
-        return
+        return response
       })
-      .catch((error) => {
-        return error
+      .catch((err) => {
+        return err
       })
   }
 
