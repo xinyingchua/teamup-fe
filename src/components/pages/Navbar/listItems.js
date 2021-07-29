@@ -13,6 +13,8 @@ import ToggleOnIcon from '@material-ui/icons/ToggleOn';
 import { Link } from "react-router-dom"
 
 
+
+// change all funcitonal compoenent 
 // const [cookies, removeCookie] = useCookies(['auth_token'])
 // const handleRemoveCookie = async(e) => {
 //   removeCookie('auth_token');
