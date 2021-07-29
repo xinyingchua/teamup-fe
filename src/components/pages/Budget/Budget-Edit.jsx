@@ -141,7 +141,7 @@ export default function NewBudget(props) {
           payment_type: paymentType,
           category: category,
           status: status,
-          description: description,
+          description: description || '',
         },
         {
           headers: cookies,
