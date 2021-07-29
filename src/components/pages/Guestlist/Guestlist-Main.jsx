@@ -128,9 +128,8 @@ export default function GuestList() {
         })
     }
 
-
-  useEffect(() => {
     getAllGuestData()
+
   }, [])
 
 // Getting Total of Filtered Guest Data
@@ -141,13 +140,13 @@ export default function GuestList() {
       return total
     }
 
-
     function sumOfGroomTeamPax() {
       const teamArray= filterData.filter(item => item.role === "groom")
       const total = teamArray.reduce(function(prev, cur) {
         return prev + cur.pax},0)
         return total
       }
+
 
   return (
     <div className={classes.root}>
@@ -188,7 +187,6 @@ export default function GuestList() {
                     // true --> item is selected // refer to mdn 
                     onChange={(e) => setFilteredData(guestListData.filter(item => e.target.value === 'all' ? true :
                     item.status === e.target.value))}
-
                     variant='outlined'
                     id='rsvp'
                   >
@@ -280,7 +278,6 @@ export default function GuestList() {
                         ) : (
                           filterData.map((item, pos) => {
                               return item.role === 'bride' ? (
-
                               <TeamGroomBrideGuestList
                                 key={pos}
                                 name={`${item.guest_first_name} ${item.guest_last_name}`}
