@@ -7,9 +7,9 @@ import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import List from '@material-ui/core/List'
 import Typography from '@material-ui/core/Typography'
-import Divider from '@material-ui/core/Divider'
 import IconButton from '@material-ui/core/IconButton'
-import { mainListItems, secondaryListItems } from './listItems'
+// import { mainListItems, secondaryListItems } from './listItems'
+import ListItems from './listItems'
 import { useCookies } from 'react-cookie'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 import { Link } from 'react-router-dom'
@@ -217,9 +217,12 @@ export default function NavBar(props) {
             {/* <ChevronLeftIcon /> */}
           </IconButton>
         </div>
-        <List style={{ color: 'white' }}>{mainListItems}</List>
-        <Divider />
-        <List style={{ color: 'white' }}>{secondaryListItems}</List>
+        <List style={{ color: 'white' }}>
+        <ListItems/>
+        </List>
+        {/* <List style={{ color: 'white' }}>{ListItems}</List> */}
+        {/* <Divider />
+        <List style={{ color: 'white' }}>{secondaryListItems}</List> */}
       </Drawer>
     </div>
   )
