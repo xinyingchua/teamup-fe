@@ -79,7 +79,6 @@ export default function BudgetMain() {
   // use useState hooks
   const [cookies] = useCookies(['auth_token'])
   const [weddingBudget, setWeddingBudget] = React.useState('')
-  const [weddingAvailableBudget, setWeddingAvailableBudget] = React.useState('')
   const [allBudgetData, setAllBudgetData] = React.useState([])
 
   const getApiCall = async (url) => {
@@ -101,9 +100,7 @@ export default function BudgetMain() {
     let budgetData = await getApiCall(
       'https://teamup-be.herokuapp.com/api/v1/users/budget/'
     )
-
-    setWeddingBudget(dashboardData.budget.initialBudget)
-    setWeddingAvailableBudget(dashboardData.budget.currentBudget)
+    setWeddingBudget(dashboardData.budget)
     setAllBudgetData(budgetData)
   }, [])
 
@@ -121,7 +118,7 @@ export default function BudgetMain() {
                   color='secondary'
                   className={classes.costTypography}
                 >
-                  {`$${parseFloat(weddingBudget).toFixed(2)}`}
+                  {`$${parseFloat(weddingBudget.initialBudget).toFixed(2)}`}
                 </Typography>
               </Box>
               Estimated Wedding Cost
@@ -134,7 +131,7 @@ export default function BudgetMain() {
                   style={{ color: '#5EAB50' }}
                   className={classes.costTypography}
                 >
-                  {`$${parseFloat(weddingAvailableBudget).toFixed(2)}`}
+                  {`$${parseFloat(weddingBudget.currentBudget).toFixed(2)}`}
                 </Typography>
               </Box>
               Available in your budget
