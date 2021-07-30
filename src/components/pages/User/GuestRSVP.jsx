@@ -52,10 +52,10 @@ const useStyles = makeStyles((theme) => ({
 export default function GuestRSVP() {
   const classes = useStyles()
 
-  const [cookies, removeCookie] = useCookies(['auth_token'])
-  const [role, setRole] = React.useState(cookies.auth_token.role)
-  const [numOfPax, setNumOfPax] = React.useState(cookies.auth_token.pax)
-  const [status, setStatus] = React.useState(cookies.auth_token.status)
+  const [cookies, removeCookie] = useCookies(['guest_token'])
+  const [role, setRole] = React.useState(cookies.guest_token.role)
+  const [numOfPax, setNumOfPax] = React.useState(cookies.guest_token.pax)
+  const [status, setStatus] = React.useState(cookies.guest_token.status)
 
   const notify = (message) => toast.dark(message)
 
@@ -69,7 +69,7 @@ export default function GuestRSVP() {
     try {
       response = await axios({
         method: 'patch',
-        url: `https://teamup-be.herokuapp.com/api/v1/users/guests/${cookies.auth_token._id}/rsvp`,
+        url: `https://teamup-be.herokuapp.com/api/v1/users/guests/${cookies.guest_token._id}/rsvp`,
         data: {
           role: role,
           status: status,
@@ -83,7 +83,7 @@ export default function GuestRSVP() {
       return notify('Please try to RSVP again')
     }
 
-    removeCookie('auth_token')
+    removeCookie('guest_token')
     notify(`Your RSVP has been saved!`)
     history.push('/guest/login')
     return

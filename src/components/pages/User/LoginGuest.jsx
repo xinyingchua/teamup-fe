@@ -8,7 +8,7 @@ import Typography from '@material-ui/core/Typography'
 import { withStyles } from '@material-ui/core/styles'
 import PropTypes from 'prop-types'
 import axios from 'axios'
-import { withCookies } from 'react-cookie'
+import { cookies, withCookies } from 'react-cookie'
 import { toast } from 'material-react-toastify'
 
 const styles = (theme) => ({
@@ -66,13 +66,15 @@ class LoginGuest extends React.Component {
       .then((response) => {
         // after successful login, store the token as cookie
         const { cookies } = this.props
+        console.log(this.props)
 
-        cookies.set('auth_token', response.data, {
-          path: '/',
+        cookies.set('guest_token', response.data, {
+          path: '/guest',
         })
         this.props.history.push('/guest/rsvp')
       })
       .catch((err) => {
+        console.log(err)
         notify('Please try again with your contact number!')
       })
   }
