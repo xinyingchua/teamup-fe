@@ -1,70 +1,96 @@
-# Getting Started with Create React App
+<h1>Team Up!</h1>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+OBJECTIVE: <a href="https://teamup-fe.herokuapp.com/">TeamUp</a> is an all-in-one App to streamline wedding planning process & manage your budget at your fingertips. 
 
-## Available Scripts
+ WHO WILL USE THIS: We are looking to target wedding planners, soon to be brides and grooms, and hopefully scale this to a wider audience target with custom event planners in mind.
+<br />
+#
 
-In the project directory, you can run:
+<h2> Application Features </h2>
+1. Dashboard <br>
+2. Budget Planning<br>
+3. To-Do List<br>
+4. Guest List Management<br>
+5. Event Schedule<br>
+6. Countdown to D-Date<br>
+<br/>
+<h2>Technologies used</h2>
+- Authorization<br>
+- Mongoose DB<br>
+- MVC<br>
+- Bcrypt<br>
+- Method Override<br>
+- Toatify<br>
+- Material UI<br>
+- Mailgun JS<br>
+- Moment JS<br>
+- AXIOS<br>
+- CORS<br>
+- DOTENV<br>
+- Express: NodeJS Web Development Framework<br>
+- JOI<br>
+- JSON Web Token<br>
+- Lodash<br>
+- randomstring<br>
+- UUID<br>
+<br/>
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+<h2>Routes / Pages</h2>
+<h3>Front End:</h3>
+<img src="public/routes-fe.png" width="1000">
+<br><br>
+<h3>Back End:</h3>
+<img src="public/routes-be.png" width="1000">
+<br>
+<br/>
+<h2>The Approaches Taken</h2>
+1. Research on best practices & competitor analysis<br>
+2. Research on design inspirations <br>
+3. App Name Exploration <br>
+4. Wireframe / Design mock up & logo design<br>
+5. Determine the routes and data needed
+6. Set up database with collections in the MongoDB<br>
+7. Concurrently working on Front User Interface & Back End RESTFUL Routes and CRUD Routes <br>
+8. Deploying Backend on Heroku and Postman
+9. Deploying Front End onto Heroku
+<br>
+<br>
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+<h2>Initial Wireframe & Design</h2>
+<img src="public/teamup-documentation-1.png" width="1000">
+<img src="public/teamup-documentation-2.png" width="1000">
+<img src="public/teamup-documentation-3.png" width="1000">
+<br><br>
+<h2>Unsolved Problems</h2>
+1. Design of e-invite<br>
+2. Bugs on Event-Edit Date/ Time input<br>
+3. Dashboard Event Pagination Arrow not working<br>
+4. Budget and Date input after registration - CORS Error<br>
+5. Pie Chart and Dashboard<br>
+6. Dark Mode<br>
+<br>
 
-### `npm test`
+<h2>Note to self</h2>
+1. Further improve on app features e.g. Design e-invites, Dark Mode, Google Map, QR Code<br>
+2. Extending to more than just a wedding planner app <br>
+<br>
+<h2>Team Members/Collaborators</h2>
+1. <a href ="https://github.com/howardleejh/">Howard Lee </a><br>
+2. <a href ="https://github.com/lucasseet/">Lucas Seet </a><br>
+3. <a href ="https://github.com/xinyingchua/">Xinying Chua </a><br>
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+<br>
 
-### `npm run build`
+<h2>Application Front / Back End Deployed on Heroku</h2>
+1. <a href ="https://teamup-fe.herokuapp.com/">Teamup Front End
+ </a><br>
+2. <a href ="https://teamup-be.herokuapp.com/">Teamup Back End
+ </a><br>
+<br>
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+<h2>Github Repositories</h2>
+1. <a href ="https://github.com/xinyingchua/teamup-fe">Front-End Repo
+ </a><br>
+2. <a href ="https://github.com/howardleejh/teamup-be">Back-End Repo
+ </a><br>
