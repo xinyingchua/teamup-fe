@@ -134,13 +134,7 @@ export default function NavBar(props) {
     setOpen(false)
   }
 
-  const [cookies, removeCookie] = useCookies(['auth_token'])
   const history = useHistory()
-
-  // Removing User's Session Upon Log out
-  function handleRemoveCookie() {
-    removeCookie('auth_token')
-  }
 
   return (
     <div className={classes.root}>
@@ -218,7 +212,7 @@ export default function NavBar(props) {
           </IconButton>
         </div>
         <List style={{ color: 'white' }}>
-        <ListItems/>
+          <ListItems />
         </List>
         {/* <List style={{ color: 'white' }}>{ListItems}</List> */}
         {/* <Divider />

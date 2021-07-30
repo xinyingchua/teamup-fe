@@ -61,9 +61,6 @@ export default function EventForm(props) {
   const [eventDescription, setEventDescription] = React.useState('')
   const [apiStatus, setApiStatus] = React.useState('')
 
-  let fromDateToIso = moment(fromDate).toISOString()
-  let toDateToIso = moment(toDate).toISOString()
-
   const getOnEventData = async () => {
     await axios
       .get(
@@ -97,7 +94,7 @@ export default function EventForm(props) {
     let toDateToIso = moment(toDate).toISOString()
 
     try {
-      const response = await axios({
+      await axios({
         method: 'post',
         headers: cookies,
         url: 'https://teamup-be.herokuapp.com/api/v1/users/events/create',

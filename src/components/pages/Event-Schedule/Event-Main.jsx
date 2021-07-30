@@ -92,8 +92,8 @@ export default function EventMain() {
       })
   }
 
-  React.useEffect(async () => {
-    await getAllEventData()
+  React.useEffect(() => {
+    getAllEventData()
   }, [])
 
   return (
