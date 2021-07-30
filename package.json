@@ -41,6 +41,9 @@
     "eject": "react-scripts eject",
     "start:prod": "serve -s build"
   },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
   "browserslist": {
     "production": [
       ">0.2%",

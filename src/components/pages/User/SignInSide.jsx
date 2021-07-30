@@ -58,7 +58,6 @@ export default function SignInSide() {
   const [passwordLogin, setPasswordLogin] = React.useState()
   // Npm Cookies  => [ value, setter ] ==> if we want to use setter, we need to set value
   const [cookie, setCookie] = useCookies(['auth_token'])
-  let [fetchedData, setFetchedData] = React.useState('')
   let history = useHistory()
 
   // use api callback

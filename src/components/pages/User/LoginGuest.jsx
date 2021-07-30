@@ -66,7 +66,6 @@ class LoginGuest extends React.Component {
       .then((response) => {
         // after successful login, store the token as cookie
         const { cookies } = this.props
-        console.log(this.props)
 
         cookies.set('guest_token', response.data, {
           path: '/guest',
