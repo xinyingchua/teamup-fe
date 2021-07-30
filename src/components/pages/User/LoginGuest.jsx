@@ -73,7 +73,6 @@ class LoginGuest extends React.Component {
         this.props.history.push('/guest/rsvp')
       })
       .catch((err) => {
-        console.log(err)
         notify('Please try again with your contact number!')
       })
   }
