@@ -193,7 +193,7 @@ export default function GuestListForm(props) {
                 required
                 fullWidth
                 id='guestname'
-                label='Guest Name'
+                label='Guest Full Name'
                 name='guestname'
                 autoFocus
                 value={guestFullName}
