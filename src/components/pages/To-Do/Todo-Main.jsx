@@ -145,6 +145,7 @@ export default function TodoMain() {
                     role={`Team ${item.role.toUpperCase()}`}
                     task={item.task}
                     _id={item._id}
+                    status={item.status}
                     refreshItems={getAllTodoData}
                   />
                 )

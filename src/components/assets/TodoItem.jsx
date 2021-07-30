@@ -12,6 +12,8 @@ import { useCookies } from 'react-cookie'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 import { useHistory } from 'react-router-dom'
+import CheckCircleIcon from '@material-ui/icons/CheckCircle'
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -47,6 +49,13 @@ const useStyles = makeStyles((theme) => ({
     width: '200px',
     color: 'black',
   },
+
+  tickIcon: {
+    color: '#5EAB50',
+    paddingBottom: theme.spacing(0),
+    marginTop: '15px'
+  },
+  
 }))
 
 export default function ToDoGrid(props) {
@@ -94,6 +103,10 @@ export default function ToDoGrid(props) {
           <Typography variant='h5' component='h2'>
             {props.task}
           </Typography>
+          {props.status === true 
+            ? (<CheckCircleIcon className={classes.tickIcon} />)
+            : (<div></div>)
+          }
           <Grid container className={classes.button}>
             <Grid item xs={6}>
               <CardActions>
