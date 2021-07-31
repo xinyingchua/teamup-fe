@@ -1,9 +1,10 @@
 <h1>Team Up!</h1>
 
-OBJECTIVE: <a href="https://teamup-fe.herokuapp.com/">TeamUp</a> is an all-in-one App to streamline wedding planning process & manage your budget at your fingertips. 
+OBJECTIVE: <a href="https://teamup-fe.herokuapp.com/">TeamUp</a> is an all-in-one App to streamline wedding planning process & manage your budget at your fingertips.
 
- WHO WILL USE THIS: We are looking to target wedding planners, soon to be brides and grooms, and hopefully scale this to a wider audience target with custom event planners in mind.
+WHO WILL USE THIS: We are looking to target wedding planners, soon to be brides and grooms, and hopefully scale this to a wider target audience with custom event planners in mind.
 <br />
+
 #
 
 <h2> Application Features </h2>
@@ -13,6 +14,9 @@ OBJECTIVE: <a href="https://teamup-fe.herokuapp.com/">TeamUp</a> is an all-in-on
 4. Guest List Management<br>
 5. Event Schedule<br>
 6. Countdown to D-Date<br>
+7. New User Activation<br>
+8. Guest Login<br>
+9. Guest RSVP<br>
 <br/>
 <h2>Technologies used</h2>
 - Authorization<br>
@@ -20,7 +24,7 @@ OBJECTIVE: <a href="https://teamup-fe.herokuapp.com/">TeamUp</a> is an all-in-on
 - MVC<br>
 - Bcrypt<br>
 - Method Override<br>
-- Toatify<br>
+- Toastify<br>
 - Material UI<br>
 - Mailgun JS<br>
 - Moment JS<br>
@@ -33,8 +37,8 @@ OBJECTIVE: <a href="https://teamup-fe.herokuapp.com/">TeamUp</a> is an all-in-on
 - Lodash<br>
 - randomstring<br>
 - UUID<br>
+- Google MAps API<br>
 <br/>
-
 
 <h2>Routes / Pages</h2>
 <h3>Front End:</h3>
@@ -49,11 +53,11 @@ OBJECTIVE: <a href="https://teamup-fe.herokuapp.com/">TeamUp</a> is an all-in-on
 2. Research on design inspirations <br>
 3. App Name Exploration <br>
 4. Wireframe / Design mock up & logo design<br>
-5. Determine the routes and data needed
+5. Determine the routes and data needed<br>
 6. Set up database with collections in the MongoDB<br>
 7. Concurrently working on Front User Interface & Back End RESTFUL Routes and CRUD Routes <br>
-8. Deploying Backend on Heroku and Postman
-9. Deploying Front End onto Heroku
+8. Deploying Backend on Heroku and Postman<br>
+9. Deploying Front End onto Heroku<br>
 <br>
 <br>
 
@@ -84,8 +88,6 @@ OBJECTIVE: <a href="https://teamup-fe.herokuapp.com/">TeamUp</a> is an all-in-on
 
 <h2>Application Front / Back End Deployed on Heroku</h2>
 1. <a href ="https://teamup-fe.herokuapp.com/">Teamup Front End
- </a><br>
-2. <a href ="https://teamup-be.herokuapp.com/">Teamup Back End
  </a><br>
 <br>
 
